@@ -1,3 +1,6 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
 #include <Arduino.h>
 #include "LedControl.h"
 #include "utils.h"
@@ -24,7 +27,9 @@ class Matrix {
     void displayMap();
 
 public:
-    Matrix();
+    Matrix() {};
     void initSetup();
     void updateDisplay(Point currentPosition, Point lastPosition);
 };
+
+#endif

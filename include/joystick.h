@@ -1,3 +1,6 @@
+#ifndef JOYSTICK_H
+#define JOYSTICK_H
+
 #include <Arduino.h>
 #include "utils.h"
 
@@ -17,9 +20,11 @@ class Joystick {
     Point updatePosition();
 
 public:
-    Joystick();
+    Joystick() {};
     bool moved();
 
     Point getCurrentPosition() const;
     Point getLastPosition() const;
 };
+
+#endif

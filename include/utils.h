@@ -19,4 +19,14 @@ struct Point {
 
 const static byte matrixSize = 8;
 
+enum ActionIndex {
+    welcomeActionIndex,
+    menuActionIndex,
+    playActionIndex,
+    howToPlayActionIndex,
+    hallOfFameActionIndex,
+    settingsActionIndex,
+    aboutActionIndex,
+};
+
 #endif

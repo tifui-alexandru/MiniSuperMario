@@ -1,7 +1,5 @@
 #include "../include/joystick.h"
 
-Joystick::Joystick() {}
-
 Point Joystick::getCurrentPosition() const {
     return currentPosition;
 }
