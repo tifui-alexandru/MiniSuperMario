@@ -6,7 +6,7 @@
 
 class HowToPlay : public Action {
 public:
-    HowToPlay();
+    HowToPlay(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix) {};
     ActionIndex run() override;
 };
 

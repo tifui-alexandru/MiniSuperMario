@@ -6,7 +6,7 @@
 
 class About : public Action {
 public:
-    About();
+    About(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr) : Action(lcd, joystick, matrix) {};
     ActionIndex run() override;
 };
 

@@ -6,7 +6,7 @@
 #include "joystick.h"
 
 class Menu : public Action {
-    char* line1 = "Options: "; // up and down emoji
+    char* firstLine = "Options: "; // up and down emoji
     static const byte noOfOptions = 5;
     char* options[noOfOptions] = {
         "Start game",
@@ -19,8 +19,9 @@ class Menu : public Action {
     byte currentOption = 0;
 
 public:
-    Menu();
+    Menu(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix) {};
     ActionIndex run() override;
+    void updateOption();
 };
 
 #endif

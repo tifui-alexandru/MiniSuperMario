@@ -14,8 +14,51 @@ class Lcd {
 
     LiquidCrystal* lcd = new LiquidCrystal(RS, enable, D4, D5, D6, D7);
 
-    const int lcdRows = 2;
-    const int lcdColumns = 16;
+    static const int lcdRows = 2;
+    static const int lcdColumns = 16;
+
+    struct lcdLayout {
+        char layout[lcdRows][lcdColumns];
+
+        lcdLayout() {
+            for (int row = 0; row < lcdRows; ++row)
+                for (int col = 0; col < lcdColumns; ++col)
+                    layout[row][col] = 0;
+        }
+
+        lcdLayout(const char* row1, const char* row2) {
+            for (int col = 0; col < lcdColumns; ++col) 
+                layout[0][col] = layout[1][col] = 0;
+
+            for (int col = 0; row1[col] and col < lcdColumns; ++col)
+                layout[0][col] = row1[col];
+
+            for (int col = 0; row2[col] and col < lcdColumns; ++col)
+                layout[1][col] = row2[col];
+        }
+
+        bool operator == (const lcdLayout& other) const {
+            for (int row = 0; row < lcdRows; ++row) 
+                for (int col = 0; col < lcdColumns; ++col) 
+                    if (layout[row][col] != other.layout[row][col])
+                        return false;
+            return true;
+        }
+
+        bool operator != (const lcdLayout& other) const {
+            return !(*this == other);
+        }
+
+        lcdLayout operator = (const lcdLayout& other) {
+            for (int row = 0; row < lcdRows; ++row)
+                for (int col = 0; col < lcdColumns; ++col) 
+                    layout[row][col] = other.layout[row][col];
+            return *this;
+        }
+    };
+
+    lcdLayout currentLayout;
+    lcdLayout lastLayout;
 
 public:
     Lcd() {};

@@ -6,7 +6,7 @@
 
 class Settings : public Action {
 public:
-    Settings();
+    Settings(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix) {};
     ActionIndex run() override;
 };
 

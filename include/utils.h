@@ -13,14 +13,14 @@ struct Point {
     }
 
     bool operator != (const Point& other) const {
-        return x != other.x or y != other.y;
+        !(*this == other);
     }
 };
 
 const static byte matrixSize = 8;
 
 enum ActionIndex {
-    welcomeActionIndex,
+    wellcomeActionIndex,
     menuActionIndex,
     playActionIndex,
     howToPlayActionIndex,

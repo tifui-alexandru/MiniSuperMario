@@ -6,7 +6,7 @@
 
 class HallOfFame : public Action {
 public:
-    HallOfFame();
+    HallOfFame(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix) {};
     ActionIndex run() override;
 };
 

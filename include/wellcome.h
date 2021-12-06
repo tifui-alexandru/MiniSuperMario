@@ -7,12 +7,13 @@
 class Wellcome : public Action {
     char* msgLine1 = "Welcome to";
     char* msgLine2 = "Mini Super Mario!";
-    unsigned int startTime;
-    const unsigned int interval = 5000;
+    unsigned long startTime;
+    const unsigned long interval = 5000;
 
 public:
-    Wellcome();
+    Wellcome(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix) {};
     ActionIndex run() override;
+    void initSetup();
 };
 
 #endif
