@@ -11,9 +11,9 @@ class Wellcome : public Action {
     const unsigned long interval = 5000;
 
 public:
-    Wellcome(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix) {};
+    Wellcome(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix), startTime(millis()) {};
     ActionIndex run() override;
-    void initSetup();
+    // void initSetup();
 };
 
 #endif

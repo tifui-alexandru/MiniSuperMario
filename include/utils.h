@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+const static byte matrixSize = 8;
+
 struct Point {
     byte x, y;
 
@@ -17,7 +19,17 @@ struct Point {
     }
 };
 
-const static byte matrixSize = 8;
+enum joystickUpDownMove {
+    Up,
+    Down,
+    NoneUpDown
+};
+
+enum joystickLeftRightMove {
+    Left,
+    Right,
+    NoneLeftRight
+};
 
 enum ActionIndex {
     wellcomeActionIndex,

@@ -6,14 +6,23 @@
 #include "joystick.h"
 
 class Menu : public Action {
-    char* firstLine = "Options: "; // up and down emoji
+    char* firstLine = "Options: "; // to do: add up and down emoji
     static const byte noOfOptions = 5;
+
     char* options[noOfOptions] = {
         "Start game",
         "How to play",
         "Hall of fame",
         "Settings",
         "About"
+    };
+
+    ActionIndex optionsActionIndex[noOfOptions] = {
+        playActionIndex,
+        howToPlayActionIndex,
+        hallOfFameActionIndex,
+        settingsActionIndex,
+        aboutActionIndex
     };
 
     byte currentOption = 0;

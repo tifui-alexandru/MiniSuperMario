@@ -7,42 +7,34 @@
 class Joystick {
     const byte xPin = A0;
     const byte yPin = A1;
-
-    Point currentPosition;
-    Point lastPosition;
-
-    enum moveDirection {
-        Up,
-        Down,
-        Right,
-        Left
-    } lastMoveDirection;
-    
-    bool changedDirectionUp();
-    bool changedDirectionDown();
-    bool changedDirectionRight();
-    bool changedDirectionLeft();
+    const byte buttonPin = 8;
 
     const int minTreshold = 200;
     const int maxTreshold = 600;
 
-    unsigned long long lastMoved = 0;
-    const int moveInterval = 100;
+    unsigned long lastDebounceTime = 0;
+    const unsigned long debounceInterval = 30;
 
-    Point updatePosition();
+    bool currentButtonReading = HIGH;
+    bool lastButtonReading = HIGH;
 
-public:
-    Joystick() {};
-    bool moved();
+    bool lastButtonState = LOW;
+    bool currentButtonState = LOW;
+
+    bool joystickMovedUpDown = false;
+    bool joystickMovedLeftRight = false;
 
     bool movedUp();
     bool movedDown();
     bool movedRight();
     bool movedLeft();
-    bool pressed();
 
-    Point getCurrentPosition() const;
-    Point getLastPosition() const;
+public:
+    Joystick() {};
+    void initSetup();
+    joystickUpDownMove movedUpDown();
+    joystickLeftRightMove movedLeftRight();
+    bool pressedButton();
 };
 
 #endif

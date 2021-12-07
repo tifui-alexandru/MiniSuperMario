@@ -63,8 +63,10 @@ class Lcd {
 public:
     Lcd() {};
     ~Lcd();
+
     void initSetup();
     void displayText(char*, char*);
+    void displayScrollingText(char*, char*, int, int);
     void clearText();
 };
 

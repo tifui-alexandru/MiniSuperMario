@@ -15,7 +15,7 @@ protected:
 public:
     Action(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr) : lcd(lcd), joystick(joystick), matrix(matrix) {};
     virtual ActionIndex run() = 0;
-    void initSetup() {};
+    // void initSetup() {};
 };
 
 #endif

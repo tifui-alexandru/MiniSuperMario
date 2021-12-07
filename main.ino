@@ -32,12 +32,13 @@ void initializeActions() {
 
 void setup() {
     lcd->initSetup();
+    joystick->initSetup();
     gameMap->initSetup();
 
     initializeActions();
 
-    for (byte i = 0; i < noOfactions; ++i) 
-        actions[i]->initSetup();
+    // for (byte i = 0; i < noOfactions; ++i) 
+    //     actions[i]->initSetup();
         
     currentActionIndex = 0; // Wellcome
     Serial.begin(9600);
