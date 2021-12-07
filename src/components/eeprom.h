@@ -11,11 +11,11 @@
 class EepromClass {
     void sort();
 
-    static const byte chunkSize = 9;
-    static const byte nicknameSize = 6;
-    static const byte highscoreSize = 6; // number of digits in base 10
-    static const byte outputStringSize = 16;
-    static const byte noOfPlayers = 3;
+    static const int chunkSize = 9;
+    static const int nicknameSize = 6;
+    static const int highscoreSize = 6; // number of digits in base 10
+    static const int outputStringSize = 16;
+    static const int noOfPlayers = 3;
 
     const int byteMask = 0xFF;
     const int byteSize = 8;

@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include "action.h"
-#include "joystick.h"
 
 class Menu : public Action {
     char* firstLine = "Options: "; // to do: add up and down emoji
@@ -28,7 +27,9 @@ class Menu : public Action {
     byte currentOption = 0;
 
 public:
-    Menu(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix) {};
+    Menu(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
+        Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+        
     ActionIndex run() override;
     void updateOption();
 };

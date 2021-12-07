@@ -3,7 +3,8 @@
 
 #include <Arduino.h>
 #include "LedControl.h"
-#include "utils.h"
+
+#include "../../include/utils.h"
 
 class Matrix {
     const byte dinPin = 12;

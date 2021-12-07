@@ -1,4 +1,4 @@
-#include "../include/wellcome.h"
+#include "wellcome.h"
 
 ActionIndex Wellcome::run() {
     unsigned long now = millis();
@@ -9,8 +9,3 @@ ActionIndex Wellcome::run() {
         return wellcomeActionIndex;
     }
 }
-
-// void Wellcome::initSetup() {
-//     Serial.println("*******************");
-//     startTime = millis();
-// }

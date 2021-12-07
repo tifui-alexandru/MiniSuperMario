@@ -1,4 +1,4 @@
-#include "../include/eeprom.h"
+#include "eeprom.h"
 
 char* EepromClass::readNickname(int playerIndex) {
     if (playerIndex < noOfActivePlayers)
@@ -15,9 +15,9 @@ int EepromClass::readHighscore(int playerIndex) {
     if (playerIndex < noOfActivePlayers)
         return -1;
 
-    byte highscoreByte1 = EEPROM.read(playerIndex * chunkSize + nicknameSize);
-    byte highscoreByte2 = EEPROM.read(playerIndex * chunkSize + nicknameSize + 1);
-    byte highscoreByte3 = EEPROM.read(playerIndex * chunkSize + nicknameSize + 2);
+    uint8_t highscoreByte1 = EEPROM.read(playerIndex * chunkSize + nicknameSize);
+    uint8_t highscoreByte2 = EEPROM.read(playerIndex * chunkSize + nicknameSize + 1);
+    uint8_t highscoreByte3 = EEPROM.read(playerIndex * chunkSize + nicknameSize + 2);
 
     return (highscoreByte3 << (2 * byteSize)) | (highscoreByte2 << byteSize) | highscoreByte1;
 }
@@ -28,9 +28,9 @@ void EepromClass::writeNickname(int playerIndex, char* newNickname) {
 }
 
 void EepromClass::writeHighscore(int playerIndex, int newHighscore) {
-    byte highscoreByte1 = newHighscore & byteMask;
-    byte highscoreByte2 = (newHighscore >> byteSize) & byteMask;
-    byte highscoreByte3 = (newHighscore >> (2 * byteSize)) & byteMask;
+    uint8_t highscoreByte1 = newHighscore & byteMask;
+    uint8_t highscoreByte2 = (newHighscore >> byteSize) & byteMask;
+    uint8_t highscoreByte3 = (newHighscore >> (2 * byteSize)) & byteMask;
 
     EEPROM.update(highscoreByte1, playerIndex * chunkSize + nicknameSize);
     EEPROM.update(highscoreByte2, playerIndex * chunkSize + nicknameSize + 1);

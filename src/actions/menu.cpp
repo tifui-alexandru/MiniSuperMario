@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "../include/menu.h"
+#include "menu.h"
 
 ActionIndex Menu::run() {
     lcd->displayText(firstLine, options[currentOption]);

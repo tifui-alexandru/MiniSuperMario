@@ -1,4 +1,4 @@
-#include "../include/how_to_play.h"
+#include "how_to_play.h"
 
 ActionIndex HowToPlay::run() {
     if (joystick->pressedButton())

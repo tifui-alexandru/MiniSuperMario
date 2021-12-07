@@ -1,4 +1,4 @@
-#include "../include/joystick.h"
+#include "joystick.h"
 
 void Joystick::initSetup() {
     pinMode(buttonPin, INPUT_PULLUP);

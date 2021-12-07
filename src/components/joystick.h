@@ -2,7 +2,7 @@
 #define JOYSTICK_H
 
 #include <Arduino.h>
-#include "utils.h"
+#include "../../include/utils.h"
 
 class Joystick {
     const byte xPin = A0;

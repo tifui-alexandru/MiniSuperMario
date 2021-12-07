@@ -14,7 +14,10 @@ class About : public Action {
     unsigned long lastCountTime = 0;
     const unsigned long scrollInterval = 400;
 
-public : About(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr) : Action(lcd, joystick, matrix){};
+public :
+    About(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
+        Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+
     ActionIndex run() override;
 };
 

@@ -1,4 +1,4 @@
-#include "../include/lcd.h"
+#include "lcd.h"
 
 Lcd::~Lcd() {
     delete lcd;

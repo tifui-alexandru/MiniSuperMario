@@ -1,4 +1,4 @@
-#include "../include/matrix.h"
+#include "matrix.h"
 
 void Matrix::initSetup() {
     // the zero refers to the MAX7219 number, it is zero for 1 chip

@@ -1,4 +1,4 @@
-#include "../include/about.h"
+#include "about.h"
 
 ActionIndex About::run() {
     unsigned long now = millis();

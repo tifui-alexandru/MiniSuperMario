@@ -3,7 +3,6 @@
 	
 class Buzzer  {
 	
-
 };
 
 #endif
