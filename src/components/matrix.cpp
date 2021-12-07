@@ -10,11 +10,8 @@ void Matrix::initSetup() {
 
 void Matrix::updateDisplay(Point currentPosition, Point lastPosition) {
     // update position
-    byte removeMask = ((1 << matrixSize) - 1) ^ (1 << lastPosition.y); // one everywhere exept one position
-    byte addMask = 1 << currentPosition.y;                            // zero everywhere exept one position
-
-    matrixByte[lastPosition.x] &= removeMask;
-    matrixByte[currentPosition.x] |= addMask; 
+    view.setPosition(lastPosition, false);
+    view.setPosition(currentPosition, true);
 
     // display map
     displayMap();
@@ -22,5 +19,5 @@ void Matrix::updateDisplay(Point currentPosition, Point lastPosition) {
 
 void Matrix::displayMap() {
     for (int row = 0; row < matrixSize; ++row)
-        lc.setRow(0, row, matrixByte[row]);
+        lc.setRow(0, row, view.getRow(row));
 }

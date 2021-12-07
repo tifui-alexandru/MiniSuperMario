@@ -1,15 +1,13 @@
 #ifndef LEVEL_H
 #define LEVEL_H
-#pragma once
 	
-class Level  
-{
-	private:
+class Level  {
+	int time = 1000; // in seconds
+    int id;
 
-	public:
-
-		Level();
-		~Level();
+public:
+    Level() {};
 
 };
+
 #endif
