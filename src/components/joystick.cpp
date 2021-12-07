@@ -78,3 +78,46 @@ bool Joystick::pressedButton() {
 
     return retValue;
 }
+
+Point Joystick::makeGameMove(Point currentPoint) {
+    unsigned long now = millis();
+
+    if (now - lastMoved > moveInterval) {
+        lastMoved = now;
+        return updateGamePosition(currentPoint);
+    }
+
+    return currentPoint;
+}
+
+Point Joystick::updateGamePosition(Point currentPoint) {
+    int xValue = analogRead(xPin);
+    int yValue = analogRead(yPin);
+    Point newPoint = currentPoint;
+
+    if (xValue < minTreshold)
+        newPoint.x = (newPoint.x + matrixSize - 1) % matrixSize;
+
+    if (xValue > maxTreshold)
+        newPoint.x = (newPoint.x + 1) % matrixSize;
+
+    if (yValue < minTreshold)
+        newPoint.y = (newPoint.y + matrixSize - 1) % matrixSize;
+
+    if (yValue > maxTreshold)
+        newPoint.y = (newPoint.y + 1) % matrixSize;
+
+    // if (movedLeft())
+    //     currentPoint.x = (currentPoint.x + matrixSize - 1) % matrixSize;
+
+    // if (movedRight())
+    //     currentPoint.x = (currentPoint.x + 1) % matrixSize;
+
+    // if (movedUp())
+    //     currentPoint.y = (currentPoint.y + matrixSize - 1) % matrixSize;
+
+    // if (movedDown())
+    //     currentPoint.y = (currentPoint.y + 1) % matrixSize;
+
+    return newPoint;
+}

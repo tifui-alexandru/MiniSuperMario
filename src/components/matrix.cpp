@@ -5,19 +5,18 @@ void Matrix::initSetup() {
     lc.shutdown(0, false);                // turn off power saving, enables display
     lc.setIntensity(0, matrixBrightness); // sets brightness (0~15 possible values)
     lc.clearDisplay(0);                   // clear screen
-    displayMap();                         // print the initial configuration
 }
 
-void Matrix::updateDisplay(Point currentPosition, Point lastPosition) {
+void Matrix::updateDisplay(Point currentPosition, Point lastPosition, CameraView& view) {
     // update position
     view.setPosition(lastPosition, false);
     view.setPosition(currentPosition, true);
 
     // display map
-    displayMap();
+    displayMap(view);
 }
 
-void Matrix::displayMap() {
+void Matrix::displayMap(CameraView& view) {
     for (int row = 0; row < matrixSize; ++row)
         lc.setRow(0, row, view.getRow(row));
 }

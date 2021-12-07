@@ -15,7 +15,13 @@ struct Point {
     }
 
     bool operator != (const Point& other) const {
-        !(*this == other);
+        x != other.x or y != other.y;
+    }
+
+    Point operator = (const Point& other) {
+        this->x = other.x;
+        this->y = other.y;
+        return *this;
     }
 };
 

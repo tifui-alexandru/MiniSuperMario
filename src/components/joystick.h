@@ -24,10 +24,15 @@ class Joystick {
     bool joystickMovedUpDown = false;
     bool joystickMovedLeftRight = false;
 
+    unsigned long lastMoved = 0;
+    const unsigned long moveInterval = 100;
+
     bool movedUp();
     bool movedDown();
     bool movedRight();
     bool movedLeft();
+
+    Point updateGamePosition(Point);
 
 public:
     Joystick() {};
@@ -35,6 +40,8 @@ public:
     joystickUpDownMove movedUpDown();
     joystickLeftRightMove movedLeftRight();
     bool pressedButton();
+
+    Point makeGameMove(Point);
 };
 
 #endif

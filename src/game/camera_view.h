@@ -12,7 +12,7 @@ class CameraView {
         B00000000,
         B00000000,
         B00000000,
-        B00000000
+        B11111111
     };
 
     byte getColumn(int);
