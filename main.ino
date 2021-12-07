@@ -9,25 +9,27 @@
 #include "include/lcd.h"
 #include "include/joystick.h"
 #include "include/matrix.h"
+#include "include/eeprom.h"
 
 #include "include/utils.h"
 
 Lcd* lcd = new Lcd();
 Joystick* joystick = new Joystick();
 Matrix* gameMap = new Matrix();
+EepromClass* eepromObj = new EepromClass();
 
 byte currentActionIndex;
 const byte noOfactions = 7;
 Action* actions[noOfactions];
 
 void initializeActions() {
-    actions[0] = new Wellcome(lcd, joystick, gameMap);
-    actions[1] = new Menu(lcd, joystick, gameMap);
-    actions[2] = new Play(lcd, joystick, gameMap);
-    actions[3] = new HowToPlay(lcd, joystick, gameMap);
-    actions[4] = new HallOfFame(lcd, joystick, gameMap);
-    actions[5] = new Settings(lcd, joystick, gameMap);
-    actions[6] = new About(lcd, joystick, gameMap);
+    actions[0] = new Wellcome(lcd, joystick, gameMap, eepromObj);
+    actions[1] = new Menu(lcd, joystick, gameMap, eepromObj);
+    actions[2] = new Play(lcd, joystick, gameMap, eepromObj);
+    actions[3] = new HowToPlay(lcd, joystick, gameMap, eepromObj);
+    actions[4] = new HallOfFame(lcd, joystick, gameMap, eepromObj);
+    actions[5] = new Settings(lcd, joystick, gameMap, eepromObj);
+    actions[6] = new About(lcd, joystick, gameMap, eepromObj);
 }
 
 void setup() {

@@ -4,6 +4,8 @@ ActionIndex HallOfFame::run() {
     if (joystick->pressedButton())
         return menuActionIndex;
 
+    int noOfScores = 
+
     lcd->displayText("Hall of fame", "highscore");
 
     return hallOfFameActionIndex;
