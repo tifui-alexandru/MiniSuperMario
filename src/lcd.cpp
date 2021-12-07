@@ -20,22 +20,17 @@ void Lcd::displayText(char* msg1, char* msg2) {
     }
 }
 
-void Lcd::displayScrollingText(char* msg1, char* msg2, int startPosMsg1, int startPosMsg2) {
-    char row1[lcdColumns];
-    char row2[lcdColumns];
+void Lcd::displayScrollingText(char* msg1, char* msg2, int startPosMsg2, int msg2Len) {
+    char scrollingRow[lcdColumns];
 
-    int posMsg1 = startPosMsg1;
     int posMsg2 = startPosMsg2;
 
     for (int i = 0; i < lcdColumns; ++i) {
-        row1[i] = msg1[posMsg1];
-        row2[i] = msg2[posMsg2];
-
-        posMsg1 = (posMsg1 + 1) % lcdColumns;
-        posMsg2 = (posMsg2 + 1) % lcdColumns;
+        scrollingRow[i] = msg2[posMsg2];
+        posMsg2 = (posMsg2 + 1) % msg2Len;
     }
 
-    displayText(row1, row2);
+    displayText(msg1, scrollingRow);
 }
 
 void Lcd::clearText() {
