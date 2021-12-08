@@ -15,15 +15,18 @@ class CameraView {
         B11111111
     };
 
-    byte getColumn(int);
-    void setColumn(int, byte);
-
 public:
     CameraView() {};
-    void setPosition(Point, bool);
     byte getRow(int pos) { return matrixByte[pos]; }
+    byte getColumn(int);
+
+    void setPosition(Point, bool);
+    void setColumn(int, byte);
+
     void appendColumn(byte);
     void prependColumn(byte);
+    
+    bool hasObstacle(Point);
 };
 
 #endif

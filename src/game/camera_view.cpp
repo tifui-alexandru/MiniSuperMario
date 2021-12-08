@@ -17,7 +17,9 @@ byte CameraView::getColumn(int index) {
 
     for (int i = 0; i < matrixSize; ++i) {
         byte byteValue = (matrixByte[i] & mask);
-        answer |= (byteValue << i);
+        answer <<= 1;
+        if (byteValue != 0)
+            answer |= 1;
     }
 
     return answer;
@@ -28,7 +30,7 @@ void CameraView::setColumn(int index, byte value) {
     byte unsetMask = ((1 << matrixSize) - 1) ^ (1 << index);    // one everywhere exept on index
 
     for (int i = 0; i < matrixSize; ++i) {
-        byte byteValue = value & (1 << i);
+        byte byteValue = value & (1 << (matrixSize - i - 1));
         if (byteValue != 0)
             matrixByte[i] |= setMask;
         else
@@ -37,13 +39,18 @@ void CameraView::setColumn(int index, byte value) {
 }
 
 void CameraView::appendColumn(byte value) {
+    for (int col = matrixSize - 1; col > 0; --col)
+        setColumn(col, getColumn(col - 1));
+    setColumn(0, value);
+}
+
+void CameraView::prependColumn(byte value) {
     for (int col = 0; col < matrixSize - 1; ++col)
         setColumn(col, getColumn(col + 1));
     setColumn(matrixSize - 1, value);
 }
 
-void CameraView::prependColumn(byte value) {
-    for (int col = matrixSize - 1; col > 0; --col)
-        setColumn(col, getColumn(col - 1));
-    setColumn(0, value);
+bool CameraView::hasObstacle(Point p) {
+    bool pointValue = (matrixByte[p.x] >> p.y) & 1;
+    return pointValue;
 }

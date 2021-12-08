@@ -8,7 +8,7 @@ class Wellcome : public Action {
     char* msgLine1 = "Welcome to";
     char* msgLine2 = "Mini Super Mario!";
     unsigned long startTime;
-    const unsigned long interval = 5000;
+    const unsigned long interval = 100;// 5000; for debugging
 
 public:
     Wellcome(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
