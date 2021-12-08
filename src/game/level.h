@@ -33,11 +33,11 @@ class Level  {
 
     int firstColumnIndex = 0;
     int lastColumnIndex = 7;
-    CameraView initialView;
+    const CameraView initialView;
 
 public:
     Level() {};
-    CameraView getInitialView() { return initialView; };
+    const CameraView getInitialView() { return initialView; };
     bool hasNextColumn();
     bool hasPrevColumn();
     byte getNextColumn();

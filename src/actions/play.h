@@ -14,15 +14,35 @@ class Play : public Action {
 
     int lives = maxLives;
     int score = 0;
+    int time = maxTime;
 
     Level level;
     Point mario = {defaultMarioRow, defaultMarioCol};
     CameraView currentView;
 
-    void moveMario(Point);
-    bool validPosition(Point);
-    Point changeCameraView(Point);
+    char* gameOverLine1 = "GAME";
+    char* gameOverLine2 = "OVER";
 
+    const unsigned long jumpInterval = 800;
+    const unsigned long jumpModifyFreq = 100;
+
+    unsigned long lastJump = 0;
+    unsigned long lastJumpModification = 0;
+
+    int jumpModifyRate;
+    bool jumpingState = false;
+
+    ActionIndex moveMario(Point);
+    bool validPosition(Point);
+
+    Point changeCameraView(Point);
+    Point applyGravity(Point);
+    Point jumpMario(Point);
+
+    bool deadPosition();
+    ActionIndex dieMario();
+
+    void resetGameState(int);
 
 public:
     Play(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 

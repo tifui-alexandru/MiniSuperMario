@@ -1,5 +1,11 @@
 #include "camera_view.h"
 
+CameraView CameraView::operator = (const CameraView& other) {
+    for (int row = 0; row < matrixSize; ++row) 
+        this->matrixByte[row] = other.getRow(row);
+    return *this;
+}
+
 void CameraView::setPosition(Point p, bool value) {
     if (value == true) {
         byte mask = 1 << p.y; // zero everywhere exept one position

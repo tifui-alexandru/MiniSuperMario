@@ -3,19 +3,24 @@
 ActionIndex Play::run() {
     lcd->displayText("PLAY", "GAME");
     matrix->displayMap(currentView);
-
-    Point nextMario = joystick->makeGameMove(mario);
-    moveMario(nextMario);
-
-    return playActionIndex;
+    Point nextMario = jumpMario(joystick->makeGameMove(mario));
+    return moveMario(nextMario);
 }
 
-void Play::moveMario(Point nextMario) {
+ActionIndex Play::moveMario(Point nextMario) {
     if (validPosition(nextMario)) {
-        Point newMario = changeCameraView(nextMario);
-        currentView.setPosition(newMario, true);
+        currentView.setPosition(mario, false);
+
+        Point newMario = changeCameraView(applyGravity(nextMario));
         mario = newMario;
+        
+        currentView.setPosition(mario, true);
+
+        if (deadPosition()) 
+            return dieMario();        
     }
+
+    return playActionIndex;
 }
 
 bool Play::validPosition(Point nextMario) {
@@ -34,17 +39,86 @@ bool Play::validPosition(Point nextMario) {
     return true;
 }
 
-Point Play::changeCameraView(Point nextMario) {
-    currentView.setPosition(mario, false);
-
-    if (nextMario.y < defaultMarioCol and level.hasNextColumn()) {
+Point Play::changeCameraView(Point marioPos) {
+    if (marioPos.y < defaultMarioCol and level.hasNextColumn()) {
         currentView.appendColumn(level.getNextColumn());
-        nextMario.y = defaultMarioCol;
+        marioPos.y = defaultMarioCol;
     }
-    else if (nextMario.y > defaultMarioCol and level.hasPrevColumn()) {
+    else if (marioPos.y > defaultMarioCol and level.hasPrevColumn()) {
         currentView.prependColumn(level.getPrevColumn());
-        nextMario.y = defaultMarioCol;
+        marioPos.y = defaultMarioCol;
     }
 
-    return nextMario;
+    return marioPos;
+}
+
+Point Play::applyGravity(Point marioPos) {
+    if (jumpingState)
+        return marioPos;
+
+    while (validPosition({marioPos.x + 1, marioPos.y}))
+        ++marioPos.x;
+    return marioPos;
+}
+
+Point Play::jumpMario(Point marioPos) {
+    // detect jump
+    unsigned long now = millis();
+    if (joystick->pressedButton() and now - lastJump > jumpInterval) {
+        lastJump = now;
+        jumpingState = true;
+        jumpModifyRate = -1; // enter ascending part of the jump
+    }
+    
+    if (jumpingState == true) {
+        if (now - lastJump > jumpInterval) 
+            jumpingState = false;
+        else {
+            // perform jump
+            if (now - lastJumpModification > jumpModifyFreq) {
+                lastJumpModification = now;
+                marioPos.x += jumpModifyRate;
+            }
+
+            if (now - lastJump > jumpInterval / 2) 
+                jumpModifyRate = 1; // enter descending part of the jump
+        }
+    }
+
+    return marioPos;
+}
+
+bool Play::deadPosition() {
+    return mario.x == matrixSize - 1; // mario fell
+}
+
+ActionIndex Play::dieMario() {
+    ActionIndex returnValue = playActionIndex;
+
+    if (--lives == 0) {
+        // game over code
+        lcd->displayText(gameOverLine1, gameOverLine2);
+        returnValue = menuActionIndex;
+        delay(5000);
+    }
+
+    resetGameState(lives);
+    return returnValue;
+}
+
+void Play::resetGameState(int noLives) {
+    if (noLives == 0) 
+        noLives = maxLives;
+
+    score = 0;
+    time = maxTime;
+    lives = noLives;
+
+    jumpingState = false;
+    lastJump = 0;
+    lastJumpModification = 0;
+
+    mario = {defaultMarioRow, defaultMarioCol};
+    currentView = level.getInitialView();
+    currentView.setPosition(mario, true);
 }

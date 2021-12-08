@@ -97,11 +97,5 @@ Point Joystick::updateGamePosition(Point currentPoint) {
     if (movedRight())
         --currentPoint.y;
 
-    if (movedUp())
-        --currentPoint.x;
-
-    if (movedDown())
-        ++currentPoint.x;
-
     return currentPoint;
 }

@@ -17,6 +17,8 @@ class CameraView {
 
 public:
     CameraView() {};
+    CameraView operator = (const CameraView&);
+
     byte getRow(int pos) { return matrixByte[pos]; }
     byte getColumn(int);
 
@@ -25,7 +27,7 @@ public:
 
     void appendColumn(byte);
     void prependColumn(byte);
-    
+
     bool hasObstacle(Point);
 };
 
