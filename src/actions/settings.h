@@ -27,7 +27,7 @@ class Settings : public Action {
         defaultScreen
     };
 
-    byte currentOption;
+    byte currentOption = 0;
     SettingsState currentState = defaultScreen;
 
     void updateOption();

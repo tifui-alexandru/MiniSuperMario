@@ -60,15 +60,25 @@ class Lcd {
     lcdLayout currentLayout;
     lcdLayout lastLayout;
 
+    unsigned long lastBlink = 0;
+    const unsigned long blinkingInterval = 200;
+    bool blinkingState = false;
+
 public:
     Lcd() {};
     ~Lcd();
 
     void initSetup();
+
     void displayText(char*, char*);
     void displayScrollingText(char*, char*, int, int);
+
     void displayTextOnSecondLine(char*);
     void displayNumberOnSecondLine(int);
+
+    void lockPositionOnSecondLine(int);
+    void unlockPositionOnSecondLine(int);
+
     void clearText();
 };
 

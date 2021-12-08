@@ -5,6 +5,7 @@
 #include "src/actions/hall_of_fame.h"
 #include "src/actions/settings.h"
 #include "src/actions/about.h"
+#include "src/actions/register.h"
 
 #include "src/components/lcd.h"
 #include "src/components/joystick.h"
@@ -21,7 +22,7 @@ Buzzer* buzzer = new Buzzer();
 EepromClass* eepromObj = new EepromClass();
 
 byte currentActionIndex;
-const byte noOfactions = 7;
+const byte noOfactions = 8;
 Action* actions[noOfactions];
 
 void initializeActions() {
@@ -32,6 +33,7 @@ void initializeActions() {
     actions[4] = new HallOfFame(lcd, joystick, gameMap, buzzer, eepromObj);
     actions[5] = new Settings(lcd, joystick, gameMap, buzzer, eepromObj);
     actions[6] = new About(lcd, joystick, gameMap, buzzer, eepromObj);
+    actions[7] = new Register(lcd, joystick, gameMap, buzzer, eepromObj);
 }
 
 void setup() {

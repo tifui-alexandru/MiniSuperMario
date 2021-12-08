@@ -1,9 +1,8 @@
 #include "settings.h"
 
 ActionIndex Settings::run() {
-    if (int(currentState) < noOfOptions)
-        lcd->displayText(options[(int(currentState))], emptyLcdLine);
-
+    lcd->displayText(defaultFirstLine, options[currentOption]);
+    
     if (currentState == startLevel)
         return runStartLevel();
     else if (currentState == lcdContrast)
@@ -46,7 +45,9 @@ ActionIndex Settings::runMatrixIntensity() {
 }
 
 ActionIndex Settings::runChangeNickname() {
-
+    currentState = defaultScreen;
+    currentOption = 0;
+    return registerActionIndex;
 }
 
 ActionIndex Settings::runBackToMenu() {
@@ -56,11 +57,10 @@ ActionIndex Settings::runBackToMenu() {
 }
 
 ActionIndex Settings::runDefaultScreen() {
-    lcd->displayText(defaultFirstLine, options[currentOption]);
-    updateOption();
-
     if (joystick->pressedButton())
         currentState = SettingsState(currentOption);
+
+    updateOption();
 
     return settingsActionIndex;
 }

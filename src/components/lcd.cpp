@@ -49,6 +49,17 @@ void Lcd::displayNumberOnSecondLine(int no) {
     // to do
 }
 
+void Lcd::lockPositionOnSecondLine(int pos) {
+    lcd->setCursor(pos, 1);
+    lcd->blink();
+}
+
+
+void Lcd::unlockPositionOnSecondLine(int pos) {
+    lcd->setCursor(pos, 1);
+    lcd->noBlink();
+}
+
 void Lcd::clearText() {
     lcd->clear();
 }

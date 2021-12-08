@@ -5,7 +5,7 @@
 
 const static byte matrixSize = 8;
 
-char* emptyLcdLine = "                ";
+static char* emptyLcdLine = "                ";
 
 struct Point {
     byte x, y;
@@ -47,6 +47,7 @@ enum ActionIndex {
     hallOfFameActionIndex,
     settingsActionIndex,
     aboutActionIndex,
+    registerActionIndex
 };
 
 #endif
