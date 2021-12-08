@@ -3,9 +3,22 @@
 
 #include <Arduino.h>
 
-const static byte matrixSize = 8;
+// matrix constants
+static const byte matrixSize = 8;
+static const byte matrixMinIntensity = 0;
+static const byte matrixMaxIntensity = 15;
 
+// lcd constants
 static char* emptyLcdLine = "                ";
+static byte lcdMinContrast = 0;
+static byte lcdMaxContrast = 1;
+static byte lcdMinIntensity = 0;
+static byte lcdMaxIntensity = 1;
+
+// levels from 1 to noOfLevels
+const int noOfLevels = 5;
+static int utilsStartingLevel = 1; 
+
 
 struct Point {
     byte x, y;

@@ -18,8 +18,12 @@ class Matrix {
 public:
     Matrix() {};
     void initSetup();
+    
+    byte getMatrixBrightness() { return matrixBrightness; };
+    void setMatrixBrightness(byte);
+    
     void updateDisplay(Point, Point, CameraView&);
-    void displayMap(CameraView &);
+    void displayMap(CameraView&);
 };
 
 #endif

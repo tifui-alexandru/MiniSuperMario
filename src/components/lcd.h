@@ -60,6 +60,9 @@ class Lcd {
     lcdLayout currentLayout;
     lcdLayout lastLayout;
 
+    byte contrast = 0;
+    byte intensity = 0;
+
     unsigned long lastBlink = 0;
     const unsigned long blinkingInterval = 200;
     bool blinkingState = false;
@@ -68,13 +71,19 @@ public:
     Lcd() {};
     ~Lcd();
 
+    byte getContrast() { return contrast; }
+    byte getIntensity() { return intensity; }
+
+    void setContrast(byte);
+    void setIntensity(byte);
+
     void initSetup();
 
     void displayText(char*, char*);
-    void displayScrollingText(char*, char*, int, int);
+    void displayTextAndNumber(char*, int);
 
+    void displayScrollingText(char*, char*, int, int);
     void displayTextOnSecondLine(char*);
-    void displayNumberOnSecondLine(int);
 
     void lockPositionOnSecondLine(int);
     void unlockPositionOnSecondLine(int);

@@ -37,11 +37,21 @@ class Level  {
 
 public:
     Level() {};
+
+    int getTime() { return time; };
+    int getId() { return id; };
+    int getFirstColumnIndex() { return firstColumnIndex; };
+    int getLastColumnIndex() { return lastColumnIndex; };
     const CameraView getInitialView() { return initialView; };
+
     bool hasNextColumn();
     bool hasPrevColumn();
     byte getNextColumn();
     byte getPrevColumn();
+
+    Level getNewLevel() { return *this; }; // for now  
+
+    Level operator = (const Level& other);
 };
 
 #endif

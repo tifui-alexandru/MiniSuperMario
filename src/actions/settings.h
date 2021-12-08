@@ -5,7 +5,11 @@
 #include "action.h"
 
 class Settings : public Action {
-    char* defaultFirstLine = "Settings options: "; // to do: add up and down emoji
+    char* defaultFirstLine = "Settings options "; // to do: add up and down emoji
+    char* levelFirstLine = "Select level no";
+    char* lcdContrastFirstLine = "LCD contrast";
+    char* lcdIntensityFirstLine = "LCD brightness";
+    char* matrixIntensityFirstLine = "Matrix intensity";
 
     static const byte noOfOptions = 6;
     char* options[noOfOptions] = {
@@ -30,14 +34,13 @@ class Settings : public Action {
     byte currentOption = 0;
     SettingsState currentState = defaultScreen;
 
-    void updateOption();
+    int getJoystickMove(int, int, int);
+    ActionIndex exitRoutine(ActionIndex);
 
     ActionIndex runStartLevel();
     ActionIndex runLcdContrast();
     ActionIndex runLcdBrightness();
     ActionIndex runMatrixIntensity();
-    ActionIndex runChangeNickname();
-    ActionIndex runBackToMenu();
     ActionIndex runDefaultScreen();
 
 public:

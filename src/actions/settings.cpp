@@ -1,8 +1,6 @@
 #include "settings.h"
 
 ActionIndex Settings::run() {
-    lcd->displayText(defaultFirstLine, options[currentOption]);
-    
     if (currentState == startLevel)
         return runStartLevel();
     else if (currentState == lcdContrast)
@@ -12,55 +10,101 @@ ActionIndex Settings::run() {
     else if (currentState == matrixIntensity)
         return runMatrixIntensity();
     else if (currentState == changeNickname)
-        return runChangeNickname();
+        return exitRoutine(registerActionIndex);
     else if (currentState == backToMenu)
-        return runBackToMenu();
+        return exitRoutine(menuActionIndex);
     else
         return runDefaultScreen();
 }
 
-void Settings::updateOption() {
+int Settings::getJoystickMove(int lowerBound, int upperBound, int value) {
+    int returnValue = value;
+
     joystickUpDownMove move = joystick->movedUpDown();
 
-    if (move == Up)
-        currentOption = (currentOption + noOfOptions - 1) % noOfOptions;
-    else if (move == Down)
-        currentOption = (currentOption + 1) % noOfOptions;
+    if (move == Up) {
+        ++returnValue;
+        if (returnValue > upperBound)
+            returnValue = lowerBound;
+    }
+    else if (move == Down) {
+        --returnValue;
+        if (returnValue < lowerBound)
+            returnValue = upperBound;
+    }
+
+    return returnValue;
+}
+
+ActionIndex Settings::exitRoutine(ActionIndex nextAction) {
+    currentState = defaultScreen;
+    currentOption = 0;
+    return nextAction;
 }
 
 ActionIndex Settings::runStartLevel() {
+    static int levelOption = utilsStartingLevel;
+    lcd->displayTextAndNumber(levelFirstLine, levelOption);
 
+    levelOption = getJoystickMove(1, noOfLevels, levelOption);
+
+    if (joystick->pressedButton()) {
+        utilsStartingLevel = levelOption;
+        return exitRoutine(menuActionIndex);
+    }
+
+    return settingsActionIndex;
 }
 
 ActionIndex Settings::runLcdContrast() {
+    static int contrastOption = lcd->getContrast();
+    lcd->displayTextAndNumber(lcdContrastFirstLine, contrastOption);
 
+    contrastOption = getJoystickMove(lcdMinContrast, lcdMaxContrast, contrastOption);
+
+    if (joystick->pressedButton()) {
+        lcd->setContrast(contrastOption);
+        return exitRoutine(menuActionIndex);
+    }
+
+    return settingsActionIndex;
 }
 
 ActionIndex Settings::runLcdBrightness() {
+    static int brightnessOption = lcd->getIntensity();
+    lcd->displayTextAndNumber(lcdIntensityFirstLine, brightnessOption);
 
+    brightnessOption = getJoystickMove(lcdMinIntensity, lcdMaxIntensity, brightnessOption);
+
+    if (joystick->pressedButton()) {
+        lcd->setIntensity(brightnessOption);
+        return exitRoutine(menuActionIndex);
+    }
+
+    return settingsActionIndex;
 }
 
 ActionIndex Settings::runMatrixIntensity() {
+    static int matrixOption = matrix->getMatrixBrightness();
+    lcd->displayTextAndNumber(matrixIntensityFirstLine, matrixOption);
 
-}
+    matrixOption = getJoystickMove(matrixMinIntensity, matrixMaxIntensity, matrixOption);
 
-ActionIndex Settings::runChangeNickname() {
-    currentState = defaultScreen;
-    currentOption = 0;
-    return registerActionIndex;
-}
+    if (joystick->pressedButton()) {
+        matrix->setMatrixBrightness(matrixOption);
+        return exitRoutine(menuActionIndex);
+    }
 
-ActionIndex Settings::runBackToMenu() {
-    currentState = defaultScreen;
-    currentOption = 0;
-    return menuActionIndex;
+    return settingsActionIndex;
 }
 
 ActionIndex Settings::runDefaultScreen() {
+    lcd->displayText(defaultFirstLine, options[currentOption]);
+
     if (joystick->pressedButton())
         currentState = SettingsState(currentOption);
 
-    updateOption();
+    currentOption = getJoystickMove(0, noOfOptions - 1, currentOption);
 
     return settingsActionIndex;
 }

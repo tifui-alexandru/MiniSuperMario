@@ -23,3 +23,13 @@ byte Level::getPrevColumn() {
     else
         return additionalColumns[firstColumnIndex - matrixSize];
 }
+
+Level Level::operator = (const Level& other) {
+    this->time = other.getTime();
+    this->id = other.getId();
+    this->firstColumnIndex = other.getFirstColumnIndex();
+    this->lastColumnIndex = other.getLastColumnIndex();
+    this->initialView = other.getInitialView();
+
+    return *this;
+}

@@ -1,5 +1,10 @@
 #include "matrix.h"
 
+void Matrix::setMatrixBrightness(byte newVal) {
+    matrixBrightness = newVal;
+    lc.setIntensity(0, matrixBrightness);
+}
+
 void Matrix::initSetup() {
     // the zero refers to the MAX7219 number, it is zero for 1 chip
     lc.shutdown(0, false);                // turn off power saving, enables display

@@ -16,6 +16,8 @@ class Play : public Action {
     int score = 0;
     int time = maxTime;
 
+    int currentLevel;
+
     Level level;
     Point mario = {defaultMarioRow, defaultMarioCol};
     CameraView currentView;
@@ -32,6 +34,9 @@ class Play : public Action {
     int jumpModifyRate;
     bool jumpingState = false;
 
+    bool initGameState = false;
+    void initGame();
+
     ActionIndex moveMario(Point);
     bool validPosition(Point);
 
@@ -46,10 +51,7 @@ class Play : public Action {
 
 public:
     Play(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
-        Action(lcd, joystick, matrix, buzzer, eepromObj) {
-            currentView = level.getInitialView();
-            currentView.setPosition(mario, true);
-        };
+        Action(lcd, joystick, matrix, buzzer, eepromObj) {};
         
     ActionIndex run() override;
 };

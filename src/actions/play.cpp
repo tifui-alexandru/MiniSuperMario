@@ -1,5 +1,19 @@
 #include "play.h"
 
+void Play::initGame() {
+    initGameState = true;
+
+    currentLevel = utilsStartingLevel;
+    // generate levels until the current one is reached 
+    // start from 1
+    for (int levelNo = 1; levelNo < currentLevel; ++levelNo) {
+        level = level.getNewLevel();
+    }
+
+    currentView = level.getInitialView();
+    currentView.setPosition(mario, true);
+}
+
 ActionIndex Play::run() {
     lcd->displayText("PLAY", "GAME");
     matrix->displayMap(currentView);

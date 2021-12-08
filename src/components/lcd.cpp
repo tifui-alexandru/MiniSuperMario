@@ -4,6 +4,14 @@ Lcd::~Lcd() {
     delete lcd;
 }
 
+void Lcd::setContrast(byte newVal) {
+    contrast = newVal;
+}
+
+void Lcd::setIntensity(byte newVal) {
+    intensity = newVal;
+}
+
 void Lcd::initSetup() {
     lcd->begin(lcdColumns, lcdRows);
 }
@@ -18,6 +26,35 @@ void Lcd::displayText(char* msg1, char* msg2) {
         lcd->setCursor(0, 1);
         lcd->print(msg2);
     }
+}
+
+void Lcd::displayTextAndNumber(char* msg, int no) {
+    char line[lcdColumns];
+    for (int i = 0; i < lcdColumns; ++i)
+        line[i] = ' ';
+
+    if (no == 0) 
+        line[0] = '0';
+    else {
+        int start = 0, stop = 0;
+
+        while (no) {
+            int lastDigit = no % 10;
+            no /= 10;
+
+            line[stop] = char(lastDigit + '0');
+        }
+        --stop;
+        
+        // reverse
+        for (int i = start, j = stop; j < j; ++i, --j) {
+            char aux = line[i];
+            line[i] = line[j];
+            line[j] = aux;
+        }
+    }
+
+    displayText(msg, line);
 }
 
 void Lcd::displayScrollingText(char* msg1, char* msg2, int startPosMsg2, int msg2Len) {
@@ -39,14 +76,6 @@ void Lcd::displayTextOnSecondLine(char* msg) {
         firstLine[i] = currentLayout.layout[0][i];
 
     displayText(firstLine, msg);
-}
-
-void Lcd::displayNumberOnSecondLine(int no) {
-    char firstLine[lcdColumns];
-    for (int i = 0; i < lcdColumns; ++i)
-        firstLine[i] = currentLayout.layout[0][i];
-
-    // to do
 }
 
 void Lcd::lockPositionOnSecondLine(int pos) {
