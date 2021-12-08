@@ -67,6 +67,8 @@ public:
     void initSetup();
     void displayText(char*, char*);
     void displayScrollingText(char*, char*, int, int);
+    void displayTextOnSecondLine(char*);
+    void displayNumberOnSecondLine(int);
     void clearText();
 };
 

@@ -5,6 +5,8 @@
 
 const static byte matrixSize = 8;
 
+char* emptyLcdLine = "                ";
+
 struct Point {
     byte x, y;
 

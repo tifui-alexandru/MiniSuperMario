@@ -33,6 +33,22 @@ void Lcd::displayScrollingText(char* msg1, char* msg2, int startPosMsg2, int msg
     displayText(msg1, scrollingRow);
 }
 
+void Lcd::displayTextOnSecondLine(char* msg) {
+    char firstLine[lcdColumns];
+    for (int i = 0; i < lcdColumns; ++i)
+        firstLine[i] = currentLayout.layout[0][i];
+
+    displayText(firstLine, msg);
+}
+
+void Lcd::displayNumberOnSecondLine(int no) {
+    char firstLine[lcdColumns];
+    for (int i = 0; i < lcdColumns; ++i)
+        firstLine[i] = currentLayout.layout[0][i];
+
+    // to do
+}
+
 void Lcd::clearText() {
     lcd->clear();
 }
