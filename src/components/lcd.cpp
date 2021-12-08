@@ -6,13 +6,23 @@ Lcd::~Lcd() {
 
 void Lcd::setContrast(byte newVal) {
     contrast = newVal;
+    // byte analogContrastValue = map(contrast, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
+    // analogWrite(V0, analogContrastValue);
 }
 
 void Lcd::setIntensity(byte newVal) {
     intensity = newVal;
+    byte analogIntensityValue = map(intensity, lcdMinIntensity, lcdMaxIntensity, analogMinValue, analogMaxValue);
+    analogWrite(A, analogIntensityValue);
 }
 
 void Lcd::initSetup() {
+    // pinMode(V0, OUTPUT);
+    pinMode(A, OUTPUT);
+
+    // setContrast(defaultContrast);
+    setIntensity(defaultIntensity);
+
     lcd->begin(lcdColumns, lcdRows);
 }
 

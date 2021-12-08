@@ -10,10 +10,12 @@ static const byte matrixMaxIntensity = 15;
 
 // lcd constants
 static char* emptyLcdLine = "                ";
-static byte lcdMinContrast = 0;
-static byte lcdMaxContrast = 1;
-static byte lcdMinIntensity = 0;
-static byte lcdMaxIntensity = 1;
+static byte lcdMinContrast = 1;
+static byte lcdMaxContrast = 10;
+static byte lcdMinIntensity = 1;
+static byte lcdMaxIntensity = 10;
+static byte analogMinValue = 0;
+static byte analogMaxValue = 255;
 
 // levels from 1 to noOfLevels
 const int noOfLevels = 5;

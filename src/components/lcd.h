@@ -4,13 +4,17 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 
+#include "../../include/utils.h"
+
 class Lcd {
     const int RS = 13;
     const int enable = 9;
-    const int D4 = 5;
-    const int D5 = 4;
-    const int D6 = 3;
+    const int D4 = 7;
+    const int D5 = 5;
+    const int D6 = 4;
     const int D7 = 2;
+    // const int V0 = 3;
+    const int A = 3;
 
     LiquidCrystal* lcd = new LiquidCrystal(RS, enable, D4, D5, D6, D7);
 
@@ -60,8 +64,11 @@ class Lcd {
     lcdLayout currentLayout;
     lcdLayout lastLayout;
 
-    byte contrast = 0;
-    byte intensity = 0;
+    const byte defaultContrast = 5;
+    const byte defaultIntensity = 8;
+
+    byte contrast;
+    byte intensity;
 
     unsigned long lastBlink = 0;
     const unsigned long blinkingInterval = 200;

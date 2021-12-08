@@ -61,9 +61,9 @@ ActionIndex Settings::runLcdContrast() {
     lcd->displayTextAndNumber(lcdContrastFirstLine, contrastOption);
 
     contrastOption = getJoystickMove(lcdMinContrast, lcdMaxContrast, contrastOption);
+    lcd->setContrast(contrastOption);
 
     if (joystick->pressedButton()) {
-        lcd->setContrast(contrastOption);
         return exitRoutine(menuActionIndex);
     }
 
@@ -75,9 +75,9 @@ ActionIndex Settings::runLcdBrightness() {
     lcd->displayTextAndNumber(lcdIntensityFirstLine, brightnessOption);
 
     brightnessOption = getJoystickMove(lcdMinIntensity, lcdMaxIntensity, brightnessOption);
+    lcd->setIntensity(brightnessOption);
 
     if (joystick->pressedButton()) {
-        lcd->setIntensity(brightnessOption);
         return exitRoutine(menuActionIndex);
     }
 
