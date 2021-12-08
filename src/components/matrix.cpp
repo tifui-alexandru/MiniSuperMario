@@ -25,3 +25,13 @@ void Matrix::displayMap(CameraView& view) {
     for (int row = 0; row < matrixSize; ++row)
         lc.setRow(0, row, view.getRow(row));
 }
+
+void Matrix::lightUp() {
+    for (int row = 0; row < matrixSize; ++row)
+        lc.setRow(0, row, lightUpByte);
+}
+
+void Matrix::lightDown() {
+    for (int row = 0; row < matrixSize; ++row)
+        lc.setRow(0, row, lightDownByte);
+}

@@ -43,11 +43,12 @@ void Lcd::displayTextAndNumber(char* msg, int no) {
             no /= 10;
 
             line[stop] = char(lastDigit + '0');
+            ++stop;
         }
         --stop;
         
         // reverse
-        for (int i = start, j = stop; j < j; ++i, --j) {
+        for (int i = start, j = stop; i < j; ++i, --j) {
             char aux = line[i];
             line[i] = line[j];
             line[j] = aux;

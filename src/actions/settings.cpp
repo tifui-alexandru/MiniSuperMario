@@ -85,13 +85,16 @@ ActionIndex Settings::runLcdBrightness() {
 }
 
 ActionIndex Settings::runMatrixIntensity() {
+    matrix->lightUp();
+
     static int matrixOption = matrix->getMatrixBrightness();
     lcd->displayTextAndNumber(matrixIntensityFirstLine, matrixOption);
 
     matrixOption = getJoystickMove(matrixMinIntensity, matrixMaxIntensity, matrixOption);
+    matrix->setMatrixBrightness(matrixOption);
 
     if (joystick->pressedButton()) {
-        matrix->setMatrixBrightness(matrixOption);
+        matrix->lightDown();
         return exitRoutine(menuActionIndex);
     }
 

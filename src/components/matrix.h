@@ -15,6 +15,9 @@ class Matrix {
 
     byte matrixBrightness = 2;
 
+    const byte lightUpByte = B11111111;
+    const byte lightDownByte = 0;
+
 public:
     Matrix() {};
     void initSetup();
@@ -24,6 +27,9 @@ public:
     
     void updateDisplay(Point, Point, CameraView&);
     void displayMap(CameraView&);
+
+    void lightUp();
+    void lightDown();
 };
 
 #endif

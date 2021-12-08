@@ -15,6 +15,9 @@ void Play::initGame() {
 }
 
 ActionIndex Play::run() {
+    if (!initGameState)
+        initGame();
+
     lcd->displayText("PLAY", "GAME");
     matrix->displayMap(currentView);
     Point nextMario = jumpMario(joystick->makeGameMove(mario));
