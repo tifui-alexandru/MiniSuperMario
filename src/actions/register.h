@@ -4,7 +4,7 @@
 #include "action.h"
 
 class Register : public Action {
-    char* firstLine = "Choose nickname";
+    char* firstLine = "Enter nickname";
     char* nicknameLine = "    aaaaaaK     "; // last char should be an ok emoji
 
     // the available characters are from 'a' to 'z' and ' '
