@@ -20,7 +20,10 @@ ActionIndex Play::run() {
 
     lcd->displayText("PLAY", "GAME");
     matrix->displayMap(currentView);
-    Point nextMario = jumpMario(joystick->makeGameMove(mario));
+
+    detectJump();
+    Point nextMario = joystick->makeGameMove(mario);
+
     return moveMario(nextMario);
 }
 
@@ -31,10 +34,7 @@ ActionIndex Play::moveMario(Point nextMario) {
         Point newMario = changeCameraView(applyGravity(nextMario));
         mario = newMario;
         
-        currentView.setPosition(mario, true);
-
-        if (deadPosition()) 
-            return dieMario();        
+        currentView.setPosition(mario, true);      
     }
 
     return playActionIndex;
@@ -70,43 +70,37 @@ Point Play::changeCameraView(Point marioPos) {
 }
 
 Point Play::applyGravity(Point marioPos) {
-    if (jumpingState)
-        return marioPos;
+    unsigned long now = millis();
+    if (now - lastGravityChange > gravityChangeFreq) {
+        lastGravityChange = now;
 
-    while (validPosition({marioPos.x + 1, marioPos.y}))
-        ++marioPos.x;
+        Point nextMario = {marioPos.x + gravityDirection, marioPos.y};
+        if (validPosition(nextMario) or deadPosition(nextMario)) 
+            return nextMario;
+    }
+
     return marioPos;
 }
 
-Point Play::jumpMario(Point marioPos) {
-    // detect jump
+void Play::detectJump() {
+    // jumping means inverting the direction of gravity
     unsigned long now = millis();
-    if (joystick->pressedButton() and now - lastJump > jumpInterval) {
-        lastJump = now;
-        jumpingState = true;
-        jumpModifyRate = -1; // enter ascending part of the jump
-    }
-    
-    if (jumpingState == true) {
-        if (now - lastJump > jumpInterval) 
-            jumpingState = false;
-        else {
-            // perform jump
-            if (now - lastJumpModification > jumpModifyFreq) {
-                lastJumpModification = now;
-                marioPos.x += jumpModifyRate;
-            }
 
-            if (now - lastJump > jumpInterval / 2) 
-                jumpModifyRate = 1; // enter descending part of the jump
+    if (now - lastJump > jumpInterval) {
+        if (jumpingState == false and joystick->pressedButton()) {
+            lastJump = now;
+            gravityDirection = -1;
+            jumpingState = true;
+        }
+        else if (jumpingState == true) {
+            jumpingState = false;
+            gravityDirection = 1;
         }
     }
-
-    return marioPos;
 }
 
-bool Play::deadPosition() {
-    return mario.x == matrixSize - 1; // mario fell
+bool Play::deadPosition(Point marioPos) {
+    return (marioPos.x == matrixSize - 1) and !currentView.hasObstacle(marioPos); // mario fell
 }
 
 ActionIndex Play::dieMario() {
@@ -131,9 +125,8 @@ void Play::resetGameState(int noLives) {
     time = maxTime;
     lives = noLives;
 
-    jumpingState = false;
     lastJump = 0;
-    lastJumpModification = 0;
+    jumpingState = false;
 
     mario = {defaultMarioRow, defaultMarioCol};
     currentView = level.getInitialView();
