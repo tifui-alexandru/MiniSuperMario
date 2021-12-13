@@ -54,7 +54,6 @@ ActionIndex Play::moveMario() {
         if (--lives == 0)
             currentGameState = dead;
 
-        resetGame(lives);
     }
     else if (winningPosition(nextMario)) {
         currentGameState = winning;
@@ -144,8 +143,11 @@ ActionIndex Play::dieMario() {
         lcd->displayText(gameOverLine1, gameOverLine2);
     else {
         lcd->displayTextAndNumber(scoreLine, score);
-        if (joystick->pressedButton()) 
+        if (joystick->pressedButton()) {
+            currentGameState = playing;
+            
             return menuActionIndex;
+        }
     }
 
     return playActionIndex;
@@ -161,15 +163,25 @@ ActionIndex Play::winMario() {
         lcd->displayText(winLine1, winLine2);
     else {
         lcd->displayText(winNextLevelLine1, winNextLevelLine2);
-        if (joystick->pressedButton()) 
+        if (joystick->pressedButton()) {
             return advanceLevel();
+        }
     }
 
     return playActionIndex;
 }
 
 ActionIndex Play::advanceLevel() {
-    return playActionIndex;
+    if (levelId == noOfLevels) {
+
+    }
+    else {
+        currentGameState = playing;
+
+        level = level.getNewLevel();
+        currentView = level.getInitialView();
+        currentView.setPosition(mario, true);
+    }
 }
 
 void Play::resetGame(int noLives) {
