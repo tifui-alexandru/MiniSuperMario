@@ -12,16 +12,22 @@ void Matrix::initSetup() {
     lc.clearDisplay(0);                   // clear screen
 }
 
-void Matrix::updateDisplay(Point currentPosition, Point lastPosition, CameraView& view) {
-    // update position
-    view.setPosition(lastPosition, false);
-    view.setPosition(currentPosition, true);
+// void Matrix::updateDisplay(Point currentPosition, Point lastPosition, CameraView& view) {
+//     // update position
+//     view.setPosition(lastPosition, false);
+//     view.setPosition(currentPosition, true);
 
-    // display map
-    displayMap(view);
-}
+//     // display map
+//     displayMap(view);
+// }
 
 void Matrix::displayMap(CameraView& view) {
+    unsigned long now = millis();
+    if (now - lastBlink > blinkingInterval) {
+        lastBlink = now;
+        view.changeCoinsState();
+    }
+
     for (int row = 0; row < matrixSize; ++row)
         lc.setRow(0, row, view.getRow(row));
 }

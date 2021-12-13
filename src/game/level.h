@@ -31,12 +31,36 @@ class Level  {
         B11111111
     };
 
+    byte additionalCoins[noOfColumns] = {
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000
+    };
+
     int firstColumnIndex = 0;
     int lastColumnIndex = 7;
     const CameraView initialView;
 
 public:
     Level() {};
+    ~Level() {}
 
     int getTime() { return time; };
     int getId() { return id; };
@@ -48,6 +72,8 @@ public:
     bool hasPrevColumn();
     byte getNextColumn();
     byte getPrevColumn();
+    byte getNextCoinsColumn();
+    byte getPrevCoinsColumn();
 
     bool reachedEndOfTheLevel();
 

@@ -39,6 +39,12 @@ struct Point {
         this->y = other.y;
         return *this;
     }
+
+    bool operator < (const Point& other) const {
+        if (x == other.x)
+            return y < other.y;
+        return x < other.x;
+    }
 };
 
 enum joystickUpDownMove {

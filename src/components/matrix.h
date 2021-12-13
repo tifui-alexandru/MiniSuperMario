@@ -18,6 +18,9 @@ class Matrix {
     const byte lightUpByte = B11111111;
     const byte lightDownByte = 0;
 
+    const unsigned long blinkingInterval = 300;
+    unsigned long lastBlink = 0;
+
 public:
     Matrix() {};
     void initSetup();

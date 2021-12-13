@@ -92,11 +92,11 @@ bool Play::winningPosition(Point marioPos) {
 
 Point Play::changeCameraView(Point marioPos) {
     if (marioPos.y < defaultMarioCol and level.hasNextColumn()) {
-        currentView.appendColumn(level.getNextColumn());
+        currentView.appendColumn(level.getNextColumn(), level.getNextCoinsColumn());
         marioPos.y = defaultMarioCol;
     }
     else if (marioPos.y > defaultMarioCol and level.hasPrevColumn()) {
-        currentView.prependColumn(level.getPrevColumn());
+        currentView.prependColumn(level.getPrevColumn(), level.getPrevCoinsColumn());
         marioPos.y = defaultMarioCol;
     }
 

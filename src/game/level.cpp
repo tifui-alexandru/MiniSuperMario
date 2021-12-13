@@ -19,9 +19,22 @@ byte Level::getPrevColumn() {
     --lastColumnIndex;
 
     if (firstColumnIndex < matrixSize) 
-        return initialView.getColumn(firstColumnIndex);
+        return initialView.getMapColumn(firstColumnIndex);
     else
         return additionalColumns[firstColumnIndex - matrixSize];
+}
+
+// always called after Level::getNextColumn()
+byte Level::getNextCoinsColumn() {
+    return additionalCoins[lastColumnIndex - matrixSize];
+}
+
+// always called after Level::getPrevColumn()
+byte Level::getPrevCoinsColumn() {
+    if (firstColumnIndex < matrixSize)
+        return initialView.getCoinsColumn(firstColumnIndex);
+    else
+        return additionalCoins[firstColumnIndex - matrixSize];
 }
 
 bool Level::reachedEndOfTheLevel() {
