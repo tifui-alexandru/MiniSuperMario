@@ -51,12 +51,13 @@ ActionIndex Play::moveMario() {
         currentView.setPosition(mario, true);      
     }
     else if (deadPosition(nextMario)) {
-        currentGameState = dead;
-        return dieMario();
+        if (--lives == 0)
+            currentGameState = dead;
+
+        resetGame(lives);
     }
     else if (winningPosition(nextMario)) {
         currentGameState = winning;
-        return winMario();
     }
 
     return playActionIndex;
@@ -134,30 +135,44 @@ void Play::detectJump() {
 }
 
 ActionIndex Play::dieMario() {
-    ActionIndex returnValue = playActionIndex;
+    unsigned long now = millis();
 
-    lcd->displayText(gameOverLine1, gameOverLine2);
-    delay(100000);
+    if (beginGameOverCountdown == 0)
+        beginGameOverCountdown = now;
 
-    if (--lives == 0) {
-        // game over code
+    if (now - beginGameOverCountdown < gameOverInterval) 
         lcd->displayText(gameOverLine1, gameOverLine2);
-        returnValue = menuActionIndex;
-        delay(5000);
+    else {
+        lcd->displayTextAndNumber(scoreLine, score);
+        if (joystick->pressedButton()) 
+            return menuActionIndex;
     }
-
-    resetGameState(lives);
-    return returnValue;
-}
-
-ActionIndex Play::winMario() {
-    lcd->displayText(winLine1, winLine2);
-    delay(100000);
 
     return playActionIndex;
 }
 
-void Play::resetGameState(int noLives) {
+ActionIndex Play::winMario() {
+    unsigned long now = millis();
+
+    if (beginWinCountdown == 0)
+        beginWinCountdown = now;
+
+    if (now - beginWinCountdown < winInterval) 
+        lcd->displayText(winLine1, winLine2);
+    else {
+        lcd->displayText(winNextLevelLine1, winNextLevelLine2);
+        if (joystick->pressedButton()) 
+            return advanceLevel();
+    }
+
+    return playActionIndex;
+}
+
+ActionIndex Play::advanceLevel() {
+    return playActionIndex;
+}
+
+void Play::resetGame(int noLives) {
     if (noLives == 0) 
         noLives = maxLives;
 

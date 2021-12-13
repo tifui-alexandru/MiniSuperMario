@@ -7,7 +7,7 @@
 
 class Play : public Action {
     const int maxLives = 3;
-    const int maxTime = 1000; // in seconds
+    const int maxTime = 999; // in seconds
     const int noOfLevels = 5;
     const int defaultMarioRow = 6;
     const int defaultMarioCol = 5;
@@ -21,11 +21,23 @@ class Play : public Action {
     Point mario = {defaultMarioRow, defaultMarioCol};
     CameraView currentView;
 
-    char* gameOverLine1 = "GAME";
-    char* gameOverLine2 = "OVER";
+    char *gameOverLine1 = "GAME";
+    char *gameOverLine2 = "OVER";
+
+    char* scoreLine = "Score:";
+    char* newHighscoreline = " New highscore:";
 
     char* winLine1 = "CONGRATULATIONS!";
     char* winLine2 = "YOU WON";
+
+    char* winNextLevelLine1 = "Press the button";
+    char* winNextLevelLine2 = "to continue";
+
+    const unsigned long winInterval = 2000;
+    unsigned long beginWinCountdown = 0;
+
+    const unsigned long gameOverInterval = 2000;
+    unsigned long beginGameOverCountdown = 0;
 
     const unsigned long countdownInterval = 1000;
     unsigned long lastCountdown = 0;
@@ -54,6 +66,7 @@ class Play : public Action {
 
     ActionIndex dieMario();
     ActionIndex winMario();
+    ActionIndex advanceLevel();
 
     enum GameState {
         playing,
@@ -64,7 +77,7 @@ class Play : public Action {
 
     void displayPlayerData();
 
-    void resetGameState(int);
+    void resetGame(int);
 
 public:
     Play(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 

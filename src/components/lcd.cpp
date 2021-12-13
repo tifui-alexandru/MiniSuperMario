@@ -39,7 +39,32 @@ void Lcd::displayText(char* msg1, char* msg2) {
 }
 
 void Lcd::displayTextAndNumber(char* msg, int no) {
-    char* line = convertIntegerToString(no);    
+    char line[lcdColumns];
+    for (int i = 0; i < lcdColumns; ++i)
+        line[i] = ' ';
+
+    if (no == 0) 
+        line[0] = '0';
+    else {
+        int start = 0, stop = 0;
+
+        while (no) {
+            int lastDigit = no % 10;
+            no /= 10;
+
+            line[stop] = char(lastDigit + '0');
+            ++stop;
+        }
+        --stop;
+        
+        // reverse
+        for (int i = start, j = stop; i < j; ++i, --j) {
+            char aux = line[i];
+            line[i] = line[j];
+            line[j] = aux;
+        }
+    }
+       
     displayText(msg, line);
 }
 
@@ -108,6 +133,9 @@ void Lcd::clearText() {
 }
 
 int Lcd::getIntegerLen(int no) {
+    if (no == 0)
+        return 1;
+
     int ans = 0;
 
     while (no) {
@@ -117,32 +145,4 @@ int Lcd::getIntegerLen(int no) {
     }
 
     return ans;
-}
-
-char* Lcd::convertIntegerToString(int no) {
-    char line[lcdColumns];
-    for (int i = 0; i < lcdColumns; ++i)
-        line[i] = ' ';
-
-    if (no == 0) 
-        line[0] = '0';
-    else {
-        int start = 0, stop = 0;
-
-        while (no) {
-            int lastDigit = no % 10;
-            no /= 10;
-
-            line[stop] = char(lastDigit + '0');
-            ++stop;
-        }
-        --stop;
-        
-        // reverse
-        for (int i = start, j = stop; i < j; ++i, --j) {
-            char aux = line[i];
-            line[i] = line[j];
-            line[j] = aux;
-        }
-    }
 }

@@ -88,7 +88,6 @@ class Lcd {
     byte heartId = 0;
 
     int getIntegerLen(int);
-    char* convertIntegerToString(int);
 
 public:
     Lcd() {
