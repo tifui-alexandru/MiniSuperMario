@@ -25,7 +25,7 @@ class Play : public Action {
     char* gameOverLine1 = "GAME";
     char* gameOverLine2 = "OVER";
 
-    const unsigned long jumpInterval = 1000;
+    const unsigned long jumpInterval = 410;
     unsigned long lastJump = 0;
 
     const unsigned long gravityChangeFreq = 100;
@@ -35,7 +35,7 @@ class Play : public Action {
     bool initGameState = false;
     void initGame();
 
-    ActionIndex moveMario(Point);
+    ActionIndex moveMario();
 
     bool validPosition(Point);
     bool deadPosition(Point);

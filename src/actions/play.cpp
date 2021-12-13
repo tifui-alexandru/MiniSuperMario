@@ -22,18 +22,17 @@ ActionIndex Play::run() {
     matrix->displayMap(currentView);
 
     detectJump();
-    Point nextMario = joystick->makeGameMove(mario);
 
-    return moveMario(nextMario);
+    return moveMario();
 }
 
-ActionIndex Play::moveMario(Point nextMario) {
+ActionIndex Play::moveMario() {
+    Point nextMario = joystick->makeGameMove(mario);
+    nextMario = applyGravity(nextMario);
+
     if (validPosition(nextMario)) {
         currentView.setPosition(mario, false);
-
-        Point newMario = changeCameraView(applyGravity(nextMario));
-        mario = newMario;
-        
+        mario = changeCameraView(nextMario);
         currentView.setPosition(mario, true);      
     }
 
