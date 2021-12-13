@@ -21,7 +21,6 @@ static byte analogMaxValue = 255;
 const int noOfLevels = 5;
 static int utilsStartingLevel = 1; 
 
-
 struct Point {
     byte x, y;
 

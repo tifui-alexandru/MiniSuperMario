@@ -3,10 +3,10 @@
 void Play::initGame() {
     initGameState = true;
 
-    currentLevel = utilsStartingLevel;
+    levelId = utilsStartingLevel;
     // generate levels until the current one is reached 
     // start from 1
-    for (int levelNo = 1; levelNo < currentLevel; ++levelNo) {
+    for (int levelNo = 1; levelNo < levelId; ++levelNo) {
         level = level.getNewLevel();
     }
 
@@ -18,15 +18,30 @@ ActionIndex Play::run() {
     if (!initGameState)
         initGame();
 
-    lcd->displayText("PLAY", "GAME");
     matrix->displayMap(currentView);
 
-    detectJump();
+    if (currentGameState == dead) 
+        return dieMario();
+    else if (currentGameState == winning) 
+        return winMario();
 
+    displayPlayerData();
     return moveMario();
 }
 
+void Play::displayPlayerData() {
+    lcd->displayGameInfo(levelId, time, score, lives);
+
+    unsigned long now = millis();
+
+    if (now - lastCountdown > countdownInterval) {
+        lastCountdown = now;
+        --time;
+    }
+}
+
 ActionIndex Play::moveMario() {
+    detectJump();
     Point nextMario = joystick->makeGameMove(mario);
     nextMario = applyGravity(nextMario);
 
@@ -34,6 +49,14 @@ ActionIndex Play::moveMario() {
         currentView.setPosition(mario, false);
         mario = changeCameraView(nextMario);
         currentView.setPosition(mario, true);      
+    }
+    else if (deadPosition(nextMario)) {
+        currentGameState = dead;
+        return dieMario();
+    }
+    else if (winningPosition(nextMario)) {
+        currentGameState = winning;
+        return winMario();
     }
 
     return playActionIndex;
@@ -52,7 +75,19 @@ bool Play::validPosition(Point nextMario) {
     if (currentView.hasObstacle(nextMario))
         return false;
 
+    // check if mario fell
+    if (deadPosition(nextMario))
+        return false;
+
     return true;
+}
+
+bool Play::deadPosition(Point marioPos) {
+    return (marioPos.x == matrixSize - 1) and !currentView.hasObstacle(marioPos); // mario fell
+}
+
+bool Play::winningPosition(Point marioPos) {
+    return (marioPos.y == 0) and level.reachedEndOfTheLevel();
 }
 
 Point Play::changeCameraView(Point marioPos) {
@@ -98,12 +133,11 @@ void Play::detectJump() {
     }
 }
 
-bool Play::deadPosition(Point marioPos) {
-    return (marioPos.x == matrixSize - 1) and !currentView.hasObstacle(marioPos); // mario fell
-}
-
 ActionIndex Play::dieMario() {
     ActionIndex returnValue = playActionIndex;
+
+    lcd->displayText(gameOverLine1, gameOverLine2);
+    delay(100000);
 
     if (--lives == 0) {
         // game over code
@@ -114,6 +148,13 @@ ActionIndex Play::dieMario() {
 
     resetGameState(lives);
     return returnValue;
+}
+
+ActionIndex Play::winMario() {
+    lcd->displayText(winLine1, winLine2);
+    delay(100000);
+
+    return playActionIndex;
 }
 
 void Play::resetGameState(int noLives) {

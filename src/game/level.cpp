@@ -24,6 +24,10 @@ byte Level::getPrevColumn() {
         return additionalColumns[firstColumnIndex - matrixSize];
 }
 
+bool Level::reachedEndOfTheLevel() {
+    return lastColumnIndex - matrixSize  == noOfColumns - 1;
+}
+
 Level Level::operator = (const Level& other) {
     this->time = other.getTime();
     this->id = other.getId();

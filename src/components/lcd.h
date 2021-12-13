@@ -74,8 +74,26 @@ class Lcd {
     const unsigned long blinkingInterval = 200;
     bool blinkingState = false;
 
+    const byte maxScoreLen = 6;
+
+    byte heart[8] = {
+        B01010,
+        B11111,
+        B11111,
+        B01110,
+        B01110,
+        B00100,
+        B00000,
+    };
+    byte heartId = 0;
+
+    int getIntegerLen(int);
+    char* convertIntegerToString(int);
+
 public:
-    Lcd() {};
+    Lcd() {
+        lcd->createChar(heartId, heart);
+    };
     ~Lcd();
 
     byte getContrast() { return contrast; }
@@ -88,6 +106,8 @@ public:
 
     void displayText(char*, char*);
     void displayTextAndNumber(char*, int);
+
+    void displayGameInfo(int, int, int, int);
 
     void displayScrollingText(char*, char*, int, int);
     void displayTextOnSecondLine(char*);

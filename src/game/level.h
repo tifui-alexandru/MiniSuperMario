@@ -49,6 +49,8 @@ public:
     byte getNextColumn();
     byte getPrevColumn();
 
+    bool reachedEndOfTheLevel();
+
     Level getNewLevel() { return *this; }; // for now  
 
     Level operator = (const Level& other);

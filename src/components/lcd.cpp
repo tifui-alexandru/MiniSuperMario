@@ -39,32 +39,7 @@ void Lcd::displayText(char* msg1, char* msg2) {
 }
 
 void Lcd::displayTextAndNumber(char* msg, int no) {
-    char line[lcdColumns];
-    for (int i = 0; i < lcdColumns; ++i)
-        line[i] = ' ';
-
-    if (no == 0) 
-        line[0] = '0';
-    else {
-        int start = 0, stop = 0;
-
-        while (no) {
-            int lastDigit = no % 10;
-            no /= 10;
-
-            line[stop] = char(lastDigit + '0');
-            ++stop;
-        }
-        --stop;
-        
-        // reverse
-        for (int i = start, j = stop; i < j; ++i, --j) {
-            char aux = line[i];
-            line[i] = line[j];
-            line[j] = aux;
-        }
-    }
-
+    char* line = convertIntegerToString(no);    
     displayText(msg, line);
 }
 
@@ -100,6 +75,74 @@ void Lcd::unlockPositionOnSecondLine(int pos) {
     lcd->noBlink();
 }
 
+void Lcd::displayGameInfo(int level, int time, int score, int lives) {
+    currentLayout = lcdLayout();
+    lcd->home();
+
+    lcd->print("Level ");
+    lcd->print(level);
+    lcd->print(" ");
+
+    lcd->print("Time ");
+    lcd->print(time);
+    lcd->print(time);
+
+    lcd->setCursor(0, 1);
+
+    lcd->print("Score ");
+    lcd->print(score);
+    lcd->print(" ");
+
+    int scoreLen = getIntegerLen(score);
+    for (int i = 0; i < maxScoreLen - scoreLen; ++i)
+        lcd->print(" ");
+
+    lcd->print(lives);
+    lcd->write(byte(heartId));
+
+    lcd->home();
+}
+
 void Lcd::clearText() {
     lcd->clear();
+}
+
+int Lcd::getIntegerLen(int no) {
+    int ans = 0;
+
+    while (no) {
+        int last_digit = no % 10;
+        no /= 10;
+        ++ans;
+    }
+
+    return ans;
+}
+
+char* Lcd::convertIntegerToString(int no) {
+    char line[lcdColumns];
+    for (int i = 0; i < lcdColumns; ++i)
+        line[i] = ' ';
+
+    if (no == 0) 
+        line[0] = '0';
+    else {
+        int start = 0, stop = 0;
+
+        while (no) {
+            int lastDigit = no % 10;
+            no /= 10;
+
+            line[stop] = char(lastDigit + '0');
+            ++stop;
+        }
+        --stop;
+        
+        // reverse
+        for (int i = start, j = stop; i < j; ++i, --j) {
+            char aux = line[i];
+            line[i] = line[j];
+            line[j] = aux;
+        }
+    }
 }

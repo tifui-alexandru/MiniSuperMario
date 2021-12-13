@@ -15,8 +15,7 @@ class Play : public Action {
     int lives = maxLives;
     int score = 0;
     int time = maxTime;
-
-    int currentLevel;
+    int levelId;
 
     Level level;
     Point mario = {defaultMarioRow, defaultMarioCol};
@@ -24,6 +23,12 @@ class Play : public Action {
 
     char* gameOverLine1 = "GAME";
     char* gameOverLine2 = "OVER";
+
+    char* winLine1 = "CONGRATULATIONS!";
+    char* winLine2 = "YOU WON";
+
+    const unsigned long countdownInterval = 1000;
+    unsigned long lastCountdown = 0;
 
     const unsigned long jumpInterval = 410;
     unsigned long lastJump = 0;
@@ -39,6 +44,7 @@ class Play : public Action {
 
     bool validPosition(Point);
     bool deadPosition(Point);
+    bool winningPosition(Point);
 
     Point changeCameraView(Point);
     Point applyGravity(Point);
@@ -47,6 +53,16 @@ class Play : public Action {
     void detectJump();
 
     ActionIndex dieMario();
+    ActionIndex winMario();
+
+    enum GameState {
+        playing,
+        dead,
+        winning
+    };
+    GameState currentGameState = playing;
+
+    void displayPlayerData();
 
     void resetGameState(int);
 
