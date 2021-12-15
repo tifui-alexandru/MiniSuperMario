@@ -25,7 +25,8 @@ void Matrix::displayMap(CameraView& view) {
     unsigned long now = millis();
     if (now - lastBlink > blinkingInterval) {
         lastBlink = now;
-        view.changeCoinsState();
+        blinkingState = !blinkingState;
+        view.changeCoinsState(blinkingState);
     }
 
     for (int row = 0; row < matrixSize; ++row)

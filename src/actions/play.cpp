@@ -46,9 +46,17 @@ ActionIndex Play::moveMario() {
     nextMario = applyGravity(nextMario);
 
     if (validPosition(nextMario)) {
+        // move mario
         currentView.setPosition(mario, false);
         mario = changeCameraView(nextMario);
-        currentView.setPosition(mario, true);      
+        currentView.setPosition(mario, true);
+        
+        // collect coin
+        if (currentView.isCoin(mario)) {
+            score += level.getCoinValue();
+            level.eraseCoin(mario);
+            currentView.eraseCoin(mario);
+        }
     }
     else if (deadPosition(nextMario)) {
         if (--lives == 0)
@@ -73,8 +81,9 @@ bool Play::validPosition(Point nextMario) {
     if (nextMario.x < 0 or nextMario.y < 0 or nextMario.x >= matrixSize or nextMario.y >= matrixSize)
         return false;
 
-    // check if obstacle
-    if (currentView.hasObstacle(nextMario))
+    // coins could be detected as obstacles
+    // so check if obstacle and not coin
+    if (currentView.isObstacle(nextMario) and !currentView.isCoin(nextMario))
         return false;
 
     // check if mario fell
@@ -85,7 +94,7 @@ bool Play::validPosition(Point nextMario) {
 }
 
 bool Play::deadPosition(Point marioPos) {
-    return (marioPos.x == matrixSize - 1) and (0 <= marioPos.y and marioPos.y < matrixSize) and !currentView.hasObstacle(marioPos); // mario fell
+    return (marioPos.x == matrixSize - 1) and (0 <= marioPos.y and marioPos.y < matrixSize) and !currentView.isObstacle(marioPos); // mario fell
 }
 
 bool Play::winningPosition(Point marioPos) {
@@ -134,7 +143,7 @@ bool Play::marioIsOnGround() {
         return false;
 
     // check if obstacle
-    return currentView.hasObstacle(underMario);
+    return currentView.isObstacle(underMario);
 }
 
 void Play::detectJump() {

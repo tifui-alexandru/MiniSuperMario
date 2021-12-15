@@ -20,6 +20,7 @@ class Matrix {
 
     const unsigned long blinkingInterval = 300;
     unsigned long lastBlink = 0;
+    bool blinkingState = false;
 
 public:
     Matrix() {};

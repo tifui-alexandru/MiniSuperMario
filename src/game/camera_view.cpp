@@ -73,12 +73,27 @@ void CameraView::prependColumn(byte mapValue, byte coinsValue) {
     setColumn(coinsMatrix, matrixSize - 1, coinsValue);
 }
 
-void CameraView::changeCoinsState() {
-    for (int row = 0; row < matrixSize; ++row)
-        mapMatrix[row] ^= coinsMatrix[row];
+void CameraView::changeCoinsState(bool state) {
+    for (int row = 0; row < matrixSize; ++row) {
+        if (state == true) 
+            mapMatrix[row] |= coinsMatrix[row];
+        else 
+            mapMatrix[row] ^= (mapMatrix[row] & coinsMatrix[row]);
+    }
 }
 
-bool CameraView::hasObstacle(Point p) {
+bool CameraView::isObstacle(Point p) {
     bool pointValue = (mapMatrix[p.x] >> p.y) & 1;
     return pointValue;
+}
+
+bool CameraView::isCoin(Point p) {
+    bool pointValue = (coinsMatrix[p.x] >> p.y) & 1;
+    return pointValue;
+}
+
+void CameraView::eraseCoin(Point p) {
+    byte mask = ((1 << matrixSize) - 1) ^ (1 << p.y); // one everywhere exept one position
+    mapMatrix[p.x] &= mask;
+    coinsMatrix[p.x] &= mask;
 }

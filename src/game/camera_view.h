@@ -51,9 +51,12 @@ public:
     void appendColumn(byte, byte);
     void prependColumn(byte, byte);
 
-    void changeCoinsState();
+    void changeCoinsState(bool);
 
-    bool hasObstacle(Point);
+    bool isObstacle(Point);
+    bool isCoin(Point);
+
+    void eraseCoin(Point);
 };
 
 #endif
