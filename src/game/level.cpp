@@ -8,33 +8,42 @@ bool Level::hasPrevColumn() {
     return firstColumnIndex > 0;
 }
 
-byte Level::getNextColumn() {
-    ++firstColumnIndex;
+void Level::moveCameraRight() {
+    ++firstColumnIndex; 
     ++lastColumnIndex;
-    return additionalColumns[lastColumnIndex - matrixSize];
+}
+
+void Level::moveCameraLeft() {
+    --firstColumnIndex;
+    --lastColumnIndex;
+}
+
+byte Level::getNextColumn() {
+    byte actualColumnIndex = lastColumnIndex + 1;
+    return additionalColumns[actualColumnIndex - matrixSize];
 }
 
 byte Level::getPrevColumn() {
-    --firstColumnIndex;
-    --lastColumnIndex;
+    byte actualColumnIndex = firstColumnIndex - 1;
 
-    if (firstColumnIndex < matrixSize) 
-        return initialView.getMapColumn(firstColumnIndex);
+    if (actualColumnIndex < matrixSize)
+        return initialView.getMapColumn(matrixSize - actualColumnIndex - 1); // complementar position due to matrix logic
     else
-        return additionalColumns[firstColumnIndex - matrixSize];
+        return additionalColumns[actualColumnIndex - matrixSize];
 }
 
-// always called after Level::getNextColumn()
 byte Level::getNextCoinsColumn() {
-    return additionalCoins[lastColumnIndex - matrixSize];
+    byte actualColumnIndex = lastColumnIndex + 1;
+    return additionalCoins[actualColumnIndex - matrixSize];
 }
 
-// always called after Level::getPrevColumn()
 byte Level::getPrevCoinsColumn() {
-    if (firstColumnIndex < matrixSize)
-        return initialView.getCoinsColumn(firstColumnIndex);
+    byte actualColumnIndex = firstColumnIndex - 1;
+
+    if (actualColumnIndex < matrixSize)
+        return initialView.getCoinsColumn(matrixSize - actualColumnIndex - 1); // complementar position due to matrix logic
     else
-        return additionalCoins[firstColumnIndex - matrixSize];
+        return additionalCoins[actualColumnIndex - matrixSize];
 }
 
 bool Level::reachedEndOfTheLevel() {

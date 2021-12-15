@@ -70,10 +70,15 @@ public:
 
     bool hasNextColumn();
     bool hasPrevColumn();
+
     byte getNextColumn();
     byte getPrevColumn();
+
     byte getNextCoinsColumn();
     byte getPrevCoinsColumn();
+    
+    void moveCameraRight();
+    void moveCameraLeft();
 
     bool reachedEndOfTheLevel();
 

@@ -96,6 +96,7 @@ Point Play::changeCameraView(Point marioPos) {
     if (marioPos.y < defaultMarioCol and level.hasNextColumn()) {
         byte nextMapCol = level.getNextColumn();
         byte nextCoinsCol = level.getNextCoinsColumn();
+        level.moveCameraRight();
 
         currentView.appendColumn(nextMapCol, nextCoinsCol);
         marioPos.y = defaultMarioCol;
@@ -103,6 +104,7 @@ Point Play::changeCameraView(Point marioPos) {
     else if (marioPos.y > defaultMarioCol and level.hasPrevColumn()) {
         byte prevMapCol = level.getPrevColumn();
         byte prevCoinsCol = level.getPrevCoinsColumn();
+        level.moveCameraLeft();
 
         currentView.prependColumn(prevMapCol, prevCoinsCol);
         marioPos.y = defaultMarioCol;
