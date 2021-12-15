@@ -2,6 +2,7 @@
 #define CAMERA_VIEW_H
 
 #include "../../include/utils.h"
+#include "game_utils.h"
 	
 class CameraView {
     /*
@@ -10,32 +11,35 @@ class CameraView {
         are both set true
     */
 
-	byte mapMatrix[matrixSize] = {
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000100,
-        B00000100,
-        B11111111
+    byte mapColumns[matrixSize] = {
+        wallType[0],
+        wallType[0],
+        wallType[0],
+        wallType[0],
+        wallType[0],
+        wallType[2],
+        wallType[0],
+        wallType[0]
     };
 
-    byte coinsMatrix[matrixSize] = {
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000100,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000
+    byte coinsColumns[matrixSize] = {
+        noCoin,
+        noCoin,
+        noCoin,
+        noCoin,
+        noCoin,
+        coinCol4,
+        noCoin,
+        noCoin
     };
+
+    byte mapMatrix[matrixSize];
+    byte coinsMatrix[matrixSize];
 
     byte getColumn(byte*, int);
 
 public:
-    CameraView() {};
+    CameraView();
     CameraView(const CameraView&);
     CameraView operator = (const CameraView&);
 

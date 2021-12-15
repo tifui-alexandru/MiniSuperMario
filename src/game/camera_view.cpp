@@ -1,5 +1,12 @@
 #include "camera_view.h"
 
+CameraView::CameraView() {
+    for (int col = 0; col < matrixSize; ++col) {
+        setColumn(mapMatrix, matrixSize - col - 1, mapColumns[col]);      // complementar position due to matrix logic
+        setColumn(coinsMatrix, matrixSize - col - 1, coinsColumns[col]);  // complementar position due to matrix logic
+    }
+}
+
 CameraView::CameraView(const CameraView& other) {
     for (int row = 0; row < matrixSize; ++row) {
         this->mapMatrix[row] = other.getMapRow(row);

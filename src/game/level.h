@@ -4,55 +4,25 @@
 #include "camera_view.h"
 
 class Level  {
-    static const int noOfColumns = 20;
+    static const int noOfColumns = 5;
 	int time = 1000; // in seconds
     int id;
     int coinValue = 100;
 
     byte additionalColumns[noOfColumns] = {
-        B00001111,
-        B00000001,
-        B00000001,
-        B00000001,
-        B00000000,
-        B00000000,
-        B00001111,
-        B00000001,
-        B00000000,
-        B00000001,
-        B00000001,
-        B00000000,
-        B00011111,
-        B00001111,
-        B00000001,
-        B00000001,
-        B00000000,
-        B00000000,
-        B00000000,
-        B11111111
+        wallType[0],
+        hole,
+        hole,
+        hole,
+        endWall
     };
 
     byte additionalCoins[noOfColumns] = {
-        B00100000,
-        B00000000,
-        B00100000,
-        B00100000,
-        B00100000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000,
-        B00000000
+        noCoin,
+        coinCol4,
+        noCoin,
+        coinCol4,
+        noCoin
     };
 
     struct ErasedCoin {
