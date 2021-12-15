@@ -55,6 +55,25 @@ void Level::restartLevel() {
     lastColumnIndex = matrixSize - 1;
 
     // restore erased coins
+    ErasedCoin* currentCoin = headErasedCoin;
+    while (currentCoin != nullptr) {
+        if (currentCoin->realPos.y < matrixSize) {
+            // complementar position due to matrix logic
+            initialView.setCoin({currentCoin->panCameraPos.x, matrixSize - currentCoin->panCameraPos.y - 1});
+        }
+        else {
+            byte index = currentCoin->realPos.y - matrixSize;
+            byte line = matrixSize - currentCoin->realPos.x - 1;
+            byte setMask = 1 << line; // zero everywhere exept on the desired line
+            additionalCoins[index] |= setMask;
+        }
+
+        ErasedCoin* temp = currentCoin;
+        currentCoin = currentCoin->next;
+        delete temp;
+    }
+
+    headErasedCoin = nullptr;
 }
 
 void Level::eraseCoin(Point p) {
@@ -64,18 +83,18 @@ void Level::eraseCoin(Point p) {
 
     // erase the coin
     if (realPoint.y < matrixSize) {
-        initialView.eraseCoin({realPoint.x, matrixSize - p.y - 1}); // complementar position due to matrix logic
+        initialView.eraseCoin({p.x, matrixSize - p.y - 1}); // complementar position due to matrix logic
     }
     else {
         byte index = realPoint.y - matrixSize;
-        byte line = matrixSize - p.x - 1;
+        byte line = matrixSize - realPoint.x - 1;
         byte eraseMask = ((1 << matrixSize) - 1) ^ (1 << line); // one everywhere exept on the desired line
         additionalColumns[index] &= eraseMask;
         additionalCoins[index] &= eraseMask;
     }
 
     // save the coin position
-    ErasedCoin* erasedCoin = new ErasedCoin(realPoint);
+    ErasedCoin* erasedCoin = new ErasedCoin(p, realPoint);
     erasedCoin->next = headErasedCoin;
     headErasedCoin = erasedCoin;
 }

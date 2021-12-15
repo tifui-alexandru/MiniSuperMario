@@ -14,6 +14,7 @@ class Play : public Action {
 
     int lives = maxLives;
     int score = 0;
+    int lastScore = 0;
     int time = maxTime;
     int levelId;
 

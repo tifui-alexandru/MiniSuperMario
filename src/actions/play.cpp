@@ -221,6 +221,7 @@ ActionIndex Play::advanceLevel() {
 void Play::resetGame() {
     jumpingState = false;
     mario = {defaultMarioRow, defaultMarioCol};
+    score = lastScore;
 
     level.restartLevel();
     currentView = level.getInitialView();

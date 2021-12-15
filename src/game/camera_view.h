@@ -57,6 +57,7 @@ public:
     bool isCoin(Point);
 
     void eraseCoin(Point);
+    void setCoin(Point);
 };
 
 #endif

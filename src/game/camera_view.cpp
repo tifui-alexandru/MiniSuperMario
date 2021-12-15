@@ -97,3 +97,8 @@ void CameraView::eraseCoin(Point p) {
     mapMatrix[p.x] &= mask;
     coinsMatrix[p.x] &= mask;
 }
+
+void CameraView::setCoin(Point p) {
+    byte mask = 1 << p.y; // zero everywhere exept one position
+    coinsMatrix[p.x] |= mask;
+}

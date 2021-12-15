@@ -56,10 +56,11 @@ class Level  {
     };
 
     struct ErasedCoin {
-        Point position;
+        Point panCameraPos;
+        Point realPos;
         ErasedCoin* next;
 
-        ErasedCoin(Point p = Point(0, 0)) : position(p), next(nullptr) {}
+        ErasedCoin(Point p1 = Point(0, 0), Point p2 = Point(0, 0)) : panCameraPos(p1), realPos(p2), next(nullptr) {}
     };
     ErasedCoin* headErasedCoin = nullptr;
 
