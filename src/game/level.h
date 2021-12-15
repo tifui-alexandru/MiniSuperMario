@@ -67,7 +67,7 @@ public:
 
     void eraseCoin(Point);
 
-    Level getNewLevel() { return *this; }; // for now  
+    Level getNewLevel();
 
     Level operator = (const Level& other);
 };

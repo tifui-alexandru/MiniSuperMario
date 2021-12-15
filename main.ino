@@ -44,8 +44,8 @@ void setup() {
 
     initializeActions();
         
-    // currentActionIndex = 0; // Wellcome
-    currentActionIndex = 2; // Play for debugging
+    currentActionIndex = 0; // Wellcome
+    // currentActionIndex = 2; // Play for debugging
     Serial.begin(9600);
 }
 

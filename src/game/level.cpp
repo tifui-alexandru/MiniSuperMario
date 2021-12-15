@@ -108,3 +108,8 @@ Level Level::operator = (const Level& other) {
 
     return *this;
 }
+
+Level Level::getNewLevel() {
+    return *this; // for now
+    // set the ground for generating the new levels
+}
