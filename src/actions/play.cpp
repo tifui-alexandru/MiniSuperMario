@@ -42,7 +42,10 @@ void Play::displayPlayerData() {
 
 ActionIndex Play::moveMario() {
     detectJump();
+    bool changedMarioPos = false;
     Point nextMario = joystick->makeGameMove(mario);
+    if (hitWall(nextMario))
+        nextMario = mario;
     nextMario = applyGravity(nextMario);
 
     if (validPosition(nextMario)) {
@@ -84,6 +87,26 @@ bool Play::validPosition(Point nextMario) {
     // coins could be detected as obstacles
     // so check if obstacle and not coin
     if (currentView.isObstacle(nextMario) and !currentView.isCoin(nextMario))
+        return false;
+
+    // check if mario fell
+    if (deadPosition(nextMario))
+        return false;
+
+    return true;
+}
+
+bool Play::hitWall(Point nextMario) {
+    // check bounds
+    if (nextMario.x < 0 or nextMario.y < 0 or nextMario.x >= matrixSize or nextMario.y >= matrixSize)
+        return false;
+
+    if (winningPosition(nextMario))
+        return false;
+
+    // coins could be detected as obstacles
+    // so check if obstacle and not coin
+    if (!currentView.isObstacle(nextMario) or currentView.isCoin(nextMario))
         return false;
 
     // check if mario fell

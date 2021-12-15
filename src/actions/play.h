@@ -59,6 +59,7 @@ class Play : public Action {
 
     ActionIndex moveMario();
 
+    bool hitWall(Point);
     bool validPosition(Point);
     bool deadPosition(Point);
     bool winningPosition(Point);
