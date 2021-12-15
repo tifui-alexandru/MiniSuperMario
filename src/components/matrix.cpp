@@ -29,7 +29,7 @@ void Matrix::displayMap(CameraView& view) {
     }
 
     for (int row = 0; row < matrixSize; ++row)
-        lc.setRow(0, row, view.getRow(row));
+        lc.setRow(0, row, view.getMapRow(row));
 }
 
 void Matrix::lightUp() {

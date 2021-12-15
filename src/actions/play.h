@@ -33,6 +33,10 @@ class Play : public Action {
     char* winNextLevelLine1 = "Press the button";
     char* winNextLevelLine2 = "to continue";
 
+    char* finalLine1 = "GAME FINISHED";
+    char* finalLine2 = emptyLcdLine;
+
+
     const unsigned long winInterval = 2000;
     unsigned long beginWinCountdown = 0;
 
@@ -42,7 +46,7 @@ class Play : public Action {
     const unsigned long countdownInterval = 1000;
     unsigned long lastCountdown = 0;
 
-    const unsigned long jumpInterval = 410;
+    const unsigned long jumpInterval = 430;
     unsigned long lastJump = 0;
 
     const unsigned long gravityChangeFreq = 100;
@@ -63,6 +67,7 @@ class Play : public Action {
 
     bool jumpingState = false;
     void detectJump();
+    bool marioIsOnGround();
 
     ActionIndex dieMario();
     ActionIndex winMario();
@@ -77,7 +82,7 @@ class Play : public Action {
 
     void displayPlayerData();
 
-    void resetGame(int);
+    void resetGame();
 
 public:
     Play(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 

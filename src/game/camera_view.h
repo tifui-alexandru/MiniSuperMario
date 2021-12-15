@@ -25,7 +25,7 @@ class CameraView {
         B00000000,
         B00000000,
         B00000000,
-        B01000100,
+        B00000100,
         B00000000,
         B00000000,
         B00000000,
@@ -42,10 +42,11 @@ public:
     byte getMapColumn(int pos) { return getColumn(mapMatrix, pos); }
     byte getCoinsColumn(int pos) { return getColumn(coinsMatrix, pos); }
 
-    byte getRow(int pos) { return mapMatrix[pos]; }
+    byte getMapRow(int pos) { return mapMatrix[pos]; }
+    byte getCoinsRow(int pos) { return coinsMatrix[pos]; }
 
     void setPosition(Point, bool);
-    void setColumn(byte *, int, byte);
+    void setColumn(byte*, int, byte);
 
     void appendColumn(byte, byte);
     void prependColumn(byte, byte);

@@ -55,7 +55,7 @@ class Level  {
     };
 
     int firstColumnIndex = 0;
-    int lastColumnIndex = 7;
+    int lastColumnIndex = matrixSize - 1;
     const CameraView initialView;
 
 public:
@@ -76,6 +76,8 @@ public:
     byte getPrevCoinsColumn();
 
     bool reachedEndOfTheLevel();
+
+    void restartLevel();
 
     Level getNewLevel() { return *this; }; // for now  
 

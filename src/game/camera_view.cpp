@@ -1,13 +1,17 @@
 #include "camera_view.h"
 
 CameraView::CameraView(const CameraView& other) {
-    for (int row = 0; row < matrixSize; ++row)
-        this->mapMatrix[row] = other.getRow(row);
+    for (int row = 0; row < matrixSize; ++row) {
+        this->mapMatrix[row] = other.getMapRow(row);
+        this->coinsMatrix[row] = other.getCoinsRow(row);
+    }
 }
 
 CameraView CameraView::operator = (const CameraView& other) {
-    for (int row = 0; row < matrixSize; ++row) 
-        this->mapMatrix[row] = other.getRow(row);
+    for (int row = 0; row < matrixSize; ++row)  {
+        this->mapMatrix[row] = other.getMapRow(row);
+        this->coinsMatrix[row] = other.getCoinsRow(row);
+    }
     return *this;
 }
 
@@ -61,7 +65,7 @@ void CameraView::appendColumn(byte mapValue, byte coinsValue) {
 
 void CameraView::prependColumn(byte mapValue, byte coinsValue) {
     for (int col = 0; col < matrixSize - 1; ++col) {
-        setColumn(mapMatrix, col, getColumn(mapMatrix, col -+1));
+        setColumn(mapMatrix, col, getColumn(mapMatrix, col + 1));
         setColumn(coinsMatrix, col, getColumn(coinsMatrix, col + 1));
     }
 

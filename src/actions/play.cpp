@@ -53,10 +53,12 @@ ActionIndex Play::moveMario() {
     else if (deadPosition(nextMario)) {
         if (--lives == 0)
             currentGameState = dead;
+        resetGame();
 
     }
     else if (winningPosition(nextMario)) {
         currentGameState = winning;
+        resetGame();
     }
 
     return playActionIndex;
@@ -83,7 +85,7 @@ bool Play::validPosition(Point nextMario) {
 }
 
 bool Play::deadPosition(Point marioPos) {
-    return (marioPos.x == matrixSize - 1) and !currentView.hasObstacle(marioPos); // mario fell
+    return (marioPos.x == matrixSize - 1) and (0 <= marioPos.y and marioPos.y < matrixSize) and !currentView.hasObstacle(marioPos); // mario fell
 }
 
 bool Play::winningPosition(Point marioPos) {
@@ -92,11 +94,17 @@ bool Play::winningPosition(Point marioPos) {
 
 Point Play::changeCameraView(Point marioPos) {
     if (marioPos.y < defaultMarioCol and level.hasNextColumn()) {
-        currentView.appendColumn(level.getNextColumn(), level.getNextCoinsColumn());
+        byte nextMapCol = level.getNextColumn();
+        byte nextCoinsCol = level.getNextCoinsColumn();
+
+        currentView.appendColumn(nextMapCol, nextCoinsCol);
         marioPos.y = defaultMarioCol;
     }
     else if (marioPos.y > defaultMarioCol and level.hasPrevColumn()) {
-        currentView.prependColumn(level.getPrevColumn(), level.getPrevCoinsColumn());
+        byte prevMapCol = level.getPrevColumn();
+        byte prevCoinsCol = level.getPrevCoinsColumn();
+
+        currentView.prependColumn(prevMapCol, prevCoinsCol);
         marioPos.y = defaultMarioCol;
     }
 
@@ -116,12 +124,23 @@ Point Play::applyGravity(Point marioPos) {
     return marioPos;
 }
 
+bool Play::marioIsOnGround() {
+    Point underMario = {mario.x + 1, mario.y};
+
+    // check bounds
+    if (underMario.x < 0 or underMario.y < 0 or underMario.x >= matrixSize or underMario.y >= matrixSize)
+        return false;
+
+    // check if obstacle
+    return currentView.hasObstacle(underMario);
+}
+
 void Play::detectJump() {
     // jumping means inverting the direction of gravity
     unsigned long now = millis();
 
     if (now - lastJump > jumpInterval) {
-        if (jumpingState == false and joystick->pressedButton()) {
+        if (jumpingState == false and joystick->pressedButton() and marioIsOnGround()) {
             lastJump = now;
             gravityDirection = -1;
             jumpingState = true;
@@ -173,7 +192,9 @@ ActionIndex Play::winMario() {
 
 ActionIndex Play::advanceLevel() {
     if (levelId == noOfLevels) {
-
+        lcd->displayText(finalLine1, finalLine2);
+        if (joystick->pressedButton()) 
+            return menuActionIndex;
     }
     else {
         currentGameState = playing;
@@ -181,21 +202,16 @@ ActionIndex Play::advanceLevel() {
         level = level.getNewLevel();
         currentView = level.getInitialView();
         currentView.setPosition(mario, true);
+
+        return playActionIndex;
     }
 }
 
-void Play::resetGame(int noLives) {
-    if (noLives == 0) 
-        noLives = maxLives;
-
-    score = 0;
-    time = maxTime;
-    lives = noLives;
-
-    lastJump = 0;
+void Play::resetGame() {
     jumpingState = false;
-
     mario = {defaultMarioRow, defaultMarioCol};
+
+    level.restartLevel();
     currentView = level.getInitialView();
     currentView.setPosition(mario, true);
 }

@@ -41,6 +41,11 @@ bool Level::reachedEndOfTheLevel() {
     return lastColumnIndex - matrixSize  == noOfColumns - 1;
 }
 
+void Level::restartLevel() {
+    firstColumnIndex = 0;
+    lastColumnIndex = matrixSize - 1;
+}
+
 Level Level::operator = (const Level& other) {
     this->time = other.getTime();
     this->id = other.getId();
