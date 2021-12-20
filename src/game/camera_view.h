@@ -11,39 +11,21 @@ class CameraView {
         are both set true
     */
 
-    byte mapColumns[matrixSize] = {
-        gameFloor,
-        gameFloor,
-        gameFloor,
-        gameFloor,
-        gameFloor,
-        wallHeight2,
-        gameFloor,
-        gameFloor
-    };
-
-    byte coinsColumns[matrixSize] = {
-        noCoin,
-        noCoin,
-        noCoin,
-        noCoin,
-        noCoin,
-        coinCol4,
-        noCoin,
-        noCoin
-    };
+    byte mapColumns[matrixSize];
+    byte coinsColumns[matrixSize];
 
     byte mapMatrix[matrixSize];
     byte coinsMatrix[matrixSize];
 
     byte getColumn(byte*, int);
+    void updateMap();
 
 public:
-    CameraView();
+    CameraView() {};
     CameraView(const CameraView&);
     CameraView operator = (const CameraView&);
 
-    void updateMap(byte*, byte*);
+    void changeMap(byte*, byte*);
 
     byte getMapColumn(int pos) { return getColumn(mapMatrix, pos); }
     byte getCoinsColumn(int pos) { return getColumn(coinsMatrix, pos); }

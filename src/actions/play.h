@@ -29,7 +29,7 @@ class Play : public Action {
     char* scoreLine = "Score:";
     char* newHighscoreline = " New highscore:";
 
-    char* winLine1 = "CONGRATULATIONS!";
+    char* winLine1 = "Congrats,";
 
     char* winNextLevelLine1 = "Press the button";
     char* winNextLevelLine2 = "to advance level";

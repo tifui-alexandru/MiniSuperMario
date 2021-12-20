@@ -1,11 +1,4 @@
-#include "camera_view.h"
-
-CameraView::CameraView() {
-    for (int col = 0; col < matrixSize; ++col) {
-        setColumn(mapMatrix, matrixSize - col - 1, mapColumns[col]);      // complementar position due to matrix logic
-        setColumn(coinsMatrix, matrixSize - col - 1, coinsColumns[col]);  // complementar position due to matrix logic
-    }
-}
+#include "camera_view.h"}
 
 CameraView::CameraView(const CameraView& other) {
     for (int row = 0; row < matrixSize; ++row) {
@@ -33,10 +26,18 @@ void CameraView::setPosition(Point p, bool value) {
     }
 }
 
-void CameraView::updateMap(byte* newMapColumns, byte* newCoinsColumns) {
+void CameraView::changeMap(byte* newMapColumns, byte* newCoinsColumns) {
     for (int col = 0; col < matrixSize; ++col) {
-        setColumn(mapMatrix, matrixSize - col - 1, newMapColumns[col]);      // complementar position due to matrix logic
-        setColumn(coinsMatrix, matrixSize - col - 1, newCoinsColumns[col]);  // complementar position due to matrix logic
+        mapColumns[col] = newMapColumns[col];
+        coinsColumns[col] = newCoinsColumns[col];
+    }
+    updateMap();
+}
+
+void CameraView::updateMap() {
+    for (int col = 0; col < matrixSize; ++col) {
+        setColumn(mapMatrix, matrixSize - col - 1, mapColumns[col]);      // complementar position due to matrix logic
+        setColumn(coinsMatrix, matrixSize - col - 1, coinsColumns[col]);  // complementar position due to matrix logic
     }
 }
 

@@ -20,6 +20,30 @@ void Level::initLevel() {
     coinValue = levelsCoinValue[levelId];
     noOfCoins = levelsNoOfCoins[levelId];
 
+    byte mapColumns[matrixSize] = {
+        gameFloor,
+        gameFloor,
+        gameFloor,
+        gameFloor,
+        gameFloor,
+        wallHeight2,
+        gameFloor,
+        gameFloor
+    };
+
+    byte coinsColumns[matrixSize] = {
+        noCoin,
+        noCoin,
+        noCoin,
+        noCoin,
+        noCoin,
+        coinCol4,
+        noCoin,
+        noCoin
+    };
+
+    initialView.changeMap(mapColumns, coinsColumns);
+
     additionalColumns[0] = gameFloor;
     additionalColumns[1] = hole;
     additionalColumns[2] = hole;
@@ -169,15 +193,23 @@ void Level::advanceToNextLevel() {
     byte totalColumns = noOfColumns + matrixSize;
 
     // generate the map
-    byte mapColumns[matrixSize];
-    byte coinsColumns[matrixSize];
+
+    // initialize the new map
+    for (int col = 0; col < totalColumns; ++col) {
+        if (col < matrixSize) {
+            NextMapColumns[col] = hole;
+            NextCoinsColumns[col] = noCoin;
+        }
+        else {
+            additionalColumns[col - matrixSize] = hole;
+            additionalCoins[col - matrixSize] = noCoin;
+        }
+    }
 
     // first 4 columns are floor
     // we don't want mario to spawn direcrly into an obstacle
-    for (int col = 0; col < 4; ++col) {
-        mapColumns[col] = gameFloor;
-        coinsColumns[col] = noCoin;
-    }
+    for (int col = 0; col < 4; ++col)
+        NextMapColumns[col] = gameFloor;
 
     for (byte col = 4; col < totalColumns - 1; ++col) {
         byte texture = texturesProbability.generateTexture();
@@ -185,19 +217,14 @@ void Level::advanceToNextLevel() {
         // if (texture != gameFloor and texture != hole and random(100) < specialWallsProbability * 100)
         // if (textture == gameFloor and random(100) < specialFloorProbability * 100)
 
-        if (col < matrixSize) {
-            mapColumns[col] = texture;
-            coinsColumns[col] = noCoin;
-        }
-        else {
+        if (col < matrixSize)
+            NextMapColumns[col] = texture;
+        else 
             additionalColumns[col - matrixSize] = texture;
-            additionalCoins[col - matrixSize] = noCoin;
-        }
     }
 
     // last column is the end wall
     additionalColumns[noOfColumns - 1] = endWall;
-    additionalCoins[noOfColumns - 1] = noCoin;
 
     // generate coin positions
     // for (byte coinIdx = 0; coinIdx < noOfCoins; ++coinIdx) {
@@ -241,6 +268,6 @@ void Level::advanceToNextLevel() {
     //     }
     // }
 
-    initialView.updateMap(mapColumns, coinsColumns);
+    initialView.changeMap(NextMapColumns, NextCoinsColumns);
     restartLevel();
 }
