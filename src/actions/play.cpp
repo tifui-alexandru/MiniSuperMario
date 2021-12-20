@@ -19,6 +19,16 @@ ActionIndex Play::run() {
     if (!initGameState)
         initGame();
 
+    // if game is finished
+    if (levelId > noOfLevels) {
+        lcd->displayText(finalLine1, finalLine2);
+        if (joystick->pressedButton()) {
+            initGameState = false;
+            return menuActionIndex;
+        }
+        return playActionIndex;
+    }
+
     matrix->displayMap(currentView);
 
     if (currentGameState == dead) 
@@ -70,7 +80,6 @@ ActionIndex Play::moveMario() {
     }
     else if (winningPosition(nextMario)) {
         currentGameState = winning;
-        resetGame();
     }
 
     return playActionIndex;
@@ -200,7 +209,7 @@ ActionIndex Play::dieMario() {
         if (joystick->pressedButton()) {
             currentGameState = playing;
             beginGameOverCountdown = 0;
-            initGameState = false;
+            resetGame();
 
             return menuActionIndex;
         }
@@ -229,13 +238,10 @@ ActionIndex Play::winMario() {
 }
 
 ActionIndex Play::advanceLevel() {
-    if (levelId == noOfLevels) {
-        lcd->displayText(finalLine1, finalLine2);
-        if (joystick->pressedButton()) 
-            return menuActionIndex;
-    }
-    else {
-        ++levelId;
+    ++levelId;
+    score += (totalLevelTime - time);
+
+    if (levelId <= noOfLevels) {
         currentGameState = playing;
 
         level.advanceToNextLevel();
@@ -246,11 +252,10 @@ ActionIndex Play::advanceLevel() {
         currentView = level.getInitialView();
         currentView.setPosition(mario, true);
 
-        time = level.getTime();
+        time = totalLevelTime = level.getTime();
         lastScore = score;
-
-        return playActionIndex;
     }
+    return playActionIndex;
 }
 
 void Play::resetGame() {
