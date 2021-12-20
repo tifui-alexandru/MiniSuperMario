@@ -28,8 +28,11 @@ ActionIndex Register::runSelectLetterIndex() {
     if (joystick->pressedButton()) {
         lcd->unlockPositionOnSecondLine(currentLetterIndex);
 
-        if (currentLetterIndex == nicknameEndPos)
+        if (currentLetterIndex == nicknameEndPos) {
+            for (int i = 0; i < nicknameLen; ++i) 
+                playerNickname[i] = nicknameLine[nicknameStartPos + i];
             return menuActionIndex;
+        }
 
         state = changeLetter;
     }

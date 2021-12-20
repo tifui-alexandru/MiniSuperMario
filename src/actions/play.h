@@ -29,10 +29,9 @@ class Play : public Action {
     char* newHighscoreline = " New highscore:";
 
     char* winLine1 = "CONGRATULATIONS!";
-    char* winLine2 = "YOU WON";
 
     char* winNextLevelLine1 = "Press the button";
-    char* winNextLevelLine2 = "to continue";
+    char* winNextLevelLine2 = "to advance level";
 
     char* finalLine1 = "GAME FINISHED";
     char* finalLine2 = emptyLcdLine;

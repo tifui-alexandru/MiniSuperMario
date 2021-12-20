@@ -140,8 +140,8 @@ Level Level::operator = (const Level& other) {
     this->coinValue = other.getCoinValue();
 
     this->texturesProbability = other.getTextureProbability();
-    this->specialWallsProbability = ohter.getSpecialWallsProbability();
-    this->specialFloorProbability = ohter.getSpecialFloorProbability();
+    this->specialWallsProbability = other.getSpecialWallsProbability();
+    this->specialFloorProbability = other.getSpecialFloorProbability();
 
     this->firstColumnIndex = other.getFirstColumnIndex();
     this->lastColumnIndex = other.getLastColumnIndex();
@@ -179,7 +179,7 @@ void Level::advanceToNextLevel() {
         coinsColumns[col] = noCoin;
     }
 
-    for (byte col = 4; col < totalColumns; ++col) {
+    for (byte col = 4; col < totalColumns - 1; ++col) {
         byte texture = texturesProbability.generateTexture();
 
         // if (texture != gameFloor and texture != hole and random(100) < specialWallsProbability * 100)
@@ -195,47 +195,51 @@ void Level::advanceToNextLevel() {
         }
     }
 
+    // last column is the end wall
+    additionalColumns[noOfColumns - 1] = endWall;
+    additionalCoins[noOfColumns - 1] = noCoin;
+
     // generate coin positions
-    for (byte coinIdx = 0; coinIdx < noOfCoins; ++coinIdx) {
-        // generate positions until we get a valid one
-        while (true) {
-            byte newCoinRow = random(coinTypes);
-            byte newCoinColumn = random(totalColumns);
+    // for (byte coinIdx = 0; coinIdx < noOfCoins; ++coinIdx) {
+    //     // generate positions until we get a valid one
+    //     while (true) {
+    //         byte newCoinRow = random(coinTypes);
+    //         byte newCoinColumn = random(totalColumns);
 
-            byte coinTexture = noCoin;
-            if (newCoinRow == 1)
-                coinTexture = coinCol1;
-            else if (newCoinRow == 2)
-                coinTexture = coinCol2;
-            else if (newCoinRow == 3)
-                coinTexture = coinCol3;
-            else if (newCoinRow == 4)
-                coinTexture = coinCol4;
-            else if (newCoinRow == 5)
-                coinTexture = coinCol5;
+    //         byte coinTexture = noCoin;
+    //         if (newCoinRow == 1)
+    //             coinTexture = coinCol1;
+    //         else if (newCoinRow == 2)
+    //             coinTexture = coinCol2;
+    //         else if (newCoinRow == 3)
+    //             coinTexture = coinCol3;
+    //         else if (newCoinRow == 4)
+    //             coinTexture = coinCol4;
+    //         else if (newCoinRow == 5)
+    //             coinTexture = coinCol5;
 
-            byte currentMapColumn;
-            byte currentCoinColumn;
-            if (newCoinColumn < matrixSize) {
-                currentMapColumn = mapColumns[newCoinColumn];
-                currentCoinColumn = coinsColumns[newCoinColumn];
-            }
-            else {
-                currentMapColumn = additionalColumns[newCoinColumn - matrixSize];
-                currentCoinColumn = additionalCoins[newCoinColumn - matrixSize];
-            }
+    //         byte currentMapColumn;
+    //         byte currentCoinColumn;
+    //         if (newCoinColumn < matrixSize) {
+    //             currentMapColumn = mapColumns[newCoinColumn];
+    //             currentCoinColumn = coinsColumns[newCoinColumn];
+    //         }
+    //         else {
+    //             currentMapColumn = additionalColumns[newCoinColumn - matrixSize];
+    //             currentCoinColumn = additionalCoins[newCoinColumn - matrixSize];
+    //         }
 
-            // if the coin position is free we found a valid position
-            // set the coin and exit the while loop
-            if (currentMapColumn & coinTexture == 0 and currentCoinColumn & coinTexture == 0) {
-                if (newCoinColumn < matrixSize)
-                    coinsColumns[newCoinColumn] |= coinTexture;
-                else
-                    additionalCoins[newCoinColumn - matrixSize] |= coinTexture;
-                break;
-            }
-        }
-    }
+    //         // if the coin position is free we found a valid position
+    //         // set the coin and exit the while loop
+    //         if (currentMapColumn & coinTexture == 0 and currentCoinColumn & coinTexture == 0) {
+    //             if (newCoinColumn < matrixSize)
+    //                 coinsColumns[newCoinColumn] |= coinTexture;
+    //             else
+    //                 additionalCoins[newCoinColumn - matrixSize] |= coinTexture;
+    //             break;
+    //         }
+    //     }
+    // }
 
     initialView.updateMap(mapColumns, coinsColumns);
     restartLevel();

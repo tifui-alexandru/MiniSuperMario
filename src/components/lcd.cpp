@@ -101,6 +101,12 @@ void Lcd::unlockPositionOnSecondLine(int pos) {
 }
 
 void Lcd::displayGameInfo(int level, int time, int score, int lives) {
+    static int lastLevel = 0;
+    if (lastLevel != level) {
+        lastLevel = level;
+        lcd->clear();
+    }
+
     currentLayout = lcdLayout();
     lcd->home();
 

@@ -199,7 +199,9 @@ ActionIndex Play::dieMario() {
         lcd->displayTextAndNumber(scoreLine, score);
         if (joystick->pressedButton()) {
             currentGameState = playing;
-            
+            beginGameOverCountdown = 0;
+            initGameState = false;
+
             return menuActionIndex;
         }
     }
@@ -214,10 +216,11 @@ ActionIndex Play::winMario() {
         beginWinCountdown = now;
 
     if (now - beginWinCountdown < winInterval) 
-        lcd->displayText(winLine1, winLine2);
+        lcd->displayText(winLine1, playerNickname);
     else {
         lcd->displayText(winNextLevelLine1, winNextLevelLine2);
         if (joystick->pressedButton()) {
+            beginWinCountdown = 0;
             return advanceLevel();
         }
     }
@@ -232,18 +235,19 @@ ActionIndex Play::advanceLevel() {
             return menuActionIndex;
     }
     else {
+        ++levelId;
         currentGameState = playing;
 
         level.advanceToNextLevel();
 
         jumpingState = false;
+        gravityDirection = 1;
         mario = {defaultMarioRow, defaultMarioCol};
         currentView = level.getInitialView();
         currentView.setPosition(mario, true);
 
         time = level.getTime();
         lastScore = score;
-        score = 0;
 
         return playActionIndex;
     }
@@ -251,6 +255,7 @@ ActionIndex Play::advanceLevel() {
 
 void Play::resetGame() {
     jumpingState = false;
+    gravityDirection = 1;
     mario = {defaultMarioRow, defaultMarioCol};
     score = lastScore;
 

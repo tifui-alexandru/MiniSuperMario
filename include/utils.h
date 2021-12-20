@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+static char *playerNickname = "aaaaaa";
+
 // matrix constants
 static const byte matrixSize = 8;
 static const byte matrixMinIntensity = 0;
