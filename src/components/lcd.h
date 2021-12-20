@@ -5,6 +5,7 @@
 #include <LiquidCrystal.h>
 
 #include "../../include/utils.h"
+#include "eeprom.h"
 
 class Lcd {
     const int RS = 13;
@@ -13,7 +14,7 @@ class Lcd {
     const int D5 = 5;
     const int D6 = 4;
     const int D7 = 2;
-    // const int V0 = 3;
+    const int V0 = 6;
     const int A = 3;
 
     LiquidCrystal* lcd = new LiquidCrystal(RS, enable, D4, D5, D6, D7);
@@ -64,8 +65,8 @@ class Lcd {
     lcdLayout currentLayout;
     lcdLayout lastLayout;
 
-    const byte defaultContrast = 5;
-    const byte defaultIntensity = 8;
+    byte defaultContrast = 5;
+    byte defaultIntensity = 8;
 
     byte contrast;
     byte intensity;
@@ -98,10 +99,10 @@ public:
     byte getContrast() { return contrast; }
     byte getIntensity() { return intensity; }
 
-    void setContrast(byte);
-    void setIntensity(byte);
+    void setContrast(byte, EepromClass*);
+    void setIntensity(byte, EepromClass*);
 
-    void initSetup();
+    void initSetup(EepromClass*);
 
     void displayText(char*, char*);
     void displayTextAndNumber(char*, int);

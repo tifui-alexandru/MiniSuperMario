@@ -17,6 +17,10 @@ class EepromClass {
     static const int outputStringSize = 16;
     static const int noOfPlayers = 3;
 
+    static const int matrixIntensityOffset = noOfPlayers * chunkSize;
+    static const int lcdIntensityOffset = noOfPlayers * chunkSize + 1;
+    static const int lcdContrastOffset = noOfPlayers * chunkSize + 2;
+
     const int byteMask = 0xFF;
     const int byteSize = 8;
 
@@ -31,6 +35,14 @@ public:
     void write(char*, int);
     char* read(int);
     int getNoOfScores() { return noOfActivePlayers; }
+
+    void writeMatrixIntensity(int value) { EEPROM.update(matrixIntensityOffset, value); }
+    void writeLcdIntensity(int value) { EEPROM.update(lcdIntensityOffset, value); }
+    void writeLcdContrast(int value) { EEPROM.update(lcdContrastOffset, value); }
+
+    int readMatrixIntensity() { return EEPROM.read(matrixIntensityOffset); }
+    int readLcdIntensity() { return EEPROM.read(lcdIntensityOffset); }
+    int readLcdContrast() { return EEPROM.read(lcdContrastOffset); }
 };
 
 #endif

@@ -1,11 +1,17 @@
 #include "matrix.h"
 
-void Matrix::setMatrixBrightness(byte newVal) {
+void Matrix::setMatrixBrightness(byte newVal, EepromClass* eepromObj) {
     matrixBrightness = newVal;
     lc.setIntensity(0, matrixBrightness);
+    eepromObj->writeMatrixIntensity(matrixBrightness);
 }
 
-void Matrix::initSetup() {
+void Matrix::initSetup(EepromClass* eepromObj) {
+    matrixBrightness = eepromObj->readMatrixIntensity();
+
+    if (matrixBrightness < matrixMinIntensity or matrixBrightness > matrixMaxIntensity) 
+        matrixBrightness = (matrixMinIntensity + matrixMaxIntensity) / 2;
+
     // the zero refers to the MAX7219 number, it is zero for 1 chip
     lc.shutdown(0, false);                // turn off power saving, enables display
     lc.setIntensity(0, matrixBrightness); // sets brightness (0~15 possible values)

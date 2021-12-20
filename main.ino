@@ -37,17 +37,17 @@ void initializeActions() {
 }
 
 void setup() {
-    lcd->initSetup();
+    lcd->initSetup(eepromObj);
     joystick->initSetup();
-    gameMap->initSetup();
+    gameMap->initSetup(eepromObj);
     // buzzer->initSetup();
 
     randomSeed(analogRead(0));
 
     initializeActions();
         
-    // currentActionIndex = 0; // Wellcome
-    currentActionIndex = 2; // Play for debugging
+    currentActionIndex = 0; // Wellcome
+    // currentActionIndex = 2; // Play for debugging
     Serial.begin(9600);
 }
 

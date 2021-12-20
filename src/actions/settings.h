@@ -11,22 +11,27 @@ class Settings : public Action {
     char* lcdIntensityFirstLine = "LCD brightness";
     char* matrixIntensityFirstLine = "Matrix intensity";
 
-    static const byte noOfOptions = 6;
+    char* musicOnText = "Turn music OFF";
+    char* musicOffText = "Turn music ON";
+
+    static const byte noOfOptions = 7;
     char* options[noOfOptions] = {
         "Start level",
         "LCD contrast",
         "LCD brightness",
         "Matrix intensity",
         "Change nickname",
+        musicOnText,
         "Back to menu"
     };
-
+    
     enum SettingsState {
         startLevel,
         lcdContrast,
         lcdBrightness,
         matrixIntensity,
         changeNickname,
+        musicOnOff,
         backToMenu,
         defaultScreen
     };
@@ -41,6 +46,7 @@ class Settings : public Action {
     ActionIndex runLcdContrast();
     ActionIndex runLcdBrightness();
     ActionIndex runMatrixIntensity();
+    ActionIndex runMusicOnOff();
     ActionIndex runDefaultScreen();
 
 public:

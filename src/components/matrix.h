@@ -7,6 +7,8 @@
 #include "../../include/utils.h"
 #include "../game/level.h"
 
+#include "eeprom.h"
+
 class Matrix {
     const byte dinPin = 12;
     const byte clockPin = 11;
@@ -24,10 +26,10 @@ class Matrix {
 
 public:
     Matrix() {};
-    void initSetup();
+    void initSetup(EepromClass*);
     
     byte getMatrixBrightness() { return matrixBrightness; };
-    void setMatrixBrightness(byte);
+    void setMatrixBrightness(byte, EepromClass*);
     
     void updateDisplay(Point, Point, CameraView&);
     void displayMap(CameraView&);

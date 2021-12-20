@@ -11,6 +11,8 @@ ActionIndex Settings::run() {
         return runMatrixIntensity();
     else if (currentState == changeNickname)
         return exitRoutine(registerActionIndex);
+    else if (currentState == musicOnOff)
+        return runMusicOnOff();
     else if (currentState == backToMenu)
         return exitRoutine(menuActionIndex);
     else
@@ -38,8 +40,18 @@ int Settings::getJoystickMove(int lowerBound, int upperBound, int value) {
 
 ActionIndex Settings::exitRoutine(ActionIndex nextAction) {
     currentState = defaultScreen;
-    currentOption = 0;
     return nextAction;
+}
+
+ActionIndex Settings::runMusicOnOff() {
+    musicState = !musicState;
+
+    if (musicState)
+        options[(int)musicOnOff] = musicOnText;
+    else
+        options[(int)musicOnOff] = musicOffText;
+
+    return exitRoutine(settingsActionIndex);
 }
 
 ActionIndex Settings::runStartLevel() {
@@ -50,7 +62,7 @@ ActionIndex Settings::runStartLevel() {
 
     if (joystick->pressedButton()) {
         utilsStartingLevel = levelOption;
-        return exitRoutine(menuActionIndex);
+        return exitRoutine(settingsActionIndex);
     }
 
     return settingsActionIndex;
@@ -61,10 +73,10 @@ ActionIndex Settings::runLcdContrast() {
     lcd->displayTextAndNumber(lcdContrastFirstLine, contrastOption);
 
     contrastOption = getJoystickMove(lcdMinContrast, lcdMaxContrast, contrastOption);
-    lcd->setContrast(contrastOption);
+    lcd->setContrast(contrastOption, eepromObj);
 
     if (joystick->pressedButton()) {
-        return exitRoutine(menuActionIndex);
+        return exitRoutine(settingsActionIndex);
     }
 
     return settingsActionIndex;
@@ -75,10 +87,10 @@ ActionIndex Settings::runLcdBrightness() {
     lcd->displayTextAndNumber(lcdIntensityFirstLine, brightnessOption);
 
     brightnessOption = getJoystickMove(lcdMinIntensity, lcdMaxIntensity, brightnessOption);
-    lcd->setIntensity(brightnessOption);
+    lcd->setIntensity(brightnessOption, eepromObj);
 
     if (joystick->pressedButton()) {
-        return exitRoutine(menuActionIndex);
+        return exitRoutine(settingsActionIndex);
     }
 
     return settingsActionIndex;
@@ -91,11 +103,11 @@ ActionIndex Settings::runMatrixIntensity() {
     lcd->displayTextAndNumber(matrixIntensityFirstLine, matrixOption);
 
     matrixOption = getJoystickMove(matrixMinIntensity, matrixMaxIntensity, matrixOption);
-    matrix->setMatrixBrightness(matrixOption);
+    matrix->setMatrixBrightness(matrixOption, eepromObj);
 
     if (joystick->pressedButton()) {
         matrix->lightDown();
-        return exitRoutine(menuActionIndex);
+        return exitRoutine(settingsActionIndex);
     }
 
     return settingsActionIndex;

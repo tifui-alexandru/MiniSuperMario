@@ -5,6 +5,8 @@
 
 static char *playerNickname = "aaaaaa";
 
+static bool musicState = true;
+
 // matrix constants
 static const byte matrixSize = 8;
 static const byte matrixMinIntensity = 0;
@@ -14,10 +16,16 @@ static const byte matrixMaxIntensity = 15;
 static char* emptyLcdLine = "                ";
 static byte lcdMinContrast = 1;
 static byte lcdMaxContrast = 10;
+
 static byte lcdMinIntensity = 1;
 static byte lcdMaxIntensity = 10;
+
 static byte analogMinValue = 0;
 static byte analogMaxValue = 255;
+
+// empirically determined
+static byte contrastMinVisibleValue = map(4, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
+static byte contrastMaxVisibleValue = map(6, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
 
 // levels from 1 to noOfLevels
 static const int noOfLevels = 5;

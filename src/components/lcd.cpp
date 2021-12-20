@@ -4,24 +4,36 @@ Lcd::~Lcd() {
     delete lcd;
 }
 
-void Lcd::setContrast(byte newVal) {
+void Lcd::setContrast(byte newVal, EepromClass* eepromObj) {
     contrast = newVal;
-    // byte analogContrastValue = map(contrast, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
-    // analogWrite(V0, analogContrastValue);
+    byte analogContrastValue = map(contrast, lcdMinContrast, lcdMaxContrast, contrastMinVisibleValue, contrastMaxVisibleValue);
+    analogWrite(V0, analogContrastValue);
+    eepromObj->writeLcdContrast(contrast);
 }
 
-void Lcd::setIntensity(byte newVal) {
+void Lcd::setIntensity(byte newVal, EepromClass* eepromObj) {
     intensity = newVal;
     byte analogIntensityValue = map(intensity, lcdMinIntensity, lcdMaxIntensity, analogMinValue, analogMaxValue);
     analogWrite(A, analogIntensityValue);
+    eepromObj->writeLcdIntensity(intensity);
 }
 
-void Lcd::initSetup() {
-    // pinMode(V0, OUTPUT);
+void Lcd::initSetup(EepromClass *eepromObj) {
+    pinMode(V0, OUTPUT);
     pinMode(A, OUTPUT);
 
-    // setContrast(defaultContrast);
-    setIntensity(defaultIntensity);
+    defaultContrast = eepromObj->readLcdContrast();
+    defaultIntensity = eepromObj->readLcdIntensity();
+
+    // reset to default values if not ok
+    if (defaultContrast < lcdMinContrast or defaultIntensity > lcdMaxContrast)
+        defaultContrast = (lcdMinContrast + lcdMaxContrast) / 2;
+
+    if (defaultIntensity < lcdMinIntensity or defaultIntensity > lcdMaxIntensity)
+        defaultIntensity = (lcdMinIntensity + lcdMaxIntensity) / 2;
+
+    setContrast(defaultContrast, eepromObj);
+    setIntensity(defaultIntensity, eepromObj);
 
     lcd->begin(lcdColumns, lcdRows);
 }
