@@ -3,6 +3,8 @@
 void Play::initGame() {
     initGameState = true;
 
+    level.initLevel();
+
     levelId = utilsStartingLevel;
     // generate levels until the current one is reached 
     // start from 1

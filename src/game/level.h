@@ -4,26 +4,20 @@
 #include "camera_view.h"
 
 class Level  {
-    static const int noOfColumns = 5;
-	int time = 1000; // in seconds
-    int id;
-    int coinValue = 100;
+    static const byte levelsNoOfColumns[noOfLevels];    
+    static const byte levelsTimeAvailable[noOfLevels];
+    static const byte levelsCoinValue[noOfLevels];
+    static const byte levelsNoOfCoins[noOfLevels];
 
-    byte additionalColumns[noOfColumns] = {
-        wallType[0],
-        hole,
-        hole,
-        hole,
-        endWall
-    };
+    byte noOfColumns;
+	byte time;
+    byte coinValue;
+    byte noOfCoins;
 
-    byte additionalCoins[noOfColumns] = {
-        noCoin,
-        coinCol4,
-        noCoin,
-        coinCol4,
-        noCoin
-    };
+    static const byte maxAdditionalColumns = 30;
+
+    byte additionalColumns[maxAdditionalColumns];
+    byte additionalCoins[maxAdditionalColumns];
 
     struct ErasedCoin {
         Point panCameraPos;
@@ -40,11 +34,15 @@ class Level  {
 
 public:
     Level() {};
-    ~Level() {}
 
-    int getTime() { return time; };
-    int getId() { return id; };
-    int getCoinValue() { return coinValue; };
+    // construct default level 1
+    void initLevel();
+
+    byte getNoOfColumns() { return noOfColumns; }
+    byte getNoOfCoins() { return noOfCoins; }
+    byte getTime() { return time; };
+    byte getCoinValue() { return coinValue; };
+
     int getFirstColumnIndex() { return firstColumnIndex; };
     int getLastColumnIndex() { return lastColumnIndex; };
     const CameraView getInitialView() { return initialView; };

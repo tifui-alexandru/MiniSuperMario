@@ -12,14 +12,14 @@ class CameraView {
     */
 
     byte mapColumns[matrixSize] = {
-        wallType[0],
-        wallType[0],
-        wallType[0],
-        wallType[0],
-        wallType[0],
-        wallType[2],
-        wallType[0],
-        wallType[0]
+        gameFloor,
+        gameFloor,
+        gameFloor,
+        gameFloor,
+        gameFloor,
+        wallHeight2,
+        gameFloor,
+        gameFloor
     };
 
     byte coinsColumns[matrixSize] = {
