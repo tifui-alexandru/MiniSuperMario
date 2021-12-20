@@ -28,8 +28,8 @@ class Level  {
     byte additionalCoins[maxAdditionalColumns];
 
     // used to generate new levels
-    byte NextMapColumns[matrixSize];
-    byte NextCoinsColumns[matrixSize];
+    byte nextMapColumns[matrixSize];
+    byte nextCoinsColumns[matrixSize];
 
     struct ErasedCoin {
         Point panCameraPos;
