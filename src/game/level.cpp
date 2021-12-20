@@ -4,12 +4,21 @@ const byte Level::levelsNoOfColumns[noOfLevels] = {5, 10, 15, 20, 30};
 const byte Level::levelsTimeAvailable[noOfLevels] = {999, 999, 999, 999, 999};
 const byte Level::levelsCoinValue[noOfLevels] = {100, 200, 300, 400, 500};
 const byte Level::levelsNoOfCoins[noOfLevels] = {3, 5, 10, 15, 20};
+const TexturesProbability Level::levelsTexturesProbability[noOfLevels] = {
+    TexturesProbability(0.33, 0.33, 0.33),
+    TexturesProbability(0.33, 0.33, 0.33),
+    TexturesProbability(0.33, 0.33, 0.33),
+    TexturesProbability(0.33, 0.33, 0.33),
+    TexturesProbability(0.33, 0.33, 0.33)
+};
+const float Level::levelsSpecialWallsProbability[noOfLevels] = {0, 0, 0.2, 0, 0.5};
+const float Level::levelsSpecialFloorProbability[noOfLevels] = {0, 0, 0, 0.2, 0.5};
 
 void Level::initLevel() {
-    noOfColumns = levelsNoOfColumns[0];
-    time = levelsTimeAvailable[0];
-    coinValue = levelsCoinValue[0];
-    noOfCoins = levelsNoOfCoins[0];
+    noOfColumns = levelsNoOfColumns[levelId];
+    time = levelsTimeAvailable[levelId];
+    coinValue = levelsCoinValue[levelId];
+    noOfCoins = levelsNoOfCoins[levelId];
 
     additionalColumns[0] = gameFloor;
     additionalColumns[1] = hole;
@@ -124,10 +133,15 @@ void Level::eraseCoin(Point p) {
 }
 
 Level Level::operator = (const Level& other) {
+    this->levelId = other.getId();
     this->time = other.getTime();
     this->noOfCoins = other.getNoOfCoins();
     this->noOfColumns = other.getNoOfColumns();
     this->coinValue = other.getCoinValue();
+
+    this->texturesProbability = other.getTextureProbability();
+    this->specialWallsProbability = ohter.getSpecialWallsProbability();
+    this->specialFloorProbability = ohter.getSpecialFloorProbability();
 
     this->firstColumnIndex = other.getFirstColumnIndex();
     this->lastColumnIndex = other.getLastColumnIndex();
@@ -136,7 +150,93 @@ Level Level::operator = (const Level& other) {
     return *this;
 }
 
-Level Level::getNewLevel() {
-    return *this; // for now
-    // set the ground for generating the new levels
+// assume that the current level is not final
+void Level::advanceToNextLevel() {
+    if (levelId == noOfLevels)
+        return;
+
+    ++levelId;
+
+    noOfColumns = levelsNoOfColumns[levelId];
+    time = levelsTimeAvailable[levelId];
+    coinValue = levelsCoinValue[levelId];
+    noOfCoins = levelsNoOfCoins[levelId];
+
+    texturesProbability = levelsTexturesProbability[levelId];
+    specialWallsProbability = levelsSpecialWallsProbability[levelId];
+    specialFloorProbability = levelsSpecialFloorProbability[levelId];
+
+    byte totalColumns = noOfColumns + matrixSize;
+
+    // generate the map
+    byte mapColumns[matrixSize];
+    byte coinsColumns[matrixSize];
+
+    // first 4 columns are floor
+    // we don't want mario to spawn direcrly into an obstacle
+    for (int col = 0; col < 4; ++col) {
+        mapColumns[col] = gameFloor;
+        coinsColumns[col] = noCoin;
+    }
+
+    for (byte col = 4; col < totalColumns; ++col) {
+        byte texture = texturesProbability.generateTexture();
+
+        // if (texture != gameFloor and texture != hole and random(100) < specialWallsProbability * 100)
+        // if (textture == gameFloor and random(100) < specialFloorProbability * 100)
+
+        if (col < matrixSize) {
+            mapColumns[col] = texture;
+            coinsColumns[col] = noCoin;
+        }
+        else {
+            additionalColumns[col - matrixSize] = texture;
+            additionalCoins[col - matrixSize] = noCoin;
+        }
+    }
+
+    // generate coin positions
+    for (byte coinIdx = 0; coinIdx < noOfCoins; ++coinIdx) {
+        // generate positions until we get a valid one
+        while (true) {
+            byte newCoinRow = random(coinTypes);
+            byte newCoinColumn = random(totalColumns);
+
+            byte coinTexture = noCoin;
+            if (newCoinRow == 1)
+                coinTexture = coinCol1;
+            else if (newCoinRow == 2)
+                coinTexture = coinCol2;
+            else if (newCoinRow == 3)
+                coinTexture = coinCol3;
+            else if (newCoinRow == 4)
+                coinTexture = coinCol4;
+            else if (newCoinRow == 5)
+                coinTexture = coinCol5;
+
+            byte currentMapColumn;
+            byte currentCoinColumn;
+            if (newCoinColumn < matrixSize) {
+                currentMapColumn = mapColumns[newCoinColumn];
+                currentCoinColumn = coinsColumns[newCoinColumn];
+            }
+            else {
+                currentMapColumn = additionalColumns[newCoinColumn - matrixSize];
+                currentCoinColumn = additionalCoins[newCoinColumn - matrixSize];
+            }
+
+            // if the coin position is free we found a valid position
+            // set the coin and exit the while loop
+            if (currentMapColumn & coinTexture == 0 and currentCoinColumn & coinTexture == 0) {
+                if (newCoinColumn < matrixSize)
+                    coinsColumns[newCoinColumn] |= coinTexture;
+                else
+                    additionalCoins[newCoinColumn - matrixSize] |= coinTexture;
+                break;
+            }
+        }
+    }
+
+    initialView.updateMap(mapColumns, coinsColumns);
+    restartLevel();
 }

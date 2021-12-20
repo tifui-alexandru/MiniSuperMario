@@ -42,6 +42,8 @@ void setup() {
     gameMap->initSetup();
     // buzzer->initSetup();
 
+    randomSeed(analogRead(0));
+
     initializeActions();
         
     // currentActionIndex = 0; // Wellcome

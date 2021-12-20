@@ -43,6 +43,8 @@ public:
     CameraView(const CameraView&);
     CameraView operator = (const CameraView&);
 
+    void updateMap(byte*, byte*);
+
     byte getMapColumn(int pos) { return getColumn(mapMatrix, pos); }
     byte getCoinsColumn(int pos) { return getColumn(coinsMatrix, pos); }
 

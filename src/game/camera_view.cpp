@@ -33,6 +33,13 @@ void CameraView::setPosition(Point p, bool value) {
     }
 }
 
+void CameraView::updateMap(byte* newMapColumns, byte* newCoinsColumns) {
+    for (int col = 0; col < matrixSize; ++col) {
+        setColumn(mapMatrix, matrixSize - col - 1, newMapColumns[col]);      // complementar position due to matrix logic
+        setColumn(coinsMatrix, matrixSize - col - 1, newCoinsColumns[col]);  // complementar position due to matrix logic
+    }
+}
+
 byte CameraView::getColumn(byte* bytesMatrix, int index) {
     byte mask = 1 << index;
     byte answer = 0;

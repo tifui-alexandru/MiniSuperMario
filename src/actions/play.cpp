@@ -8,9 +8,8 @@ void Play::initGame() {
     levelId = utilsStartingLevel;
     // generate levels until the current one is reached 
     // start from 1
-    for (int levelNo = 1; levelNo < levelId; ++levelNo) {
-        level = level.getNewLevel();
-    }
+    for (int levelNo = 1; levelNo < levelId; ++levelNo)
+        level.advanceToNextLevel();
 
     currentView = level.getInitialView();
     currentView.setPosition(mario, true);
@@ -235,9 +234,16 @@ ActionIndex Play::advanceLevel() {
     else {
         currentGameState = playing;
 
-        level = level.getNewLevel();
+        level.advanceToNextLevel();
+
+        jumpingState = false;
+        mario = {defaultMarioRow, defaultMarioCol};
         currentView = level.getInitialView();
         currentView.setPosition(mario, true);
+
+        time = level.getTime();
+        lastScore = score;
+        score = 0;
 
         return playActionIndex;
     }
