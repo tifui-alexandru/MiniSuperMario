@@ -14,8 +14,10 @@ class Level  {
     byte coinValue;
     byte noOfCoins;
 
-    byte* additionalColumns;
-    byte *additionalCoins;
+    static const byte maxAdditionalColumns = 30;
+
+    byte additionalColumns[maxAdditionalColumns];
+    byte additionalCoins[maxAdditionalColumns];
 
     struct ErasedCoin {
         Point panCameraPos;

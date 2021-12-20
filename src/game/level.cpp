@@ -11,12 +11,6 @@ void Level::initLevel() {
     coinValue = levelsCoinValue[0];
     noOfCoins = levelsNoOfCoins[0];
 
-    delete[] additionalColumns;
-    delete[] additionalCoins;
-
-    additionalColumns = new byte[noOfColumns];
-    additionalCoins = new byte[noOfColumns];
-
     additionalColumns[0] = gameFloor;
     additionalColumns[1] = hole;
     additionalColumns[2] = hole;
