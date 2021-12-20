@@ -18,7 +18,7 @@ static byte analogMinValue = 0;
 static byte analogMaxValue = 255;
 
 // levels from 1 to noOfLevels
-const int noOfLevels = 5;
+static const int noOfLevels = 5;
 static int utilsStartingLevel = 1; 
 
 struct Point {

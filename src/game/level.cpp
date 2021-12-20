@@ -1,4 +1,34 @@
-#include "level.h"  
+#include "level.h"
+
+const byte Level::levelsNoOfColumns[noOfLevels] = {5, 10, 15, 20, 30};
+const byte Level::levelsTimeAvailable[noOfLevels] = {999, 999, 999, 999, 999};
+const byte Level::levelsCoinValue[noOfLevels] = {100, 200, 300, 400, 500};
+const byte Level::levelsNoOfCoins[noOfLevels] = {3, 5, 10, 15, 20};
+
+void Level::initLevel() {
+    noOfColumns = levelsNoOfColumns[0];
+    time = levelsTimeAvailable[0];
+    coinValue = levelsCoinValue[0];
+    noOfCoins = levelsNoOfCoins[0];
+
+    delete[] additionalColumns;
+    delete[] additionalCoins;
+
+    additionalColumns = new byte[noOfColumns];
+    additionalCoins = new byte[noOfColumns];
+
+    additionalColumns[0] = gameFloor;
+    additionalColumns[1] = hole;
+    additionalColumns[2] = hole;
+    additionalColumns[3] = hole;
+    additionalColumns[4] = endWall;
+
+    additionalCoins[0] = noCoin;
+    additionalCoins[1] = coinCol4;
+    additionalCoins[2] = noCoin;
+    additionalCoins[3] = coinCol4;
+    additionalCoins[4] = noCoin;
+}
 
 bool Level::hasNextColumn() {
     return lastColumnIndex - matrixSize < noOfColumns - 1;
@@ -101,7 +131,10 @@ void Level::eraseCoin(Point p) {
 
 Level Level::operator = (const Level& other) {
     this->time = other.getTime();
-    this->id = other.getId();
+    this->noOfCoins = other.getNoOfCoins();
+    this->noOfColumns = other.getNoOfColumns();
+    this->coinValue = other.getCoinValue();
+
     this->firstColumnIndex = other.getFirstColumnIndex();
     this->lastColumnIndex = other.getLastColumnIndex();
     this->initialView = other.getInitialView();
