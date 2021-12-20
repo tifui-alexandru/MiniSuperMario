@@ -40,11 +40,11 @@ void setup() {
     lcd->initSetup(eepromObj);
     joystick->initSetup();
     gameMap->initSetup(eepromObj);
-    // buzzer->initSetup();
+    buzzer->initSetup();
 
     randomSeed(analogRead(0));
 
-    initializeActions();
+    // initializeActions();
         
     currentActionIndex = 0; // Wellcome
     // currentActionIndex = 2; // Play for debugging
@@ -52,6 +52,7 @@ void setup() {
 }
 
 void loop() {
-    ActionIndex nextActionIndex = actions[currentActionIndex]->run();
-    currentActionIndex = int(nextActionIndex);
+    // ActionIndex nextActionIndex = actions[currentActionIndex]->run();
+    // currentActionIndex = int(nextActionIndex);
+    buzzer->playThemeSong();
 }
