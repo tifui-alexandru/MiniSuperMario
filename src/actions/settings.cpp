@@ -62,6 +62,8 @@ ActionIndex Settings::runStartLevel() {
 
     if (joystick->pressedButton()) {
         utilsStartingLevel = levelOption;
+        Serial.println("*****");
+        Serial.println(utilsStartingLevel);
         return exitRoutine(settingsActionIndex);
     }
 

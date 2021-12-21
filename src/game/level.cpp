@@ -152,11 +152,8 @@ void Level::eraseCoin(Point p) {
         additionalCoins[index] &= eraseMask;
     }
 
-    Serial.println("here");
-
     // save the coin position
     ErasedCoin* erasedCoin = new ErasedCoin(p, realPoint);
-    Serial.println("here");
     erasedCoin->next = headErasedCoin;
     headErasedCoin = erasedCoin;
 }

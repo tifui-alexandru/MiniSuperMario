@@ -5,6 +5,8 @@ void Play::initGame() {
 
     level.initLevel();
 
+    Serial.println(utilsStartingLevel);
+
     levelId = utilsStartingLevel;
     // generate levels until the current one is reached 
     // start from 1
@@ -67,12 +69,9 @@ ActionIndex Play::moveMario() {
         
         // collect coin
         if (currentView.isCoin(mario)) {
-            Serial.println("before coin");
             score += level.getCoinValue();
             level.eraseCoin(mario);
-            Serial.println("after coin");
             currentView.eraseCoin(mario);
-            Serial.println("after coin");
         }
     }
     else if (deadPosition(nextMario)) {
@@ -205,10 +204,18 @@ ActionIndex Play::dieMario() {
     if (beginGameOverCountdown == 0)
         beginGameOverCountdown = now;
 
-    if (now - beginGameOverCountdown < gameOverInterval) 
-        lcd->displayText("GAME", "OVER");
+    bool enteredTop3 = eepromObj->write(playerNickname, score);
+
+    if (now - beginGameOverCountdown < gameOverInterval) {
+        if (enteredTop3)
+            lcd->displayText(playerNickname, "You are in top 3");
+        else
+            lcd->displayText(playerNickname, "GAME OVER");
+    }
     else {
-        lcd->displayTextAndNumber("Score:", score);
+        lcd->displayTextAndNumber("Score:     PRESS", score);
+
+
         if (joystick->pressedButton()) {
             currentGameState = playing;
             beginGameOverCountdown = 0;
@@ -266,6 +273,9 @@ void Play::resetGame() {
     gravityDirection = 1;
     mario = {defaultMarioRow, defaultMarioCol};
     score = lastScore;
+
+    levelId = 1;
+    initGameState = false;
 
     level.restartLevel();
     currentView = level.getInitialView();

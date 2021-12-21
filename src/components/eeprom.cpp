@@ -37,7 +37,8 @@ void EepromClass::writeHighscore(uint8_t playerIndex, int newHighscore) {
     EEPROM.update(highscoreByte3, playerIndex * chunkSize + nicknameSize + 2);
 }
 
-void EepromClass::write(char* nickname, int highscore) {
+// returns true if player entered the podium
+bool EepromClass::write(char* nickname, int highscore) {
     if (noOfActivePlayers < noOfPlayers) {
         writeNickname(noOfActivePlayers, nickname);
         writeHighscore(noOfActivePlayers, highscore);
@@ -46,7 +47,7 @@ void EepromClass::write(char* nickname, int highscore) {
     else {
         int lowestHighscore = readHighscore(noOfPlayers);
         if (lowestHighscore >= highscore) 
-            return; // the new highscore is not in top 3
+            return false; // the new highscore is not in top 3
         
         // else replace the lowest highscore
         writeNickname(noOfPlayers, nickname);
@@ -71,7 +72,11 @@ void EepromClass::write(char* nickname, int highscore) {
         writeHighscore(currentIndex - 1, highscore);
 
         currentIndex -= 1;
+
+        delete[] nextNickname;
     } 
+
+    return true;
 }
 
 // return the string in the format it will be displayed
@@ -119,6 +124,10 @@ char* EepromClass::read(uint8_t playerIndex) {
 
     for (uint8_t i = 0; i < highscoreSize; ++i)
         answer[3 + nicknameSize + 1 + i] = stringHighscore[i];
+
+    delete[] answer;
+    delete[] nickname;
+    delete[] stringHighscore;
 
     return answer; 
 }

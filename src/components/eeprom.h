@@ -30,7 +30,7 @@ class EepromClass {
     void writeHighscore(uint8_t, int);
 
 public:
-    void write(char*, int);
+    bool write(char*, int);
     char* read(uint8_t);
     uint8_t getNoOfScores() { return noOfActivePlayers; }
 

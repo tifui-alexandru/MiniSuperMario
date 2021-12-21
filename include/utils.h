@@ -3,8 +3,7 @@
 
 #include <Arduino.h>
 
-static char *playerNickname = "aaaaaa";
-
+static char* playerNickname = "aaaaaa";
 static bool musicState = true;
 
 // matrix constants
