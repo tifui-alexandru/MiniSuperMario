@@ -5,11 +5,8 @@
 #include "action.h"
 
 class HallOfFame : public Action {
-    char* firstLine = " Top 3 players ";
-    char* defaultText = " No score saved ";
-
-    int noOfScores = 0;
-    int currentDisplayedScore = 0;
+    byte noOfScores = 0;
+    byte currentDisplayedScore = 0;
 
     char* secondLine[3];
 

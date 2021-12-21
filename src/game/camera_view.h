@@ -17,7 +17,7 @@ class CameraView {
     byte mapMatrix[matrixSize];
     byte coinsMatrix[matrixSize];
 
-    byte getColumn(byte*, int);
+    byte getColumn(byte*, byte);
     void updateMap();
 
 public:
@@ -27,14 +27,14 @@ public:
 
     void changeMap(byte*, byte*);
 
-    byte getMapColumn(int pos) { return getColumn(mapMatrix, pos); }
-    byte getCoinsColumn(int pos) { return getColumn(coinsMatrix, pos); }
+    byte getMapColumn(byte pos) { return getColumn(mapMatrix, pos); }
+    byte getCoinsColumn(byte pos) { return getColumn(coinsMatrix, pos); }
 
-    byte getMapRow(int pos) { return mapMatrix[pos]; }
-    byte getCoinsRow(int pos) { return coinsMatrix[pos]; }
+    byte getMapRow(byte pos) { return mapMatrix[pos]; }
+    byte getCoinsRow(byte pos) { return coinsMatrix[pos]; }
 
     void setPosition(Point, bool);
-    void setColumn(byte*, int, byte);
+    void setColumn(byte*, byte, byte);
 
     void appendColumn(byte, byte);
     void prependColumn(byte, byte);

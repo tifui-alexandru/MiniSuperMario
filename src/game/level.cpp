@@ -198,7 +198,7 @@ void Level::advanceToNextLevel() {
     // generate the map
 
     // initialize the new map
-    for (int col = 0; col < totalColumns; ++col) {
+    for (byte col = 0; col < totalColumns; ++col) {
         if (col < matrixSize) {
             nextMapColumns[col] = hole;
             nextCoinsColumns[col] = noCoin;
@@ -211,7 +211,7 @@ void Level::advanceToNextLevel() {
 
     // first 4 columns are floor
     // we don't want mario to spawn direcrly into an obstacle
-    for (int col = 0; col < 4; ++col)
+    for (byte col = 0; col < 4; ++col)
         nextMapColumns[col] = gameFloor;
 
     for (byte col = 4; col < totalColumns - 1; ++col) {

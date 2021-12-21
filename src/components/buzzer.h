@@ -5,7 +5,7 @@
 #include "../game/theme_song.h"
 	
 class Buzzer  {
-	static const int buzzerPin = 3;
+	static const byte buzzerPin = 3;
 
     unsigned long lastPause = 0;
     byte currentNote = 0;

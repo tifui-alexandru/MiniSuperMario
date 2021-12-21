@@ -8,7 +8,7 @@ void Play::initGame() {
     levelId = utilsStartingLevel;
     // generate levels until the current one is reached 
     // start from 1
-    for (int levelNo = 1; levelNo < levelId; ++levelNo)
+    for (byte levelNo = 1; levelNo < levelId; ++levelNo)
         level.advanceToNextLevel();
 
     currentView = level.getInitialView();
@@ -21,7 +21,7 @@ ActionIndex Play::run() {
 
     // if game is finished
     if (levelId > noOfLevels) {
-        lcd->displayText(finalLine1, finalLine2);
+        lcd->displayText("CONGRATULATIONS!", "GAME FINISHED");
         if (joystick->pressedButton()) {
             initGameState = false;
             return menuActionIndex;
@@ -206,9 +206,9 @@ ActionIndex Play::dieMario() {
         beginGameOverCountdown = now;
 
     if (now - beginGameOverCountdown < gameOverInterval) 
-        lcd->displayText(gameOverLine1, gameOverLine2);
+        lcd->displayText("GAME", "OVER");
     else {
-        lcd->displayTextAndNumber(scoreLine, score);
+        lcd->displayTextAndNumber("Score:", score);
         if (joystick->pressedButton()) {
             currentGameState = playing;
             beginGameOverCountdown = 0;
@@ -228,9 +228,9 @@ ActionIndex Play::winMario() {
         beginWinCountdown = now;
 
     if (now - beginWinCountdown < winInterval) 
-        lcd->displayText(winLine1, playerNickname);
+        lcd->displayText("Congrats,", playerNickname);
     else {
-        lcd->displayText(winNextLevelLine1, winNextLevelLine2);
+        lcd->displayText("Press the button", "to advance level");
         if (joystick->pressedButton()) {
             beginWinCountdown = 0;
             return advanceLevel();

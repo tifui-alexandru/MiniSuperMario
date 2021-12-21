@@ -8,43 +8,43 @@
 #include "eeprom.h"
 
 class Lcd {
-    const int RS = 13;
-    const int enable = 9;
-    const int D4 = 7;
-    const int D5 = A5;
-    const int D6 = 4;
-    const int D7 = 2;
-    const int V0 = 6;
-    const int A = 5;
+    const byte RS = 13;
+    const byte enable = 9;
+    const byte D4 = 7;
+    const byte D5 = A5;
+    const byte D6 = 4;
+    const byte D7 = 2;
+    const byte V0 = 6;
+    const byte A = 5;
 
     LiquidCrystal* lcd = new LiquidCrystal(RS, enable, D4, D5, D6, D7);
 
-    static const int lcdRows = 2;
-    static const int lcdColumns = 16;
+    static const byte lcdRows = 2;
+    static const byte lcdColumns = 16;
 
     struct lcdLayout {
         char layout[lcdRows][lcdColumns];
 
         lcdLayout() {
-            for (int row = 0; row < lcdRows; ++row)
-                for (int col = 0; col < lcdColumns; ++col)
+            for (byte row = 0; row < lcdRows; ++row)
+                for (byte col = 0; col < lcdColumns; ++col)
                     layout[row][col] = 0;
         }
 
         lcdLayout(const char* row1, const char* row2) {
-            for (int col = 0; col < lcdColumns; ++col) 
+            for (byte col = 0; col < lcdColumns; ++col)
                 layout[0][col] = layout[1][col] = 0;
 
-            for (int col = 0; row1[col] and col < lcdColumns; ++col)
+            for (byte col = 0; row1[col] and col < lcdColumns; ++col)
                 layout[0][col] = row1[col];
 
-            for (int col = 0; row2[col] and col < lcdColumns; ++col)
+            for (byte col = 0; row2[col] and col < lcdColumns; ++col)
                 layout[1][col] = row2[col];
         }
 
         bool operator == (const lcdLayout& other) const {
-            for (int row = 0; row < lcdRows; ++row) 
-                for (int col = 0; col < lcdColumns; ++col) 
+            for (byte row = 0; row < lcdRows; ++row)
+                for (byte col = 0; col < lcdColumns; ++col)
                     if (layout[row][col] != other.layout[row][col])
                         return false;
             return true;
@@ -55,8 +55,8 @@ class Lcd {
         }
 
         lcdLayout operator = (const lcdLayout& other) {
-            for (int row = 0; row < lcdRows; ++row)
-                for (int col = 0; col < lcdColumns; ++col) 
+            for (byte row = 0; row < lcdRows; ++row)
+                for (byte col = 0; col < lcdColumns; ++col)
                     layout[row][col] = other.layout[row][col];
             return *this;
         }
@@ -88,7 +88,7 @@ class Lcd {
     };
     byte heartId = 0;
 
-    int getIntegerLen(int);
+    byte getIntegerLen(int);
 
 public:
     Lcd() {
@@ -107,13 +107,13 @@ public:
     void displayText(char*, char*);
     void displayTextAndNumber(char*, int);
 
-    void displayGameInfo(int, int, int, int);
+    void displayGameInfo(byte, short, int, byte);
 
-    void displayScrollingText(char*, char*, int, int);
+    void displayScrollingText(char*, char*, byte, byte);
     void displayTextOnSecondLine(char*);
 
-    void lockPositionOnSecondLine(int);
-    void unlockPositionOnSecondLine(int);
+    void lockPositionOnSecondLine(byte);
+    void unlockPositionOnSecondLine(byte);
 
     void clearText();
 };

@@ -4,16 +4,15 @@
 #include "action.h"
 
 class Register : public Action {
-    char* firstLine = " Enter nickname";
     char* nicknameLine = "    aaaaaaK     "; // last char should be an ok emoji
 
     // the available characters are from 'a' to 'z' and ' '
 
-    const int nicknameLen = 6;
-    const int nicknameStartPos = 4;
-    const int nicknameEndPos = nicknameStartPos + nicknameLen;
+    const byte nicknameLen = 6;
+    const byte nicknameStartPos = 4;
+    const byte nicknameEndPos = nicknameStartPos + nicknameLen;
 
-    int currentLetterIndex = nicknameStartPos;
+    byte currentLetterIndex = nicknameStartPos;
 
     enum RegisterState {
         selectLetterIndex,

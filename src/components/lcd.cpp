@@ -52,16 +52,16 @@ void Lcd::displayText(char* msg1, char* msg2) {
 
 void Lcd::displayTextAndNumber(char* msg, int no) {
     char line[lcdColumns];
-    for (int i = 0; i < lcdColumns; ++i)
+    for (byte i = 0; i < lcdColumns; ++i)
         line[i] = ' ';
 
     if (no == 0) 
         line[0] = '0';
     else {
-        int start = 0, stop = 0;
+        byte start = 0, stop = 0;
 
         while (no) {
-            int lastDigit = no % 10;
+            byte lastDigit = no % 10;
             no /= 10;
 
             line[stop] = char(lastDigit + '0');
@@ -70,7 +70,7 @@ void Lcd::displayTextAndNumber(char* msg, int no) {
         --stop;
         
         // reverse
-        for (int i = start, j = stop; i < j; ++i, --j) {
+        for (byte i = start, j = stop; i < j; ++i, --j) {
             char aux = line[i];
             line[i] = line[j];
             line[j] = aux;
@@ -80,12 +80,12 @@ void Lcd::displayTextAndNumber(char* msg, int no) {
     displayText(msg, line);
 }
 
-void Lcd::displayScrollingText(char* msg1, char* msg2, int startPosMsg2, int msg2Len) {
+void Lcd::displayScrollingText(char* msg1, char* msg2, byte startPosMsg2, byte msg2Len) {
     char scrollingRow[lcdColumns];
 
-    int posMsg2 = startPosMsg2;
+    byte posMsg2 = startPosMsg2;
 
-    for (int i = 0; i < lcdColumns; ++i) {
+    for (byte i = 0; i < lcdColumns; ++i) {
         scrollingRow[i] = msg2[posMsg2];
         posMsg2 = (posMsg2 + 1) % msg2Len;
     }
@@ -95,25 +95,25 @@ void Lcd::displayScrollingText(char* msg1, char* msg2, int startPosMsg2, int msg
 
 void Lcd::displayTextOnSecondLine(char* msg) {
     char firstLine[lcdColumns];
-    for (int i = 0; i < lcdColumns; ++i)
+    for (byte i = 0; i < lcdColumns; ++i)
         firstLine[i] = currentLayout.layout[0][i];
 
     displayText(firstLine, msg);
 }
 
-void Lcd::lockPositionOnSecondLine(int pos) {
+void Lcd::lockPositionOnSecondLine(byte pos) {
     lcd->setCursor(pos, 1);
     lcd->blink();
 }
 
 
-void Lcd::unlockPositionOnSecondLine(int pos) {
+void Lcd::unlockPositionOnSecondLine(byte pos) {
     lcd->setCursor(pos, 1);
     lcd->noBlink();
 }
 
-void Lcd::displayGameInfo(int level, int time, int score, int lives) {
-    static int lastLevel = 0;
+void Lcd::displayGameInfo(byte level, short time, int score, byte lives) {
+    static byte lastLevel = 0;
     if (lastLevel != level) {
         lastLevel = level;
         lcd->clear();
@@ -136,8 +136,8 @@ void Lcd::displayGameInfo(int level, int time, int score, int lives) {
     lcd->print(score);
     lcd->print(" ");
 
-    int scoreLen = getIntegerLen(score);
-    for (int i = 0; i < maxScoreLen - scoreLen; ++i)
+    byte scoreLen = getIntegerLen(score);
+    for (byte i = 0; i < maxScoreLen - scoreLen; ++i)
         lcd->print(" ");
 
     lcd->print(lives);
@@ -150,14 +150,14 @@ void Lcd::clearText() {
     lcd->clear();
 }
 
-int Lcd::getIntegerLen(int no) {
+byte Lcd::getIntegerLen(int no) {
     if (no == 0)
         return 1;
 
-    int ans = 0;
+    byte ans = 0;
 
     while (no) {
-        int last_digit = no % 10;
+        byte last_digit = no % 10;
         no /= 10;
         ++ans;
     }

@@ -7,7 +7,8 @@ ActionIndex About::run() {
         startIndexSecondLine = (startIndexSecondLine + 1) % secondLineLength;
     }
 
-    lcd->displayScrollingText(firstLine, secondLine, startIndexSecondLine, secondLineLength);
+    lcd->displayScrollingText("Mini Super Mario", " Creator: Alexandru Tifui source code: https://github.com/tifui-alexandru/MiniSuperMario ", \
+                                startIndexSecondLine, secondLineLength);
 
     if (joystick->pressedButton()) 
         return menuActionIndex;

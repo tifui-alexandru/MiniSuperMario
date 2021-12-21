@@ -35,16 +35,16 @@ void Matrix::displayMap(CameraView& view) {
         view.changeCoinsState(blinkingState);
     }
 
-    for (int row = 0; row < matrixSize; ++row)
+    for (byte row = 0; row < matrixSize; ++row)
         lc.setRow(0, row, view.getMapRow(row));
 }
 
 void Matrix::lightUp() {
-    for (int row = 0; row < matrixSize; ++row)
+    for (byte row = 0; row < matrixSize; ++row)
         lc.setRow(0, row, lightUpByte);
 }
 
 void Matrix::lightDown() {
-    for (int row = 0; row < matrixSize; ++row)
+    for (byte row = 0; row < matrixSize; ++row)
         lc.setRow(0, row, lightDownByte);
 }

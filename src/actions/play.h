@@ -6,37 +6,22 @@
 #include "../game/level.h"
 
 class Play : public Action {
-    const int maxLives = 3;
-    const int maxTime = 999; // in seconds
-    const int noOfLevels = 5;
-    const int defaultMarioRow = 6;
-    const int defaultMarioCol = 5;
+    const byte maxLives = 3;
+    const short maxTime = 999; // in seconds
+    const byte noOfLevels = 5;
+    const byte defaultMarioRow = 6;
+    const byte defaultMarioCol = 5;
 
-    int lives = maxLives;
+    byte lives = maxLives;
     int score = 0;
     int lastScore = 0;
-    int totalLevelTime = maxTime;
-    int time = maxTime;
-    int levelId;
+    short totalLevelTime = maxTime;
+    short time = maxTime;
+    byte levelId;
 
     Level level;
     Point mario = {defaultMarioRow, defaultMarioCol};
     CameraView currentView;
-
-    char *gameOverLine1 = "GAME";
-    char *gameOverLine2 = "OVER";
-
-    char* scoreLine = "Score:";
-    char* newHighscoreline = " New highscore:";
-
-    char* winLine1 = "Congrats,";
-
-    char* winNextLevelLine1 = "Press the button";
-    char* winNextLevelLine2 = "to advance level";
-
-    char* finalLine1 = "GAME FINISHED";
-    char* finalLine2 = emptyLcdLine;
-
 
     const unsigned long winInterval = 2000;
     unsigned long beginWinCountdown = 0;
@@ -52,7 +37,7 @@ class Play : public Action {
 
     const unsigned long gravityChangeFreq = 100;
     unsigned long lastGravityChange = 0;
-    int gravityDirection = 1;
+    byte gravityDirection = 1;
 
     bool initGameState = false;
     void initGame();

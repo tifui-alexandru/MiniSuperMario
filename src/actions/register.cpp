@@ -1,7 +1,7 @@
 #include "register.h"
 
 ActionIndex Register::run() {
-    lcd->displayText(firstLine, nicknameLine);
+    lcd->displayText(" Enter nickname", nicknameLine);
 
     if (state == selectLetterIndex)
         return runSelectLetterIndex();
@@ -29,7 +29,7 @@ ActionIndex Register::runSelectLetterIndex() {
         lcd->unlockPositionOnSecondLine(currentLetterIndex);
 
         if (currentLetterIndex == nicknameEndPos) {
-            for (int i = 0; i < nicknameLen; ++i) 
+            for (byte i = 0; i < nicknameLen; ++i) 
                 playerNickname[i] = nicknameLine[nicknameStartPos + i];
             return menuActionIndex;
         }

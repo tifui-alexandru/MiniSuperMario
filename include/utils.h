@@ -28,13 +28,13 @@ static byte contrastMinVisibleValue = map(4, lcdMinContrast, lcdMaxContrast, ana
 static byte contrastMaxVisibleValue = map(6, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
 
 // levels from 1 to noOfLevels
-static const int noOfLevels = 5;
-static int utilsStartingLevel = 1; 
+static const byte noOfLevels = 5;
+static byte utilsStartingLevel = 1; 
 
 struct Point {
     byte x, y;
 
-    Point(int x = 0, int y = 0) : x(x), y(y) {}
+    Point(byte x = 0, byte y = 0) : x(x), y(y) {}
 
     bool operator == (const Point& other) const {
         return x == other.x and y == other.y;

@@ -5,7 +5,7 @@ ActionIndex Wellcome::run() {
     if (now - startTime > interval) 
         return registerActionIndex;
     else {
-        lcd->displayText(msgLine1, msgLine2);
+        lcd->displayText("Welcome to", "Mini Super Mario!");
         return wellcomeActionIndex;
     }
 }

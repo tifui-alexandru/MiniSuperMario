@@ -40,8 +40,8 @@ class Level  {
     };
     ErasedCoin* headErasedCoin = nullptr;
 
-    int firstColumnIndex = 0;
-    int lastColumnIndex = matrixSize - 1;
+    byte firstColumnIndex = 0;
+    byte lastColumnIndex = matrixSize - 1;
     CameraView initialView;
 
 public:
@@ -59,9 +59,8 @@ public:
     float getSpecialWallsProbability() { return specialWallsProbability; };
     float getSpecialFloorProbability() { return specialFloorProbability; };
 
-
-    int getFirstColumnIndex() { return firstColumnIndex; };
-    int getLastColumnIndex() { return lastColumnIndex; };
+    byte getFirstColumnIndex() { return firstColumnIndex; };
+    byte getLastColumnIndex() { return lastColumnIndex; };
     const CameraView getInitialView() { return initialView; };
 
     bool hasNextColumn();

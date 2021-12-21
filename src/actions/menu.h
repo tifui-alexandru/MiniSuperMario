@@ -5,7 +5,6 @@
 #include "action.h"
 
 class Menu : public Action {
-    char* firstLine = "Options: "; // to do: add up and down emoji
     static const byte noOfOptions = 5;
 
     char* options[noOfOptions] = {

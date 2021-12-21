@@ -5,8 +5,6 @@
 #include "action.h"
 
 class Wellcome : public Action {
-    char* msgLine1 = "Welcome to";
-    char* msgLine2 = "Mini Super Mario!";
     unsigned long startTime;
     const unsigned long interval = 5000;
 

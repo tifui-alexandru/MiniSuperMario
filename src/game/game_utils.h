@@ -27,7 +27,7 @@ struct TexturesProbability {
     float floorProb, holeProb, wallProb;
 
     byte generateTexture() {
-        int randomNumber = random(100);
+        byte randomNumber = random(100);
 
         float currentProb = floorProb;
         if (randomNumber <= currentProb * 100)
@@ -37,7 +37,7 @@ struct TexturesProbability {
         if (randomNumber <= currentProb * 100)
             return hole;
 
-        int wallHeight = random(1, 5);
+        byte wallHeight = random(1, 5);
 
         if (wallHeight == 1) 
             return wallHeight1;

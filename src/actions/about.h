@@ -5,11 +5,8 @@
 #include "action.h"
 
 class About : public Action {
-    char *firstLine = "Mini Super Mario";
-    char *secondLine = " Creator: Alexandru Tifui source code: https://github.com/tifui-alexandru/MiniSuperMario ";
-
-    int secondLineLength = 89;
-    int startIndexSecondLine = 0;
+    byte secondLineLength = 89;
+    byte startIndexSecondLine = 0;
 
     unsigned long lastCountTime = 0;
     const unsigned long scrollInterval = 400;
