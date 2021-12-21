@@ -1,8 +1,4 @@
-#include "buzzer.h"  
-
-void Buzzer::initSetup() { 
-    pinMode(buzzerPin, OUTPUT);
-}
+#include "buzzer.h" 
 
 void Buzzer::playThemeSong() {
     tone(buzzerPin, 660, 100);

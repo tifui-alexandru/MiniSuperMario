@@ -67,9 +67,12 @@ ActionIndex Play::moveMario() {
         
         // collect coin
         if (currentView.isCoin(mario)) {
+            Serial.println("before coin");
             score += level.getCoinValue();
             level.eraseCoin(mario);
+            Serial.println("after coin");
             currentView.eraseCoin(mario);
+            Serial.println("after coin");
         }
     }
     else if (deadPosition(nextMario)) {

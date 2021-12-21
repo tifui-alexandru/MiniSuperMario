@@ -150,8 +150,11 @@ void Level::eraseCoin(Point p) {
         additionalCoins[index] &= eraseMask;
     }
 
+    Serial.println("here");
+
     // save the coin position
     ErasedCoin* erasedCoin = new ErasedCoin(p, realPoint);
+    Serial.println("here");
     erasedCoin->next = headErasedCoin;
     headErasedCoin = erasedCoin;
 }
@@ -231,7 +234,7 @@ void Level::advanceToNextLevel() {
         // generate positions until we get a valid one
         while (true) {
             byte newCoinRow = random(coinTypes);
-            byte newCoinColumn = random(totalColumns);
+            byte newCoinColumn = random(totalColumns); // spawn coins begining to the 4th column
 
             byte coinTexture = noCoin;
             if (newCoinRow == 1)

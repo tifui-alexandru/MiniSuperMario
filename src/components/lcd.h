@@ -11,7 +11,7 @@ class Lcd {
     const int RS = 13;
     const int enable = 9;
     const int D4 = 7;
-    const int D5 = 1;
+    const int D5 = A5;
     const int D6 = 4;
     const int D7 = 2;
     const int V0 = 6;

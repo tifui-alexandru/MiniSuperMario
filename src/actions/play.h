@@ -6,7 +6,7 @@
 #include "../game/level.h"
 
 class Play : public Action {
-    const int maxLives = 30;
+    const int maxLives = 3;
     const int maxTime = 999; // in seconds
     const int noOfLevels = 5;
     const int defaultMarioRow = 6;

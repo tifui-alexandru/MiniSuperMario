@@ -12,7 +12,6 @@ class Buzzer  {
 
 public:
     Buzzer() {};
-    void initSetup();
     void playThemeSong();
 };
 
