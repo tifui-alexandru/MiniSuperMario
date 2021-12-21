@@ -74,6 +74,8 @@ class Play : public Action {
 public:
     Play(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
         Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+
+    virtual ~Play() {};
         
     ActionIndex run() override;
 };

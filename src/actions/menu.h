@@ -28,6 +28,8 @@ class Menu : public Action {
 public:
     Menu(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
         Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+
+    virtual ~Menu() {}
         
     ActionIndex run() override;
     void updateOption();

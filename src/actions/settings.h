@@ -44,6 +44,8 @@ public:
     Settings(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
         Action(lcd, joystick, matrix, buzzer, eepromObj) {};
         
+    virtual ~Settings() {}
+
     ActionIndex run() override;
 };
 

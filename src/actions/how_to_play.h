@@ -8,6 +8,8 @@ class HowToPlay : public Action {
 public:
     HowToPlay(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
         Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+
+    virtual ~HowToPlay() {};
         
     ActionIndex run() override;
 };

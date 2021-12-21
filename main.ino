@@ -21,20 +21,10 @@ Matrix* gameMap = new Matrix();
 Buzzer* buzzer = new Buzzer();
 EepromClass* eepromObj = new EepromClass();
 
-byte currentActionIndex;
+ActionIndex currentActionIndex;
 const byte noOfactions = 8;
-Action* actions[noOfactions];
 
-void initializeActions() {
-    actions[0] = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj);
-    actions[1] = new Menu(lcd, joystick, gameMap, buzzer, eepromObj);
-    actions[2] = new Play(lcd, joystick, gameMap, buzzer, eepromObj);
-    actions[3] = new HowToPlay(lcd, joystick, gameMap, buzzer, eepromObj);
-    actions[4] = new HallOfFame(lcd, joystick, gameMap, buzzer, eepromObj);
-    actions[5] = new Settings(lcd, joystick, gameMap, buzzer, eepromObj);
-    actions[6] = new About(lcd, joystick, gameMap, buzzer, eepromObj);
-    actions[7] = new Register(lcd, joystick, gameMap, buzzer, eepromObj);
-}
+Action* action;
 
 void setup() {
     lcd->initSetup(eepromObj);
@@ -43,14 +33,38 @@ void setup() {
 
     randomSeed(analogRead(0));
 
-    initializeActions();
-        
-    // currentActionIndex = 0; // Wellcome
-    currentActionIndex = 2; // Play for debugging
+    // currentActionIndex = wellcomeActionIndex;
+    // action = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj);
+
+    currentActionIndex = playActionIndex; // for debugging
+    action = new Play(lcd, joystick, gameMap, buzzer, eepromObj);
+
     Serial.begin(9600);
 }
 
 void loop() {
-    ActionIndex nextActionIndex = actions[currentActionIndex]->run();
-    currentActionIndex = int(nextActionIndex);
+    ActionIndex nextActionIndex = action->run();
+
+    if (currentActionIndex != nextActionIndex) {
+        currentActionIndex = nextActionIndex;
+
+        delete action;
+
+        if (currentActionIndex == wellcomeActionIndex)
+            action = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj);
+        else if (currentActionIndex == menuActionIndex)
+            action = new Menu(lcd, joystick, gameMap, buzzer, eepromObj);
+        else if (currentActionIndex == playActionIndex)
+            action = new Play(lcd, joystick, gameMap, buzzer, eepromObj);
+        else if (currentActionIndex == howToPlayActionIndex)
+            action = new HowToPlay(lcd, joystick, gameMap, buzzer, eepromObj);
+        else if (currentActionIndex == hallOfFameActionIndex)
+            action = new HallOfFame(lcd, joystick, gameMap, buzzer, eepromObj);
+        else if (currentActionIndex == settingsActionIndex)
+            action = new Settings(lcd, joystick, gameMap, buzzer, eepromObj);
+        else if (currentActionIndex == aboutActionIndex)
+            action = new About(lcd, joystick, gameMap, buzzer, eepromObj);
+        else if (currentActionIndex == registerActionIndex)
+            action = new Register(lcd, joystick, gameMap, buzzer, eepromObj);
+    }
 }

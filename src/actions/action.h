@@ -21,6 +21,8 @@ protected:
 public:
     Action(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr, Buzzer* buzzer = nullptr, EepromClass* eepromObj = nullptr) : 
         lcd(lcd), joystick(joystick), matrix(matrix), buzzer(buzzer), eepromObj(eepromObj) {};
+
+    virtual ~Action() {}
         
     virtual ActionIndex run() = 0;
 };

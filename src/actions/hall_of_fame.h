@@ -8,11 +8,13 @@ class HallOfFame : public Action {
     byte noOfScores = 0;
     byte currentDisplayedScore = 0;
 
-    char* secondLine[3];
+    static char* secondLine[3];
 
 public:
     HallOfFame(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
         Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+
+    virtual ~HallOfFame() {}
 
     ActionIndex run() override;
 };

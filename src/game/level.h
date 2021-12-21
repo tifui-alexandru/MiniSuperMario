@@ -49,6 +49,10 @@ class Level  {
 public:
     Level() {};
 
+    ~Level() {
+        restoreErasedCoins();
+    }
+
     // construct default level 1
     void initLevel();
 

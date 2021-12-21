@@ -11,6 +11,8 @@ class Wellcome : public Action {
 public:
     Wellcome(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
         Action(lcd, joystick, matrix, buzzer, eepromObj), startTime(millis()) {};
+
+    virtual ~Wellcome() {};
         
     ActionIndex run() override;
 };
