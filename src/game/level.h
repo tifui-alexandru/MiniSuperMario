@@ -40,6 +40,8 @@ class Level  {
     };
     ErasedCoin* headErasedCoin = nullptr;
 
+    void restoreErasedCoins();
+
     byte firstColumnIndex = 0;
     byte lastColumnIndex = matrixSize - 1;
     CameraView initialView;

@@ -110,8 +110,10 @@ bool Level::reachedEndOfTheLevel() {
 void Level::restartLevel() {
     firstColumnIndex = 0;
     lastColumnIndex = matrixSize - 1;
+    restoreErasedCoins();
+}
 
-    // restore erased coins
+void Level::restoreErasedCoins() {
     ErasedCoin* currentCoin = headErasedCoin;
     while (currentCoin != nullptr) {
         if (currentCoin->realPos.y < matrixSize) {
@@ -182,6 +184,8 @@ void Level::advanceToNextLevel() {
     if (levelId == noOfLevels)
         return;
 
+    restoreErasedCoins(); // in order to free some memory
+
     ++levelId;
 
     noOfColumns = levelsNoOfColumns[levelId];
@@ -234,11 +238,11 @@ void Level::advanceToNextLevel() {
         // generate positions until we get a valid one
         while (true) {
             byte newCoinRow = random(coinTypes);
-            byte newCoinColumn = random(totalColumns); // spawn coins begining to the 4th column
+            byte newCoinColumn = random(4, totalColumns); // spawn coins begining to the 4th column
 
             byte coinTexture = noCoin;
             if (newCoinRow == 1)
-                coinTexture = coinCol1;
+                coinTexture = coinCol2;
             else if (newCoinRow == 2)
                 coinTexture = coinCol2;
             else if (newCoinRow == 3)
