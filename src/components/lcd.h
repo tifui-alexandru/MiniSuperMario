@@ -94,7 +94,7 @@ class Lcd {
         B00100,
         B01110,
         B11111,
-        B00100,
+        B00000,
         B11111,
         B01110,
         B00100
@@ -127,7 +127,7 @@ public:
     void initSetup(EepromClass*);
 
     void displayText(char*, char*, bool upDownEmoji = false);
-    void displayTextAndNumber(char*, int);
+    void displayTextAndNumber(char*, int, bool upDownEmoji = false);
 
     void displayGameInfo(byte, short, int, byte);
     void displayRegisterInfo(char*, char*);

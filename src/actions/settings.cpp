@@ -68,9 +68,9 @@ ActionIndex Settings::runResetScoreboard() {
     resetOption = getJoystickMove(no, yes, resetOption);
 
     if (resetOption == no)
-        lcd->displayText("Are you sure?", "NO");
+        lcd->displayText("Are you sure?", "NO", true);
     else
-        lcd->displayText("Are you sure?", "YES");
+        lcd->displayText("Are you sure?", "YES", true);
 
     if (joystick->pressedButton()) {
         if (resetOption == yes)
@@ -82,7 +82,7 @@ ActionIndex Settings::runResetScoreboard() {
 
 ActionIndex Settings::runStartLevel() {
     static int levelOption = utilsStartingLevel;
-    lcd->displayTextAndNumber("Select level no", levelOption);
+    lcd->displayTextAndNumber("Select level no", levelOption, true);
 
     levelOption = getJoystickMove(1, noOfLevels, levelOption);
 
@@ -96,7 +96,7 @@ ActionIndex Settings::runStartLevel() {
 
 ActionIndex Settings::runLcdContrast() {
     static int contrastOption = lcd->getContrast();
-    lcd->displayTextAndNumber("LCD contrast", contrastOption);
+    lcd->displayTextAndNumber("LCD contrast", contrastOption, true);
 
     contrastOption = getJoystickMove(lcdMinContrast, lcdMaxContrast, contrastOption);
     lcd->setContrast(contrastOption, eepromObj);
@@ -110,7 +110,7 @@ ActionIndex Settings::runLcdContrast() {
 
 ActionIndex Settings::runLcdBrightness() {
     static int brightnessOption = lcd->getIntensity();
-    lcd->displayTextAndNumber("LCD brightness", brightnessOption);
+    lcd->displayTextAndNumber("LCD brightness", brightnessOption, true);
 
     brightnessOption = getJoystickMove(lcdMinIntensity, lcdMaxIntensity, brightnessOption);
     lcd->setIntensity(brightnessOption, eepromObj);
@@ -126,7 +126,7 @@ ActionIndex Settings::runMatrixIntensity() {
     matrix->lightUp();
 
     static int matrixOption = matrix->getMatrixBrightness();
-    lcd->displayTextAndNumber("Matrix intensity", matrixOption);
+    lcd->displayTextAndNumber("Matrix intensity", matrixOption, true);
 
     matrixOption = getJoystickMove(matrixMinIntensity, matrixMaxIntensity, matrixOption);
     matrix->setMatrixBrightness(matrixOption, eepromObj);
@@ -140,7 +140,7 @@ ActionIndex Settings::runMatrixIntensity() {
 }
 
 ActionIndex Settings::runDefaultScreen() {
-    lcd->displayText("Settings options ", options[currentOption]);
+    lcd->displayText("Settings menu", options[currentOption], true);
 
     if (joystick->pressedButton())
         currentState = SettingsState(currentOption);

@@ -12,9 +12,9 @@ ActionIndex HallOfFame::run() {
         if (noOfScores == 1)
             lcd->displayText(" Top 1 player ", eepromObj->read(currentDisplayedScore));
         else if (noOfScores == 2)
-            lcd->displayText(" Top 2 players ", eepromObj->read(currentDisplayedScore));
+            lcd->displayText(" Top 2 players ", eepromObj->read(currentDisplayedScore), true);
         else
-            lcd->displayText(" Top 3 players ", eepromObj->read(currentDisplayedScore));
+            lcd->displayText(" Top 3 players ", eepromObj->read(currentDisplayedScore), true);
 
         joystickUpDownMove move = joystick->movedUpDown();
 

@@ -53,11 +53,14 @@ void Lcd::displayText(char* msg1, char* msg2, bool upDownEmoji = false) {
         lcd->print(msg2);
     }
 
-    if (upDownEmoji)
-        lcd->write(byte(okId));
+    if (upDownEmoji) {
+        // set cursor on the firt row and last column and display UpDown emoji
+        lcd->setCursor(lcdColumns - 1, 0);
+        lcd->write(byte(upDownId));
+    }
 }
 
-void Lcd::displayTextAndNumber(char* msg, int no) {
+void Lcd::displayTextAndNumber(char* msg, int no, bool upDownEmoji = false) {
     char line[lcdColumns];
     for (byte i = 0; i < lcdColumns; ++i)
         line[i] = ' ';
@@ -84,7 +87,7 @@ void Lcd::displayTextAndNumber(char* msg, int no) {
         }
     }
        
-    displayText(msg, line);
+    displayText(msg, line, upDownEmoji);
 }
 
 void Lcd::displayScrollingText(char* msg1, char* msg2, byte startPosMsg2, byte msg2Len) {

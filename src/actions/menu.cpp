@@ -3,7 +3,7 @@
 
 ActionIndex Menu::run() {
     matrix->displayMenuAnimation();
-    lcd->displayText("Options: ", options[currentOption]);
+    lcd->displayText("Options: ", options[currentOption], true);
 
     if (joystick->pressedButton()) 
         return optionsActionIndex[currentOption];
