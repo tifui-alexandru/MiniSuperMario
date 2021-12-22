@@ -22,6 +22,11 @@ void Buzzer::playNote(unsigned int frequency, unsigned long duration, unsigned l
     }
 }
 
+void Buzzer::initialize() {
+    for (byte i = 0; i < noOfSoundTypes; ++i) 
+        soundTypeIndex[i] = 0;
+}
+
 void Buzzer::playSound() {
     if (soundState == themeSong)
         buzzThemeSong();
@@ -29,10 +34,6 @@ void Buzzer::playSound() {
         buzzJumpSound();
     else if (soundState == coinSound)
         buzzCoinSound();
-    else if (soundState == deathTune)
-        buzzDeathTune();
-    else if (soundState == nextLevelTune)
-        buzzNextLevelTune();
 }
 
 void Buzzer::buzzJumpSound() {
@@ -40,14 +41,6 @@ void Buzzer::buzzJumpSound() {
         playNote(391, 47, 0);
     else if (soundTypeIndex[(byte)soundState] == 1)
         playNote(415, 47, 117);
-}
-
-void Buzzer::buzzDeathTune() {
-    soundState = themeSong;
-}
-
-void Buzzer::buzzNextLevelTune() {
-    soundState = themeSong;
 }
 
 void Buzzer::buzzCoinSound() {

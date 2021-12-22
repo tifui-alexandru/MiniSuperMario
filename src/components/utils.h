@@ -11,7 +11,8 @@ public:
 
     Utils() {
         playerNickname = "aaaaaa";
-        musicState = true;
+        // musicState = true;
+        musicState = false; // for debugging !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         utilsStartingLevel = 1;
     };
 };

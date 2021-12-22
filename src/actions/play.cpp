@@ -262,11 +262,13 @@ ActionIndex Play::winMario() {
     matrix->displayAnimation(happyAnimation);
     unsigned long now = millis();
 
-    if (beginWinCountdown == 0)
+    if (beginWinCountdown == 0) {
         beginWinCountdown = now;
+    }
 
-    if (now - beginWinCountdown < winInterval)
+    if (now - beginWinCountdown < winInterval) {
         lcd->displayText("Congrats,", gameUtils->playerNickname);
+    }
     else {
         lcd->displayText("Press the button", "to advance level");
         if (joystick->pressedButton()) {
