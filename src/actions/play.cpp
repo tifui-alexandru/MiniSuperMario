@@ -8,7 +8,7 @@ void Play::initGame() {
 
     // generate levels until the current one is reached 
     // start from 1
-    while (levelId < utilsStartingLevel) {
+    while (levelId < gameUtils->utilsStartingLevel) {
         level.advanceToNextLevel();
         ++levelId;
     }
@@ -29,15 +29,15 @@ ActionIndex Play::run() {
             beginGameOverCountdown = now;
 
         if (scoreboardUpdated == false) {
-            enteredTop3 = eepromObj->write(playerNickname, score);  
+            enteredTop3 = eepromObj->write(gameUtils->playerNickname, score);  
             scoreboardUpdated = true;
         }
 
         if (now - beginGameOverCountdown < gameOverInterval) {
             if (enteredTop3)
-                lcd->displayText("You are in top 3", playerNickname);
+                lcd->displayText("You are in top 3", gameUtils->playerNickname);
             else
-                lcd->displayText("CONGRATULATIONS!", playerNickname);
+                lcd->displayText("CONGRATULATIONS!", gameUtils->playerNickname);
         }
         else {
             lcd->displayTextAndNumber("Score:     PRESS", score);
@@ -226,15 +226,15 @@ ActionIndex Play::dieMario() {
         beginGameOverCountdown = now;
 
     if (scoreboardUpdated == false) {
-        enteredTop3 = eepromObj->write(playerNickname, score);  
+        enteredTop3 = eepromObj->write(gameUtils->playerNickname, score);
         scoreboardUpdated = true;
     }
 
     if (now - beginGameOverCountdown < gameOverInterval) {
         if (enteredTop3)
-            lcd->displayText(playerNickname, "You are in top 3");
+            lcd->displayText(gameUtils->playerNickname, "You are in top 3");
         else
-            lcd->displayText(playerNickname, "GAME OVER");
+            lcd->displayText(gameUtils->playerNickname, "GAME OVER");
     }
     else {
         lcd->displayTextAndNumber("Score:     PRESS", score);
@@ -258,8 +258,8 @@ ActionIndex Play::winMario() {
     if (beginWinCountdown == 0)
         beginWinCountdown = now;
 
-    if (now - beginWinCountdown < winInterval) 
-        lcd->displayText("Congrats,", playerNickname);
+    if (now - beginWinCountdown < winInterval)
+        lcd->displayText("Congrats,", gameUtils->playerNickname);
     else {
         lcd->displayText("Press the button", "to advance level");
         if (joystick->pressedButton()) {

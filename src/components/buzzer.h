@@ -1,7 +1,7 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
-#include "../../include/utils.h"
+#include "utils.h"
 #include "../game/theme_song.h"
 	
 class Buzzer  {

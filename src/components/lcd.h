@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 
-#include "../../include/utils.h"
+#include "utils.h"
 #include "eeprom.h"
 
 class Lcd {

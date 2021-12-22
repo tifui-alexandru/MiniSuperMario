@@ -23,8 +23,9 @@ class About : public Action {
     const unsigned long scrollInterval = 400;
 
 public :
-    About(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
-        Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+    About(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr, 
+        Buzzer* buzzer = nullptr, EepromClass* eepromObj = nullptr, Utils* gameUtils = nullptr) : 
+        Action(lcd, joystick, matrix, buzzer, eepromObj, gameUtils) {}
 
     virtual ~About() {}
 

@@ -30,8 +30,8 @@ ActionIndex Register::runSelectLetterIndex() {
         lcd->unlockPositionOnSecondLine(currentLetterIndex);
 
         if (currentLetterIndex == nicknameEndPos) {
-            for (byte i = 0; i < nicknameLen; ++i) 
-                playerNickname[i] = nicknameLine[nicknameStartPos + i];
+            for (byte i = 0; i < nicknameLen; ++i)
+                gameUtils->playerNickname[i] = nicknameLine[nicknameStartPos + i];
             return menuActionIndex;
         }
 

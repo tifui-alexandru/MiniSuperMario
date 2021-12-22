@@ -3,8 +3,14 @@
 
 #include <Arduino.h>
 
-static char* playerNickname = "aaaaaa";
-static bool musicState = true;
+class Utils {
+public:
+    Utils() {};
+
+    char* playerNickname = "aaaaaa";
+    bool musicState = true;
+    byte utilsStartingLevel = 1;
+};
 
 // matrix constants
 static const byte matrixSize = 8;
@@ -12,23 +18,23 @@ static const byte matrixMinIntensity = 0;
 static const byte matrixMaxIntensity = 15;
 
 // lcd constants
-static char* emptyLcdLine = "                ";
-static byte lcdMinContrast = 1;
-static byte lcdMaxContrast = 10;
+static const char *emptyLcdLine = "                ";
 
-static byte lcdMinIntensity = 1;
-static byte lcdMaxIntensity = 10;
+static const byte lcdMinContrast = 1;
+static const byte lcdMaxContrast = 10;
 
-static byte analogMinValue = 0;
-static byte analogMaxValue = 255;
+static const byte lcdMinIntensity = 1;
+static const byte lcdMaxIntensity = 10;
+
+static const byte analogMinValue = 0;
+static const byte analogMaxValue = 255;
 
 // empirically determined
-static byte contrastMinVisibleValue = map(4, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
-static byte contrastMaxVisibleValue = map(6, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
+static const byte contrastMinVisibleValue = map(4, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
+static const byte contrastMaxVisibleValue = map(6, lcdMinContrast, lcdMaxContrast, analogMinValue, analogMaxValue);
 
 // levels from 1 to noOfLevels
-static const byte noOfLevels = 5;
-static byte utilsStartingLevel = 1; 
+const byte noOfLevels = 5;
 
 struct Point {
     byte x, y;

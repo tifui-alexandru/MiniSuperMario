@@ -37,8 +37,9 @@ class Menu : public Action {
     byte currentOption = 0;
 
 public:
-    Menu(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
-        Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+    Menu(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr, 
+        Buzzer* buzzer = nullptr, EepromClass* eepromObj = nullptr, Utils* gameUtils = nullptr) : 
+        Action(lcd, joystick, matrix, buzzer, eepromObj, gameUtils) {}
 
     virtual ~Menu() {}
         

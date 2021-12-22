@@ -23,8 +23,9 @@ class HallOfFame : public Action {
     static char* secondLine[3];
 
 public:
-    HallOfFame(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
-        Action(lcd, joystick, matrix, buzzer, eepromObj) {};
+    HallOfFame(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr, 
+        Buzzer* buzzer = nullptr, EepromClass* eepromObj = nullptr, Utils* gameUtils = nullptr) : 
+        Action(lcd, joystick, matrix, buzzer, eepromObj, gameUtils) {}
 
     virtual ~HallOfFame() {}
 

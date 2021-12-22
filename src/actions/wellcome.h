@@ -20,8 +20,9 @@ class Wellcome : public Action {
     const unsigned long interval = 5000;
 
 public:
-    Wellcome(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
-        Action(lcd, joystick, matrix, buzzer, eepromObj), startTime(millis()) {};
+    Wellcome(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr, 
+        Buzzer* buzzer = nullptr, EepromClass* eepromObj = nullptr, Utils* gameUtils = nullptr) : 
+        Action(lcd, joystick, matrix, buzzer, eepromObj, gameUtils), startTime(millis()) {}
 
     virtual ~Wellcome() {};
         

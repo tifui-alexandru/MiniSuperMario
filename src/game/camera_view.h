@@ -1,8 +1,8 @@
 #ifndef CAMERA_VIEW_H
 #define CAMERA_VIEW_H
 
-#include "../../include/utils.h"
-#include "game_utils.h"
+#include "../components/utils.h"
+#include "gameplay_utils.h"
 	
 class CameraView {
     /*

@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include "LedControl.h"
 
-#include "../../include/utils.h"
+#include "utils.h"
 #include "../game/level.h"
 
 #include "eeprom.h"

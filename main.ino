@@ -12,14 +12,14 @@
 #include "src/components/matrix.h"
 #include "src/components/buzzer.h"
 #include "src/components/eeprom.h"
-
-#include "include/utils.h"
+#include "src/components/utils.h"
 
 Lcd* lcd = new Lcd();
 Joystick* joystick = new Joystick();
 Matrix* gameMap = new Matrix();
 Buzzer* buzzer = new Buzzer();
 EepromClass* eepromObj = new EepromClass();
+Utils* gameUtils = new Utils();
 
 ActionIndex currentActionIndex;
 const byte noOfactions = 8;
@@ -55,20 +55,20 @@ void loop() {
         delete action;
 
         if (currentActionIndex == wellcomeActionIndex)
-            action = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
         else if (currentActionIndex == menuActionIndex)
-            action = new Menu(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new Menu(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
         else if (currentActionIndex == playActionIndex)
-            action = new Play(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new Play(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
         else if (currentActionIndex == howToPlayActionIndex)
-            action = new HowToPlay(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new HowToPlay(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
         else if (currentActionIndex == hallOfFameActionIndex)
-            action = new HallOfFame(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new HallOfFame(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
         else if (currentActionIndex == settingsActionIndex)
-            action = new Settings(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new Settings(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
         else if (currentActionIndex == aboutActionIndex)
-            action = new About(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new About(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
         else if (currentActionIndex == registerActionIndex)
-            action = new Register(lcd, joystick, gameMap, buzzer, eepromObj);
+            action = new Register(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
     }
 }

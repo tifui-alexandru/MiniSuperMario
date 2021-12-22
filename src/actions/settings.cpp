@@ -48,9 +48,9 @@ ActionIndex Settings::exitRoutine(ActionIndex nextAction) {
 }
 
 ActionIndex Settings::runMusicOnOff() {
-    musicState = !musicState;
+    gameUtils->musicState = !gameUtils->musicState;
 
-    if (musicState)
+    if (gameUtils->musicState)
         options[(int)musicOnOff] = "Turn music OFF";
     else
         options[(int)musicOnOff] = "Turn music ON";
@@ -81,13 +81,13 @@ ActionIndex Settings::runResetScoreboard() {
 }
 
 ActionIndex Settings::runStartLevel() {
-    static int levelOption = utilsStartingLevel;
+    static int levelOption = gameUtils->utilsStartingLevel;
     lcd->displayTextAndNumber("Select level no", levelOption, true);
 
     levelOption = getJoystickMove(1, noOfLevels, levelOption);
 
     if (joystick->pressedButton()) {
-        utilsStartingLevel = levelOption;
+        gameUtils->utilsStartingLevel = levelOption;
         return exitRoutine(settingsActionIndex);
     }
 

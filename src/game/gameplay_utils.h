@@ -1,3 +1,6 @@
+#ifndef GAMEPLAY_UTILS_H
+#define GAMEPLAY_UTILS_H
+
 // column textures for the game
 const static byte gameFloor = B00000001;
 const static byte hole = B00000000;
@@ -49,3 +52,5 @@ struct TexturesProbability {
             return wallHeight4;
     }
 };
+
+#endif
