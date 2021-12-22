@@ -1,13 +1,13 @@
 #include "eeprom.h"
 
 void EepromClass::initSetup() {
-    EEPROM.update(noOfActivePlayersOffset, 0); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // EEPROM.update(noOfActivePlayersOffset, 0); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     noOfActivePlayers = EEPROM.read(noOfActivePlayersOffset);
 }
 
 // read nickname and place it in storingString variable
 void EepromClass::readNickname(uint8_t playerIndex, char* storingString) {
-    if (playerIndex < noOfActivePlayers)
+    if (playerIndex >= noOfActivePlayers)
         return;
 
     for (uint8_t i = 0; i < nicknameSize; ++i)
@@ -15,7 +15,7 @@ void EepromClass::readNickname(uint8_t playerIndex, char* storingString) {
 }
 
 int EepromClass::readHighscore(uint8_t playerIndex) {
-    if (playerIndex < noOfActivePlayers)
+    if (playerIndex >= noOfActivePlayers)
         return -1;
 
     uint8_t highscoreByte1 = EEPROM.read(playerIndex * chunkSize + nicknameSize);
@@ -54,6 +54,9 @@ bool EepromClass::checkScorePresence(char* nickname, int highscore) {
 bool EepromClass::write(char* nickname, int highscore) {
     if (checkScorePresence(nickname, highscore)) 
         return false;
+
+    Serial.println(nickname);
+    Serial.println(highscore);
 
     if (noOfActivePlayers < noOfPlayers) {
         writeNickname(noOfActivePlayers, nickname);
@@ -103,8 +106,13 @@ char* EepromClass::read(uint8_t playerIndex) {
     readNickname(playerIndex, currentNickname);
     int highscore = readHighscore(playerIndex);
 
+    Serial.println(currentNickname);
+    Serial.println(highscore);
+
     for (uint8_t i = 0; i < highscoreSize; ++i)
         currentStringHighscore[i] = ' ';
+
+    // convert highscore to string 
     if (highscore == 0)
         currentStringHighscore[0] = '0';
     else {
@@ -116,7 +124,7 @@ char* EepromClass::read(uint8_t playerIndex) {
         }
 
         // reverse
-        for (uint8_t i = 0, j = highscoreSize; i < j; ++i, --j) {
+        for (uint8_t i = 0, j = currPos - 1; i < j; ++i, --j) {
             char aux = currentStringHighscore[i];
             currentStringHighscore[i] = currentStringHighscore[j];
             currentStringHighscore[j] = aux;
