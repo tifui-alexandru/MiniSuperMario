@@ -92,8 +92,9 @@ ActionIndex Play::moveMario() {
         
         // collect coin
         if (currentView.isCoin(mario)) {
+            buzzer->playCoinSound();
             score += level.getCoinValue();
-            level.eraseCoin(mario);
+            // level.eraseCoin(mario);
             currentView.eraseCoin(mario);
         }
     }
@@ -213,6 +214,8 @@ void Play::detectJump() {
             lastJump = now;
             gravityDirection = -1;
             jumpingState = true;
+
+            // buzzer->playCoinSound();
         }
         else if (jumpingState == true) {
             jumpingState = false;

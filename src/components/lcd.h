@@ -14,8 +14,8 @@ class Lcd {
     const byte D5 = A5;
     const byte D6 = 4;
     const byte D7 = 2;
-    const byte V0 = 6;
-    const byte A = 5;
+    const byte V0 = 5;
+    const byte A = 6;
 
     LiquidCrystal* lcd = new LiquidCrystal(RS, enable, D4, D5, D6, D7);
 

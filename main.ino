@@ -47,6 +47,8 @@ void setup() {
 }
 
 void loop() {
+    buzzer->playSound();
+
     ActionIndex nextActionIndex = action->run();
 
     if (currentActionIndex != nextActionIndex) {
