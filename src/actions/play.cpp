@@ -3,9 +3,8 @@
 void Play::initGame() {
     initGameState = true;
 
-    level.initLevel();
-
-    Serial.println(utilsStartingLevel);
+    if (levelId == 1)
+        level.initLevel();
 
     levelId = utilsStartingLevel;
     // generate levels until the current one is reached 
@@ -277,7 +276,6 @@ void Play::resetGame() {
     mario = {defaultMarioRow, defaultMarioCol};
     score = lastScore;
 
-    levelId = 1;
     initGameState = false;
 
     level.restartLevel();

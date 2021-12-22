@@ -17,7 +17,7 @@ class Play : public Action {
     int lastScore = 0;
     short totalLevelTime = maxTime;
     short time = maxTime;
-    byte levelId;
+    byte levelId = 1;
 
     Level level;
     Point mario = {defaultMarioRow, defaultMarioCol};
