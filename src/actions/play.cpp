@@ -6,11 +6,12 @@ void Play::initGame() {
     if (levelId == 1)
         level.initLevel();
 
-    levelId = utilsStartingLevel;
     // generate levels until the current one is reached 
     // start from 1
-    for (byte levelNo = 1; levelNo < levelId; ++levelNo)
+    while (levelId < utilsStartingLevel) {
         level.advanceToNextLevel();
+        ++levelId;
+    }
 
     currentView = level.getInitialView();
     currentView.setPosition(mario, true);
@@ -242,7 +243,6 @@ ActionIndex Play::dieMario() {
         if (joystick->pressedButton()) {
             currentGameState = playing;
             beginGameOverCountdown = 0;
-            resetGame();
 
             return menuActionIndex;
         }

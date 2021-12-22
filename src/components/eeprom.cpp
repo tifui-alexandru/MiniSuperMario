@@ -1,18 +1,17 @@
 #include "eeprom.h"
 
 void EepromClass::initSetup() {
-    // EEPROM.update(noOfActivePlayersOffset, 0);
+    EEPROM.update(noOfActivePlayersOffset, 0); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     noOfActivePlayers = EEPROM.read(noOfActivePlayersOffset);
 }
 
-char* EepromClass::readNickname(uint8_t playerIndex) {
+// read nickname and place it in storingString variable
+void EepromClass::readNickname(uint8_t playerIndex, char* storingString) {
     if (playerIndex < noOfActivePlayers)
-        return nullptr;
+        return;
 
     for (uint8_t i = 0; i < nicknameSize; ++i)
-        currentNickname[i] = EEPROM.read(playerIndex * chunkSize + i);
-
-    return currentNickname;
+        storingString[i] = EEPROM.read(playerIndex * chunkSize + i);
 }
 
 int EepromClass::readHighscore(uint8_t playerIndex) {
@@ -44,7 +43,8 @@ void EepromClass::writeHighscore(uint8_t playerIndex, int newHighscore) {
 // checks if a score is already registered in top 3
 bool EepromClass::checkScorePresence(char* nickname, int highscore) {
     for (uint8_t idx = 0; idx < noOfActivePlayers; ++idx) {
-        if (highscore == readHighscore(idx) and stringEq(nickname, readNickname(0))) 
+        readNickname(idx, currentNickname);
+        if (highscore == readHighscore(idx) and stringEq(nickname, currentNickname)) 
             return true;
     }
     return false;
@@ -81,8 +81,7 @@ bool EepromClass::write(char* nickname, int highscore) {
         if (nextHighscore >= highscore)
             break; // we found the last lastPosition
         
-        char* nextNickname = new char[nicknameSize];
-        nextNickname = readNickname(currentIndex - 1);
+        readNickname(currentIndex - 1, nextNickname);
 
         writeNickname(currentIndex, nextNickname);
         writeHighscore(currentIndex, nextHighscore);
@@ -91,8 +90,6 @@ bool EepromClass::write(char* nickname, int highscore) {
         writeHighscore(currentIndex - 1, highscore);
 
         currentIndex -= 1;
-
-        delete[] nextNickname;
     } 
 
     return true;
@@ -103,29 +100,26 @@ char* EepromClass::read(uint8_t playerIndex) {
     if (playerIndex >= noOfActivePlayers)
         return nullptr;
 
-    char* nickname = new char[nicknameSize];
-    nickname = readNickname(playerIndex);
-
-    int highscore = readHighscore(highscore);
-    char* stringHighscore = new char[highscoreSize];
+    readNickname(playerIndex, currentNickname);
+    int highscore = readHighscore(playerIndex);
 
     for (uint8_t i = 0; i < highscoreSize; ++i)
-        stringHighscore[i] = ' ';
+        currentStringHighscore[i] = ' ';
     if (highscore == 0)
-        stringHighscore[0] = '0';
+        currentStringHighscore[0] = '0';
     else {
         uint8_t currPos = 0;
         while (highscore > 0) {
             uint8_t lastDigit = highscore % 10;
             highscore /= 10;
-            stringHighscore[currPos++] = char(lastDigit + '0');
+            currentStringHighscore[currPos++] = char(lastDigit + '0');
         }
 
         // reverse
         for (uint8_t i = 0, j = highscoreSize; i < j; ++i, --j) {
-            char aux = stringHighscore[i];
-            stringHighscore[i] = stringHighscore[j];
-            stringHighscore[j] = aux;
+            char aux = currentStringHighscore[i];
+            currentStringHighscore[i] = currentStringHighscore[j];
+            currentStringHighscore[j] = aux;
         }
     }
 
@@ -135,15 +129,12 @@ char* EepromClass::read(uint8_t playerIndex) {
     outputString[2] = ' ';
 
     for (uint8_t i = 0; i < nicknameSize; ++i)
-        outputString[3 + i] = nickname[i];
+        outputString[3 + i] = currentNickname[i];
 
     outputString[3 + nicknameSize] = ' ';
 
     for (uint8_t i = 0; i < highscoreSize; ++i)
-        outputString[3 + nicknameSize + 1 + i] = stringHighscore[i];
-
-    delete[] nickname;
-    delete[] stringHighscore;
+        outputString[3 + nicknameSize + 1 + i] = currentStringHighscore[i];
 
     return outputString; 
 }

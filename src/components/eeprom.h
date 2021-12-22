@@ -10,11 +10,14 @@
 // keep eeprom values sorted by highscore
 class EepromClass {
     static const uint8_t chunkSize = 9;
-    static const uint8_t highscoreSize = 6; // number of digits in base 10
     static const uint8_t noOfPlayers = 3;
+
+    static const uint8_t highscoreSize = 6; // number of digits in base 10
+    char currentStringHighscore[highscoreSize];
 
     static const uint8_t nicknameSize = 6;
     char currentNickname[nicknameSize];
+    char nextNickname[nicknameSize];
 
     static const uint8_t outputStringSize = 16;
     char outputString[outputStringSize];
@@ -30,7 +33,7 @@ class EepromClass {
 
     uint8_t noOfActivePlayers = 0;
 
-    char *readNickname(uint8_t);
+    void readNickname(uint8_t, char*);
     int readHighscore(uint8_t);
     void writeNickname(uint8_t, char*);
     void writeHighscore(uint8_t, int);
