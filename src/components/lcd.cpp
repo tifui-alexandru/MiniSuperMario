@@ -124,8 +124,10 @@ void Lcd::unlockPositionOnSecondLine(byte pos) {
 
 void Lcd::displayGameInfo(byte level, short time, int score, byte lives) {
     static byte lastLevel = 0;
-    if (lastLevel != level) {
+    static byte lastTimeLen = 0;
+    if (lastLevel != level or getIntegerLen(time) != lastTimeLen) {
         lastLevel = level;
+        lastTimeLen = getIntegerLen(time);
         lcd->clear();
     }
 
@@ -137,7 +139,6 @@ void Lcd::displayGameInfo(byte level, short time, int score, byte lives) {
     lcd->print(" ");
 
     lcd->print("Time ");
-    lcd->print(time);
     lcd->print(time);
 
     lcd->setCursor(0, 1);

@@ -34,11 +34,11 @@ void setup() {
 
     randomSeed(analogRead(0));
 
-    currentActionIndex = wellcomeActionIndex;
-    action = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj);
+    // currentActionIndex = wellcomeActionIndex;
+    // action = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj);
 
-    // currentActionIndex = playActionIndex; // for debugging
-    // action = new Play(lcd, joystick, gameMap, buzzer, eepromObj);
+    currentActionIndex = playActionIndex; // for debugging
+    action = new Play(lcd, joystick, gameMap, buzzer, eepromObj, gameUtils);
 
     // currentActionIndex = menuActionIndex; // for debugging
     // action = new Menu(lcd, joystick, gameMap, buzzer, eepromObj);

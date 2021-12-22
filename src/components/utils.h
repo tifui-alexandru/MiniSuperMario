@@ -5,11 +5,15 @@
 
 class Utils {
 public:
-    Utils() {};
+    char *playerNickname;
+    bool musicState;
+    byte utilsStartingLevel;
 
-    char* playerNickname = "aaaaaa";
-    bool musicState = true;
-    byte utilsStartingLevel = 1;
+    Utils() {
+        playerNickname = "aaaaaa";
+        musicState = true;
+        utilsStartingLevel = 1;
+    };
 };
 
 // matrix constants

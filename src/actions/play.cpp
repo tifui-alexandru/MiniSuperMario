@@ -50,6 +50,10 @@ ActionIndex Play::run() {
         return playActionIndex;
     }
 
+    // if time is up, the game is over
+    if (time <= 0) 
+        currentGameState = dead;
+
     if (currentGameState == dead) 
         return dieMario();
     else if (currentGameState == winning) 

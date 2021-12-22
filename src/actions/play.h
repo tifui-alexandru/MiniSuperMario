@@ -29,7 +29,7 @@ class Play : public Action {
     };
 
     const byte maxLives = 3;
-    const short maxTime = 999; // in seconds
+    const short maxTime = 300; // in seconds
     const byte noOfLevels = 5;
     const byte defaultMarioRow = 6;
     const byte defaultMarioCol = 5;
