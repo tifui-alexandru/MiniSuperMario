@@ -42,7 +42,7 @@ void Lcd::initSetup(EepromClass *eepromObj) {
     lcd->begin(lcdColumns, lcdRows);
 }
 
-void Lcd::displayText(char* msg1, char* msg2) {
+void Lcd::displayText(char* msg1, char* msg2, bool upDownEmoji = false) {
     lastLayout = currentLayout;
     currentLayout = lcdLayout(msg1, msg2);
 
@@ -52,6 +52,9 @@ void Lcd::displayText(char* msg1, char* msg2) {
         lcd->setCursor(0, 1);
         lcd->print(msg2);
     }
+
+    if (upDownEmoji)
+        lcd->write(byte(okId));
 }
 
 void Lcd::displayTextAndNumber(char* msg, int no) {

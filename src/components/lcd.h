@@ -126,7 +126,7 @@ public:
 
     void initSetup(EepromClass*);
 
-    void displayText(char*, char*);
+    void displayText(char*, char*, bool upDownEmoji = false);
     void displayTextAndNumber(char*, int);
 
     void displayGameInfo(byte, short, int, byte);
