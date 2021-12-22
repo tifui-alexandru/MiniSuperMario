@@ -71,6 +71,9 @@ class Play : public Action {
 
     void resetGame();
 
+    bool enteredTop3 = false;
+    bool scoreboardUpdated = false;
+
 public:
     Play(Lcd *lcd = nullptr, Joystick *joystick = nullptr, Matrix *matrix = nullptr, Buzzer *buzzer = nullptr, EepromClass *eepromObj = nullptr) : 
         Action(lcd, joystick, matrix, buzzer, eepromObj) {};

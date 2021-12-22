@@ -22,10 +22,29 @@ ActionIndex Play::run() {
 
     // if game is finished
     if (levelId > noOfLevels) {
-        lcd->displayText("CONGRATULATIONS!", "GAME FINISHED");
-        if (joystick->pressedButton()) {
-            initGameState = false;
-            return menuActionIndex;
+        unsigned long now = millis();
+
+        if (beginGameOverCountdown == 0)
+            beginGameOverCountdown = now;
+
+        if (scoreboardUpdated == false) {
+            enteredTop3 = eepromObj->write(playerNickname, score);  
+            scoreboardUpdated = true;
+        }
+
+        if (now - beginGameOverCountdown < gameOverInterval) {
+            if (enteredTop3)
+                lcd->displayText("You are in top 3", playerNickname);
+            else
+                lcd->displayText("CONGRATULATIONS!", playerNickname);
+        }
+        else {
+            lcd->displayTextAndNumber("Score:     PRESS", score);
+
+            if (joystick->pressedButton()) {
+                initGameState = false;
+                return menuActionIndex;
+            }
         }
         return playActionIndex;
     }
@@ -205,7 +224,10 @@ ActionIndex Play::dieMario() {
     if (beginGameOverCountdown == 0)
         beginGameOverCountdown = now;
 
-    bool enteredTop3 = eepromObj->write(playerNickname, score);
+    if (scoreboardUpdated == false) {
+        enteredTop3 = eepromObj->write(playerNickname, score);  
+        scoreboardUpdated = true;
+    }
 
     if (now - beginGameOverCountdown < gameOverInterval) {
         if (enteredTop3)

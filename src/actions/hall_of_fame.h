@@ -8,6 +8,7 @@ class HallOfFame : public Action {
     byte noOfScores = 0;
     byte currentDisplayedScore = 0;
 
+    static char* firstLine;
     static char* secondLine[3];
 
 public:

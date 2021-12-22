@@ -1,14 +1,18 @@
 #include "eeprom.h"
 
+void EepromClass::initSetup() {
+    // EEPROM.update(noOfActivePlayersOffset, 0);
+    noOfActivePlayers = EEPROM.read(noOfActivePlayersOffset);
+}
+
 char* EepromClass::readNickname(uint8_t playerIndex) {
     if (playerIndex < noOfActivePlayers)
         return nullptr;
 
-    char answer[nicknameSize];
     for (uint8_t i = 0; i < nicknameSize; ++i)
-        answer[i] = EEPROM.read(playerIndex * chunkSize + i);
+        currentNickname[i] = EEPROM.read(playerIndex * chunkSize + i);
 
-    return answer;
+    return currentNickname;
 }
 
 int EepromClass::readHighscore(uint8_t playerIndex) {
@@ -32,17 +36,32 @@ void EepromClass::writeHighscore(uint8_t playerIndex, int newHighscore) {
     uint8_t highscoreByte2 = (newHighscore >> byteSize) & byteMask;
     uint8_t highscoreByte3 = (newHighscore >> (2 * byteSize)) & byteMask;
 
-    EEPROM.update(highscoreByte1, playerIndex * chunkSize + nicknameSize);
-    EEPROM.update(highscoreByte2, playerIndex * chunkSize + nicknameSize + 1);
-    EEPROM.update(highscoreByte3, playerIndex * chunkSize + nicknameSize + 2);
+    EEPROM.update(playerIndex * chunkSize + nicknameSize, highscoreByte1);
+    EEPROM.update(playerIndex * chunkSize + nicknameSize + 1, highscoreByte2);
+    EEPROM.update(playerIndex * chunkSize + nicknameSize + 2, highscoreByte3);
+}
+
+// checks if a score is already registered in top 3
+bool EepromClass::checkScorePresence(char* nickname, int highscore) {
+    for (uint8_t idx = 0; idx < noOfActivePlayers; ++idx) {
+        if (highscore == readHighscore(idx) and stringEq(nickname, readNickname(0))) 
+            return true;
+    }
+    return false;
 }
 
 // returns true if player entered the podium
 bool EepromClass::write(char* nickname, int highscore) {
+    if (checkScorePresence(nickname, highscore)) 
+        return false;
+
     if (noOfActivePlayers < noOfPlayers) {
         writeNickname(noOfActivePlayers, nickname);
         writeHighscore(noOfActivePlayers, highscore);
+
+        // count the new player
         ++noOfActivePlayers;
+        EEPROM.update(noOfActivePlayersOffset, noOfActivePlayers);
     }
     else {
         int lowestHighscore = readHighscore(noOfPlayers);
@@ -81,10 +100,8 @@ bool EepromClass::write(char* nickname, int highscore) {
 
 // return the string in the format it will be displayed
 char* EepromClass::read(uint8_t playerIndex) {
-    if (playerIndex < noOfActivePlayers)
+    if (playerIndex >= noOfActivePlayers)
         return nullptr;
-
-    char* answer = new char[EepromClass::outputStringSize];
 
     char* nickname = new char[nicknameSize];
     nickname = readNickname(playerIndex);
@@ -113,21 +130,27 @@ char* EepromClass::read(uint8_t playerIndex) {
     }
 
     // construct the final string
-    answer[0] = char(playerIndex + 1 + '0');
-    answer[1] = '.';
-    answer[2] = ' ';
+    outputString[0] = char(playerIndex + 1 + '0');
+    outputString[1] = '.';
+    outputString[2] = ' ';
 
     for (uint8_t i = 0; i < nicknameSize; ++i)
-        answer[3 + i] = nickname[i];
+        outputString[3 + i] = nickname[i];
 
-    answer[3 + nicknameSize] = ' ';
+    outputString[3 + nicknameSize] = ' ';
 
     for (uint8_t i = 0; i < highscoreSize; ++i)
-        answer[3 + nicknameSize + 1 + i] = stringHighscore[i];
+        outputString[3 + nicknameSize + 1 + i] = stringHighscore[i];
 
-    delete[] answer;
     delete[] nickname;
     delete[] stringHighscore;
 
-    return answer; 
+    return outputString; 
+}
+
+bool EepromClass::stringEq(char* str1, char* str2) {
+    for (uint8_t i = 0; i < nicknameSize; ++i)
+        if (str1[i] != str2[i])
+            return false;
+    return true;
 }

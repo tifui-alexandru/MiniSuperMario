@@ -10,14 +10,20 @@
 // keep eeprom values sorted by highscore
 class EepromClass {
     static const uint8_t chunkSize = 9;
-    static const uint8_t nicknameSize = 6;
     static const uint8_t highscoreSize = 6; // number of digits in base 10
-    static const uint8_t outputStringSize = 16;
     static const uint8_t noOfPlayers = 3;
+
+    static const uint8_t nicknameSize = 6;
+    char currentNickname[nicknameSize];
+
+    static const uint8_t outputStringSize = 16;
+    char outputString[outputStringSize];
 
     static const uint8_t matrixIntensityOffset = noOfPlayers * chunkSize;
     static const uint8_t lcdIntensityOffset = noOfPlayers * chunkSize + 1;
     static const uint8_t lcdContrastOffset = noOfPlayers * chunkSize + 2;
+
+    static const uint8_t noOfActivePlayersOffset = lcdContrastOffset + 1;
 
     const uint8_t byteMask = 0xFF;
     const uint8_t byteSize = 8;
@@ -29,7 +35,12 @@ class EepromClass {
     void writeNickname(uint8_t, char*);
     void writeHighscore(uint8_t, int);
 
+    bool checkScorePresence(char*, int);
+
+    bool stringEq(char*, char*);
+
 public:
+    void initSetup();
     bool write(char*, int);
     char* read(uint8_t);
     uint8_t getNoOfScores() { return noOfActivePlayers; }

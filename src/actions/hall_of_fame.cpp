@@ -7,10 +7,14 @@ ActionIndex HallOfFame::run() {
     noOfScores = eepromObj->getNoOfScores();
     
     if (noOfScores == 0)
-        lcd->displayText(" Top 3 players ", " No score saved ");
+        lcd->displayText("Scoreboard clean", " No score saved ");
     else {
-        // not testet yet
-        lcd->displayText(" Top 3 players ", eepromObj->read(currentDisplayedScore));
+        if (noOfScores == 1)
+            lcd->displayText(" Top 1 player ", eepromObj->read(currentDisplayedScore));
+        else if (noOfScores == 2)
+            lcd->displayText(" Top 2 players ", eepromObj->read(currentDisplayedScore));
+        else
+            lcd->displayText(" Top 3 players ", eepromObj->read(currentDisplayedScore));
 
         joystickUpDownMove move = joystick->movedUpDown();
 

@@ -47,14 +47,14 @@ class Matrix {
     };
 
     const byte menuAnimation[matrixSize] = {
+        B00000000,
         B00111100,
-        B01000010,
-        B10100101,
-        B10111101,
-        B10100101,
-        B10100101,
-        B01000010,
-        B00111100
+        B01111110,
+        B01111110,
+        B00011000,
+        B00011000,
+        B00011000,
+        B00011000
     };
 
     const byte settingsAnimation[matrixSize] = {
