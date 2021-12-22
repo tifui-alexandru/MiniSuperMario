@@ -215,7 +215,7 @@ void Play::detectJump() {
             gravityDirection = -1;
             jumpingState = true;
 
-            // buzzer->playCoinSound();
+            buzzer->playJumpSound();
         }
         else if (jumpingState == true) {
             jumpingState = false;

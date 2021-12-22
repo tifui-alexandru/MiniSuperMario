@@ -28,7 +28,22 @@ void Buzzer::playSound() {
 }
 
 void Buzzer::buzzJumpSound() {
-    soundState = themeSong;
+    if (soundTypeIndex[(byte)soundState] == 0)
+        playNote(391, 47, 0);
+    else if (soundTypeIndex[(byte)soundState] == 1)
+        playNote(415, 47, 117);
+    else if (soundTypeIndex[(byte)soundState] == 2)
+        playNote(880, 47, 47);
+    else if (soundTypeIndex[(byte)soundState] == 3)
+        playNote(1046, 23, 93);
+    else if (soundTypeIndex[(byte)soundState] == 4)
+        playNote(554, 23, 23);
+    else if (soundTypeIndex[(byte)soundState] == 5)
+        playNote(587, 23, 46);
+    else if (soundTypeIndex[(byte)soundState] == 6)
+        playNote(622, 23, 23);
+    else if (soundTypeIndex[(byte)soundState] == 7)
+        playNote(659, 47, 23);
 }
 
 void Buzzer::buzzDeathTune() {
