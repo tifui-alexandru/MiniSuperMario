@@ -19,6 +19,10 @@ void Lcd::setIntensity(byte newVal, EepromClass* eepromObj) {
 }
 
 void Lcd::initSetup(EepromClass *eepromObj) {
+    lcd->createChar(heartId, heart);
+    lcd->createChar(upDownId, upDown);
+    lcd->createChar(okId, ok);
+
     pinMode(V0, OUTPUT);
     pinMode(A, OUTPUT);
 
@@ -144,6 +148,13 @@ void Lcd::displayGameInfo(byte level, short time, int score, byte lives) {
     lcd->write(byte(heartId));
 
     lcd->home();
+}
+
+void Lcd::displayRegisterInfo(char* msg1, char* msg2) {
+    if (currentLayout != lcdLayout(msg1, msg2)) {
+        displayText(msg1, msg2);
+        lcd->write(byte(okId));
+    }
 }
 
 void Lcd::clearText() {

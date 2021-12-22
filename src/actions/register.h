@@ -4,10 +4,10 @@
 #include "action.h"
 
 class Register : public Action {
-    char* nicknameLine = "    aaaaaaK     "; // last char should be an ok emoji
+    char* nicknameLine = "    aaaaaa"; // last char should be an ok emoji
 
     // the available characters are from 'a' to 'z' and ' '
-
+    
     const byte nicknameLen = 6;
     const byte nicknameStartPos = 4;
     const byte nicknameEndPos = nicknameStartPos + nicknameLen;

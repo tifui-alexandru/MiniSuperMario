@@ -76,24 +76,46 @@ class Lcd {
     bool blinkingState = false;
 
     const byte maxScoreLen = 6;
+    
+    static const byte emojiSize = 8;
 
-    byte heart[8] = {
+    byte heart[emojiSize] = {
         B01010,
         B11111,
         B11111,
         B01110,
         B01110,
         B00100,
-        B00000,
+        B00000
     };
     byte heartId = 0;
+
+    byte upDown[emojiSize] = {
+        B00100,
+        B01110,
+        B11111,
+        B00100,
+        B11111,
+        B01110,
+        B00100
+    };
+    byte upDownId = 1;
+
+    byte ok[emojiSize] = {
+        B00000,
+        B00000,
+        B00000,
+        B00001,
+        B10010,
+        B10100,
+        B01000
+    };
+    byte okId = 2;
 
     byte getIntegerLen(int);
 
 public:
-    Lcd() {
-        lcd->createChar(heartId, heart);
-    };
+    Lcd() {};
     ~Lcd();
 
     byte getContrast() { return contrast; }
@@ -108,6 +130,7 @@ public:
     void displayTextAndNumber(char*, int);
 
     void displayGameInfo(byte, short, int, byte);
+    void displayRegisterInfo(char*, char*);
 
     void displayScrollingText(char*, char*, byte, byte);
     void displayTextOnSecondLine(char*);

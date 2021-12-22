@@ -1,7 +1,7 @@
 #include "register.h"
 
 ActionIndex Register::run() {
-    lcd->displayText(" Enter nickname", nicknameLine);
+    lcd->displayRegisterInfo(" Enter nickname", nicknameLine);
 
     if (state == selectLetterIndex)
         return runSelectLetterIndex();
