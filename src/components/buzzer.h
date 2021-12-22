@@ -22,7 +22,7 @@ class Buzzer  {
 
     SoundType soundState = themeSong;
 
-    const byte soundTypeLength[noOfSoundTypes] = {2, 2, 2, 2, 2};
+    const byte soundTypeLength[noOfSoundTypes] = {149, 2, 2, 2, 2};
     byte soundTypeIndex[noOfSoundTypes] = {0, 0, 0, 0, 0};
 
     void playNote(unsigned int, unsigned long, unsigned long);
