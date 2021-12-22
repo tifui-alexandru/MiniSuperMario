@@ -1,6 +1,8 @@
 #include "settings.h"
 
 ActionIndex Settings::run() {
+    matrix->displaySettingAnimation();
+
     if (currentState == startLevel)
         return runStartLevel();
     else if (currentState == lcdContrast)

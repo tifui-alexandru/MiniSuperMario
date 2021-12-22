@@ -31,12 +31,12 @@ ActionIndex Play::run() {
         return playActionIndex;
     }
 
-    matrix->displayMap(currentView);
-
     if (currentGameState == dead) 
         return dieMario();
     else if (currentGameState == winning) 
         return winMario();
+
+    matrix->displayMap(currentView);
 
     displayPlayerData();
     return moveMario();
@@ -199,6 +199,8 @@ void Play::detectJump() {
 }
 
 ActionIndex Play::dieMario() {
+    matrix->displaySadAnimation();
+
     unsigned long now = millis();
 
     if (beginGameOverCountdown == 0)
@@ -229,6 +231,7 @@ ActionIndex Play::dieMario() {
 }
 
 ActionIndex Play::winMario() {
+    matrix->displayHappyAnimation();
     unsigned long now = millis();
 
     if (beginWinCountdown == 0)

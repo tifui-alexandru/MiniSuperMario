@@ -18,15 +18,6 @@ void Matrix::initSetup(EepromClass* eepromObj) {
     lc.clearDisplay(0);                   // clear screen
 }
 
-// void Matrix::updateDisplay(Point currentPosition, Point lastPosition, CameraView& view) {
-//     // update position
-//     view.setPosition(lastPosition, false);
-//     view.setPosition(currentPosition, true);
-
-//     // display map
-//     displayMap(view);
-// }
-
 void Matrix::displayMap(CameraView& view) {
     unsigned long now = millis();
     if (now - lastBlink > blinkingInterval) {
@@ -47,4 +38,24 @@ void Matrix::lightUp() {
 void Matrix::lightDown() {
     for (byte row = 0; row < matrixSize; ++row)
         lc.setRow(0, row, lightDownByte);
+}
+
+void Matrix::displayMenuAnimation() {
+    for (byte row = 0; row < matrixSize; ++row)
+        lc.setRow(0, row, menuAnimation[row]);
+}
+
+void Matrix::displaySettingAnimation() {
+    for (byte row = 0; row < matrixSize; ++row)
+        lc.setRow(0, row, settingsAnimation[row]);
+}
+
+void Matrix::displayHappyAnimation() {
+    for (byte row = 0; row < matrixSize; ++row)
+        lc.setRow(0, row, happyAnimation[row]);
+}
+
+void Matrix::displaySadAnimation() {
+    for (byte row = 0; row < matrixSize; ++row)
+        lc.setRow(0, row, sadAnimation[row]);
 }
