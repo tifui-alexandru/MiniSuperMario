@@ -5,7 +5,7 @@
 #include "action.h"
 
 class Settings : public Action {
-    static const byte noOfOptions = 7;
+    static const byte noOfOptions = 8;
     char* options[noOfOptions] = {
         "Start level",
         "LCD contrast",
@@ -13,6 +13,7 @@ class Settings : public Action {
         "Matrix intensity",
         "Change nickname",
         "Turn music OFF",
+        "Reset scoreboard",
         "Back to menu"
     };
     
@@ -23,6 +24,7 @@ class Settings : public Action {
         matrixIntensity,
         changeNickname,
         musicOnOff,
+        resetScoreboard,
         backToMenu,
         defaultScreen
     };
@@ -38,6 +40,7 @@ class Settings : public Action {
     ActionIndex runLcdBrightness();
     ActionIndex runMatrixIntensity();
     ActionIndex runMusicOnOff();
+    ActionIndex runResetScoreboard();
     ActionIndex runDefaultScreen();
 
 public:

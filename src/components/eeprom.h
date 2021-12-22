@@ -49,6 +49,8 @@ public:
     char* read(uint8_t);
     uint8_t getNoOfScores() { return noOfActivePlayers; }
 
+    void resetScoreboard();
+
     void writeMatrixIntensity(uint8_t value) { EEPROM.update(matrixIntensityOffset, value); }
     void writeLcdIntensity(uint8_t value) { EEPROM.update(lcdIntensityOffset, value); }
     void writeLcdContrast(uint8_t value) { EEPROM.update(lcdContrastOffset, value); }

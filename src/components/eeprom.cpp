@@ -1,8 +1,12 @@
 #include "eeprom.h"
 
 void EepromClass::initSetup() {
-    // EEPROM.update(noOfActivePlayersOffset, 0); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     noOfActivePlayers = EEPROM.read(noOfActivePlayersOffset);
+}
+
+void EepromClass::resetScoreboard() {
+    noOfActivePlayers = 0;
+    EEPROM.update(noOfActivePlayersOffset, 0);
 }
 
 // read nickname and place it in storingString variable
@@ -55,9 +59,6 @@ bool EepromClass::write(char* nickname, int highscore) {
     if (checkScorePresence(nickname, highscore)) 
         return false;
 
-    Serial.println(nickname);
-    Serial.println(highscore);
-
     if (noOfActivePlayers < noOfPlayers) {
         writeNickname(noOfActivePlayers, nickname);
         writeHighscore(noOfActivePlayers, highscore);
@@ -105,9 +106,6 @@ char* EepromClass::read(uint8_t playerIndex) {
 
     readNickname(playerIndex, currentNickname);
     int highscore = readHighscore(playerIndex);
-
-    Serial.println(currentNickname);
-    Serial.println(highscore);
 
     for (uint8_t i = 0; i < highscoreSize; ++i)
         currentStringHighscore[i] = ' ';

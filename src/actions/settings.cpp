@@ -15,6 +15,8 @@ ActionIndex Settings::run() {
         return exitRoutine(registerActionIndex);
     else if (currentState == musicOnOff)
         return runMusicOnOff();
+    else if (currentState == resetScoreboard)
+        return runResetScoreboard();
     else if (currentState == backToMenu)
         return exitRoutine(menuActionIndex);
     else
@@ -56,6 +58,28 @@ ActionIndex Settings::runMusicOnOff() {
     return exitRoutine(settingsActionIndex);
 }
 
+ActionIndex Settings::runResetScoreboard() {
+    // ask the user if they are sure
+    // 0 for no, 1 for yes
+    static const int yes = 1;
+    static const int no = 0;
+    static int resetOption = no;
+
+    resetOption = getJoystickMove(no, yes, resetOption);
+
+    if (resetOption == no)
+        lcd->displayText("Are you sure?", "NO");
+    else
+        lcd->displayText("Are you sure?", "YES");
+
+    if (joystick->pressedButton()) {
+        if (resetOption == yes)
+            eepromObj->resetScoreboard();
+            
+        return exitRoutine(settingsActionIndex);
+    }
+}
+
 ActionIndex Settings::runStartLevel() {
     static int levelOption = utilsStartingLevel;
     lcd->displayTextAndNumber("Select level no", levelOption);
@@ -64,8 +88,6 @@ ActionIndex Settings::runStartLevel() {
 
     if (joystick->pressedButton()) {
         utilsStartingLevel = levelOption;
-        Serial.println("*****");
-        Serial.println(utilsStartingLevel);
         return exitRoutine(settingsActionIndex);
     }
 
