@@ -9,6 +9,8 @@ class Buzzer  {
 
     unsigned long lastPause = 0;
     byte currentNote = 0;
+    
+    static const byte noOfSoundTypes = 5;
 
     enum SoundType {
         themeSong,
@@ -18,26 +20,29 @@ class Buzzer  {
         nextLevelTune
     };
 
-    SoundType currentSound = themeSong;
+    SoundType soundState = themeSong;
 
-    static const byte themeSongLenght = 2;
-    static const byte jumpSoundLenght = 2;
-    static const byte coinSoundLenght = 2;
-    static const byte deathTuneLenght = 2;
-    static const byte nextLevelTuneLenght = 2;
+    const byte soundTypeLength[noOfSoundTypes] = {2, 2, 2, 2, 2};
+    byte soundTypeIndex[noOfSoundTypes] = {0, 0, 0, 0, 0};
 
     void playNote(unsigned int, unsigned long, unsigned long);
 
-    void playThemeSong();
-    void playJumpSound();
-    void playCoinSound();
-    void playDeathTune();
-    void playNextLevelTune();
+    void buzzThemeSong();
+    void buzzJumpSound();
+    void buzzCoinSound();
+    void buzzDeathTune();
+    void buzzNextLevelTune();
 
 public:
     Buzzer() {};
 
     void playSound();
+
+    void playThemeSong() { soundState = themeSong; }
+    void playJumpSound() { soundState = jumpSound; }
+    void playCoinSound() { soundState = coinSound; }
+    void playDeathTune() { soundState = deathTune; }
+    void playNextLevelTune() { soundState = nextLevelTune; }
 };
 
 #endif
