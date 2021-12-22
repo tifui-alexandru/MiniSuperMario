@@ -43,18 +43,18 @@ class Matrix {
         B10011001,
         B10100101,
         B01000010,
-        B00111100,
+        B00111100
     };
 
     const byte menuAnimation[matrixSize] = {
         B00111100,
         B01000010,
+        B10100101,
         B10111101,
-        B10000001,
-        B10000001,
-        B10111101,
+        B10100101,
+        B10100101,
         B01000010,
-        B00111100,
+        B00111100
     };
 
     const byte settingsAnimation[matrixSize] = {
@@ -65,11 +65,10 @@ class Matrix {
         B11011011,
         B01000010,
         B00111100,
-        B00011000,
+        B00011000
     };
 
-public:
-    Matrix() {};
+    public : Matrix(){};
     void initSetup(EepromClass*);
     
     byte getMatrixBrightness() { return matrixBrightness; };

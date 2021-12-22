@@ -1,6 +1,8 @@
 #include "wellcome.h"
 
 ActionIndex Wellcome::run() {
+    matrix->displayMenuAnimation();
+
     unsigned long now = millis();
     if (now - startTime > interval) 
         return registerActionIndex;
