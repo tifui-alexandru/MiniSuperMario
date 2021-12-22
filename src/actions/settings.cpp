@@ -1,7 +1,7 @@
 #include "settings.h"
 
 ActionIndex Settings::run() {
-    matrix->displaySettingAnimation();
+    matrix->displayAnimation(settingsAnimation);
 
     if (currentState == startLevel)
         return runStartLevel();

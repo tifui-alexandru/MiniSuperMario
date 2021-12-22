@@ -6,6 +6,28 @@
 #include "../game/level.h"
 
 class Play : public Action {
+    const byte happyAnimation[matrixSize] = {
+        B00111100,
+        B01000010,
+        B10100101,
+        B10000001,
+        B10100101,
+        B10011001,
+        B01000010,
+        B00111100,
+    };
+
+    const byte sadAnimation[matrixSize] = {
+        B00111100,
+        B01000010,
+        B10100101,
+        B10000001,
+        B10011001,
+        B10100101,
+        B01000010,
+        B00111100
+    };
+
     const byte maxLives = 3;
     const short maxTime = 999; // in seconds
     const byte noOfLevels = 5;

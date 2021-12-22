@@ -24,50 +24,6 @@ class Matrix {
     unsigned long lastBlink = 0;
     bool blinkingState = false;
 
-    const byte happyAnimation[matrixSize] = {
-        B00111100,
-        B01000010,
-        B10100101,
-        B10000001,
-        B10100101,
-        B10011001,
-        B01000010,
-        B00111100,
-    };
-
-    const byte sadAnimation[matrixSize] = {
-        B00111100,
-        B01000010,
-        B10100101,
-        B10000001,
-        B10011001,
-        B10100101,
-        B01000010,
-        B00111100
-    };
-
-    const byte menuAnimation[matrixSize] = {
-        B00000000,
-        B00111100,
-        B01111110,
-        B01111110,
-        B00011000,
-        B00011000,
-        B00011000,
-        B00011000
-    };
-
-    const byte settingsAnimation[matrixSize] = {
-        B00011000,
-        B00111100,
-        B01000010,
-        B11011011,
-        B11011011,
-        B01000010,
-        B00111100,
-        B00011000
-    };
-
     public : Matrix(){};
     void initSetup(EepromClass*);
     
@@ -80,10 +36,7 @@ class Matrix {
     void lightUp();
     void lightDown();
 
-    void displayMenuAnimation();
-    void displaySettingAnimation();
-    void displayHappyAnimation();
-    void displaySadAnimation();
+    void displayAnimation(const byte*);
 };
 
 #endif

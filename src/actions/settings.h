@@ -5,6 +5,17 @@
 #include "action.h"
 
 class Settings : public Action {
+    const byte settingsAnimation[matrixSize] = {
+        B00011000,
+        B00111100,
+        B01000010,
+        B11011011,
+        B11011011,
+        B01000010,
+        B00111100,
+        B00011000
+    };
+
     static const byte noOfOptions = 8;
     char* options[noOfOptions] = {
         "Start level",

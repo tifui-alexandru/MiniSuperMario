@@ -4,6 +4,17 @@
 #include "action.h"
 
 class Register : public Action {
+    const byte registerAnimation[matrixSize] = {
+        B00011000,
+        B00111100,
+        B00111100,
+        B00011000,
+        B00000000,
+        B01111110,
+        B01111110,
+        B01111110
+    };
+
     char* nicknameLine = "    aaaaaa"; // last char should be an ok emoji
 
     // the available characters are from 'a' to 'z' and ' '

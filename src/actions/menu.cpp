@@ -2,7 +2,7 @@
 #include "menu.h"
 
 ActionIndex Menu::run() {
-    matrix->displayMenuAnimation();
+    matrix->displayAnimation(menuAnimation);
     lcd->displayText("Options: ", options[currentOption], true);
 
     if (joystick->pressedButton()) 

@@ -1,6 +1,8 @@
 #include "how_to_play.h"
 
 ActionIndex HowToPlay::run() {
+    matrix->displayAnimation(questionAnimation);
+
     if (joystick->pressedButton())
         return menuActionIndex;
 

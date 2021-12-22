@@ -1,6 +1,8 @@
 #include "hall_of_fame.h"
 
 ActionIndex HallOfFame::run() {
+    matrix->displayAnimation(rankingAnimation);
+    
     if (joystick->pressedButton())
         return menuActionIndex;
 

@@ -5,6 +5,17 @@
 #include "action.h"
 
 class HallOfFame : public Action {
+    const byte rankingAnimation[matrixSize] = {
+        B00000000,
+        B00011000,
+        B00011000,
+        B00011011,
+        B00011011,
+        B11011011,
+        B11011011,
+        B11011011
+    };
+
     byte noOfScores = 0;
     byte currentDisplayedScore = 0;
 

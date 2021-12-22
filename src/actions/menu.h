@@ -5,6 +5,17 @@
 #include "action.h"
 
 class Menu : public Action {
+    const byte menuAnimation[matrixSize] = {
+        B00111100,
+        B01000010,
+        B10111101,
+        B10000001,
+        B10000001,
+        B10111101,
+        B01000010,
+        B00111100,
+    };
+
     static const byte noOfOptions = 5;
 
     char* options[noOfOptions] = {

@@ -40,22 +40,7 @@ void Matrix::lightDown() {
         lc.setRow(0, row, lightDownByte);
 }
 
-void Matrix::displayMenuAnimation() {
+void Matrix::displayAnimation(const byte* animation) {
     for (byte row = 0; row < matrixSize; ++row)
-        lc.setRow(0, row, menuAnimation[row]);
-}
-
-void Matrix::displaySettingAnimation() {
-    for (byte row = 0; row < matrixSize; ++row)
-        lc.setRow(0, row, settingsAnimation[row]);
-}
-
-void Matrix::displayHappyAnimation() {
-    for (byte row = 0; row < matrixSize; ++row)
-        lc.setRow(0, row, happyAnimation[row]);
-}
-
-void Matrix::displaySadAnimation() {
-    for (byte row = 0; row < matrixSize; ++row)
-        lc.setRow(0, row, sadAnimation[row]);
+        lc.setRow(0, row, animation[row]);
 }

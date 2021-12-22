@@ -1,6 +1,7 @@
 #include "register.h"
 
 ActionIndex Register::run() {
+    matrix->displayAnimation(registerAnimation);
     lcd->displayRegisterInfo(" Enter nickname", nicknameLine);
 
     if (state == selectLetterIndex)

@@ -5,6 +5,17 @@
 #include "action.h"
 
 class Wellcome : public Action {
+    const byte wellcomeAnimation[matrixSize] = {
+        B00000000,
+        B00111100,
+        B01111110,
+        B01111110,
+        B00011000,
+        B00011000,
+        B00011000,
+        B00011000
+    };
+    
     unsigned long startTime;
     const unsigned long interval = 5000;
 

@@ -218,7 +218,7 @@ void Play::detectJump() {
 }
 
 ActionIndex Play::dieMario() {
-    matrix->displaySadAnimation();
+    matrix->displayAnimation(sadAnimation);
 
     unsigned long now = millis();
 
@@ -252,7 +252,7 @@ ActionIndex Play::dieMario() {
 }
 
 ActionIndex Play::winMario() {
-    matrix->displayHappyAnimation();
+    matrix->displayAnimation(happyAnimation);
     unsigned long now = millis();
 
     if (beginWinCountdown == 0)

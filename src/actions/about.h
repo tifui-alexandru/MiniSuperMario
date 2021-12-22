@@ -5,6 +5,17 @@
 #include "action.h"
 
 class About : public Action {
+    const byte infoAnimation[matrixSize] = {
+        B00000000,
+        B00011000,
+        B00011000,
+        B00000000,
+        B00011000,
+        B00011000,
+        B00011000,
+        B00011000,
+    };
+
     byte secondLineLength = 89;
     byte startIndexSecondLine = 0;
 

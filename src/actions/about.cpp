@@ -1,6 +1,8 @@
 #include "about.h"
 
 ActionIndex About::run() {
+    matrix->displayAnimation(infoAnimation);
+
     unsigned long now = millis();
     if (now - lastCountTime > scrollInterval) {
         lastCountTime = now;
