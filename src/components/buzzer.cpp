@@ -27,8 +27,8 @@ void Buzzer::initialize() {
         soundTypeIndex[i] = 0;
 }
 
-void Buzzer::playSound() {
-    if (soundState == themeSong)
+void Buzzer::playSound(bool musicState) {
+    if (soundState == themeSong and musicState)
         buzzThemeSong();
     else if (soundState == jumpSound)
         buzzJumpSound();

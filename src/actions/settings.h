@@ -50,7 +50,7 @@ class Settings : public Action {
     ActionIndex runLcdContrast();
     ActionIndex runLcdBrightness();
     ActionIndex runMatrixIntensity();
-    ActionIndex runsoundsOnOff();
+    ActionIndex runSoundsOnOff();
     ActionIndex runResetScoreboard();
     ActionIndex runDefaultScreen();
 

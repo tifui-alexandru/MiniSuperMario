@@ -14,7 +14,7 @@ ActionIndex Settings::run() {
     else if (currentState == changeNickname)
         return exitRoutine(registerActionIndex);
     else if (currentState == soundsOnOff)
-        return runsoundsOnOff();
+        return runSoundsOnOff();
     else if (currentState == resetScoreboard)
         return runResetScoreboard();
     else if (currentState == backToMenu)
@@ -49,11 +49,13 @@ ActionIndex Settings::exitRoutine(ActionIndex nextAction) {
     return nextAction;
 }
 
-ActionIndex Settings::runsoundsOnOff() {
+ActionIndex Settings::runSoundsOnOff() {
     gameUtils->soundsState = !gameUtils->soundsState;
 
-    if (gameUtils->soundsState)
+    if (gameUtils->soundsState) {
         options[(int)soundsOnOff] = "Turn music OFF";
+        buzzer->initialize();
+    }
     else
         options[(int)soundsOnOff] = "Turn music ON";
 

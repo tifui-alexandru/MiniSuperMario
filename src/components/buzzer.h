@@ -32,7 +32,7 @@ class Buzzer  {
 public:
     Buzzer() {};
 
-    void playSound();
+    void playSound(bool);
     void initialize();
 
     void beep() { tone(buzzerPin, 300, 100); }

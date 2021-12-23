@@ -47,10 +47,7 @@ void setup() {
 }
 
 void loop() {
-    if (gameUtils->soundsState == true)
-        buzzer->playSound();
-    else
-        buzzer->initialize();
+    buzzer->playSound(gameUtils->soundsState);
 
     ActionIndex nextActionIndex = action->run();
 

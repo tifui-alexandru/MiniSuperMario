@@ -51,7 +51,7 @@ ActionIndex Play::run() {
     }
 
     // if time is up, the game is over
-    if (time <= 0) 
+    if (time <= 0 or lives == 0) 
         currentGameState = dead;
 
     if (currentGameState == dead) 
@@ -246,10 +246,7 @@ ActionIndex Play::dieMario() {
     else {
         lcd->displayTextAndNumber("Score:     PRESS", score);
 
-
         if (joystick->pressedButton()) {
-            Serial.println(beginGameOverCountdown);
-
             beginGameOverCountdown = 0;
 
             return menuActionIndex;
