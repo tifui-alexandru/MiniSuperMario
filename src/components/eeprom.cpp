@@ -73,8 +73,8 @@ bool EepromClass::write(char* nickname, int highscore) {
             return false; // the new highscore is not in top 3
         
         // else replace the lowest highscore
-        writeNickname(noOfPlayers, nickname);
-        writeHighscore(noOfPlayers, highscore);
+        writeNickname(noOfPlayers - 1, nickname);
+        writeHighscore(noOfPlayers - 1, highscore);
     }
 
     // keep the EEPROM sorted by pushing the new inserted value to its place
