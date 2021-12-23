@@ -1,7 +1,7 @@
 #include "level.h"
 
 const byte Level::levelsNoOfColumns[noOfLevels] = {5, 10, 15, 20, 30};
-const byte Level::levelsTimeAvailable[noOfLevels] = {999, 999, 999, 999, 999};
+const byte Level::levelsTimeAvailable[noOfLevels] = {230, 200, 150, 100, 50};
 const byte Level::levelsCoinValue[noOfLevels] = {100, 200, 300, 400, 500};
 const byte Level::levelsNoOfCoins[noOfLevels] = {3, 5, 6, 7, 10};
 const TexturesProbability Level::levelsTexturesProbability[noOfLevels] = {

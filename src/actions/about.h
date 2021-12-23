@@ -20,7 +20,7 @@ class About : public Action {
     byte startIndexSecondLine = 0;
 
     unsigned long lastCountTime = 0;
-    const unsigned long scrollInterval = 400;
+    const unsigned long scrollInterval = 200;
 
 public :
     About(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr, 

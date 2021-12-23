@@ -8,6 +8,15 @@ ActionIndex HowToPlay::run() {
         return menuActionIndex;
     }
 
+     unsigned long now = millis();
+    if (now - lastCountTime > scrollInterval) {
+        lastCountTime = now;
+        startIndexSecondLine = (startIndexSecondLine + 1) % secondLineLength;
+    }
+
+    lcd->displayScrollingText("Instructions at:", " https://github.com/tifui-alexandru/MiniSuperMario ", \
+                                startIndexSecondLine, secondLineLength);
+
     lcd->displayText("Instructions", "how to play");
 
     return howToPlayActionIndex;

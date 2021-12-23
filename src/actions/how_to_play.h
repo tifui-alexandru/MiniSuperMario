@@ -16,6 +16,12 @@ class HowToPlay : public Action {
         B00010000
     };
 
+    byte secondLineLength = 51;
+    byte startIndexSecondLine = 0;
+
+    unsigned long lastCountTime = 0;
+    const unsigned long scrollInterval = 200;
+
 public:
     HowToPlay(Lcd* lcd = nullptr, Joystick* joystick = nullptr, Matrix* matrix = nullptr, 
         Buzzer* buzzer = nullptr, EepromClass* eepromObj = nullptr, Utils* gameUtils = nullptr) : 
