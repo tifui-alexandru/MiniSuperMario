@@ -13,8 +13,8 @@ ActionIndex Settings::run() {
         return runMatrixIntensity();
     else if (currentState == changeNickname)
         return exitRoutine(registerActionIndex);
-    else if (currentState == musicOnOff)
-        return runMusicOnOff();
+    else if (currentState == soundsOnOff)
+        return runsoundsOnOff();
     else if (currentState == resetScoreboard)
         return runResetScoreboard();
     else if (currentState == backToMenu)
@@ -29,11 +29,13 @@ byte Settings::getJoystickMove(byte lowerBound, byte upperBound, byte value) {
     joystickUpDownMove move = joystick->movedUpDown();
 
     if (move == Up) {
+        buzzer->beep();
         ++returnValue;
         if (returnValue > upperBound)
             returnValue = lowerBound;
     }
     else if (move == Down) {
+        buzzer->beep();
         --returnValue;
         if (returnValue < lowerBound)
             returnValue = upperBound;
@@ -47,13 +49,13 @@ ActionIndex Settings::exitRoutine(ActionIndex nextAction) {
     return nextAction;
 }
 
-ActionIndex Settings::runMusicOnOff() {
-    gameUtils->musicState = !gameUtils->musicState;
+ActionIndex Settings::runsoundsOnOff() {
+    gameUtils->soundsState = !gameUtils->soundsState;
 
-    if (gameUtils->musicState)
-        options[(int)musicOnOff] = "Turn music OFF";
+    if (gameUtils->soundsState)
+        options[(int)soundsOnOff] = "Turn sounds OFF";
     else
-        options[(int)musicOnOff] = "Turn music ON";
+        options[(int)soundsOnOff] = "Turn sounds ON";
 
     return exitRoutine(settingsActionIndex);
 }
@@ -73,6 +75,8 @@ ActionIndex Settings::runResetScoreboard() {
         lcd->displayText("Are you sure?", "YES", true);
 
     if (joystick->pressedButton()) {
+        buzzer->beep();
+
         if (resetOption == yes)
             eepromObj->resetScoreboard();
             
@@ -87,6 +91,8 @@ ActionIndex Settings::runStartLevel() {
     levelOption = getJoystickMove(1, noOfLevels, levelOption);
 
     if (joystick->pressedButton()) {
+        buzzer->beep();
+
         gameUtils->utilsStartingLevel = levelOption;
         return exitRoutine(settingsActionIndex);
     }
@@ -102,6 +108,8 @@ ActionIndex Settings::runLcdContrast() {
     lcd->setContrast(contrastOption, eepromObj);
 
     if (joystick->pressedButton()) {
+        buzzer->beep();
+
         return exitRoutine(settingsActionIndex);
     }
 
@@ -116,6 +124,8 @@ ActionIndex Settings::runLcdBrightness() {
     lcd->setIntensity(brightnessOption, eepromObj);
 
     if (joystick->pressedButton()) {
+        buzzer->beep();
+
         return exitRoutine(settingsActionIndex);
     }
 
@@ -132,6 +142,8 @@ ActionIndex Settings::runMatrixIntensity() {
     matrix->setMatrixBrightness(matrixOption, eepromObj);
 
     if (joystick->pressedButton()) {
+        buzzer->beep();
+
         matrix->lightDown();
         return exitRoutine(settingsActionIndex);
     }
@@ -142,8 +154,11 @@ ActionIndex Settings::runMatrixIntensity() {
 ActionIndex Settings::runDefaultScreen() {
     lcd->displayText("Settings menu", options[currentOption], true);
 
-    if (joystick->pressedButton())
+    if (joystick->pressedButton()) {
+        buzzer->beep();
+
         currentState = SettingsState(currentOption);
+    }
 
     currentOption = getJoystickMove(0, noOfOptions - 1, currentOption);
 

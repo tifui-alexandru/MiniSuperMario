@@ -47,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-    if (gameUtils->musicState == true)
+    if (gameUtils->soundsState == true)
         buzzer->playSound();
     else
         buzzer->initialize();

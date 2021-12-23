@@ -34,7 +34,7 @@ class Settings : public Action {
         lcdBrightness,
         matrixIntensity,
         changeNickname,
-        musicOnOff,
+        soundsOnOff,
         resetScoreboard,
         backToMenu,
         defaultScreen
@@ -50,7 +50,7 @@ class Settings : public Action {
     ActionIndex runLcdContrast();
     ActionIndex runLcdBrightness();
     ActionIndex runMatrixIntensity();
-    ActionIndex runMusicOnOff();
+    ActionIndex runsoundsOnOff();
     ActionIndex runResetScoreboard();
     ActionIndex runDefaultScreen();
 

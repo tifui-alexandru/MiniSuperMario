@@ -35,6 +35,8 @@ public:
     void playSound();
     void initialize();
 
+    void beep() { tone(buzzerPin, 300, 100); }
+
     void playThemeSong() { soundState = themeSong; }
     void playJumpSound() { soundState = jumpSound; }
     void playCoinSound() { soundState = coinSound; }

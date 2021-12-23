@@ -3,8 +3,10 @@
 ActionIndex HallOfFame::run() {
     matrix->displayAnimation(rankingAnimation);
     
-    if (joystick->pressedButton())
+    if (joystick->pressedButton()) {
+        buzzer->beep();
         return menuActionIndex;
+    }
 
     noOfScores = eepromObj->getNoOfScores();
     
@@ -20,10 +22,14 @@ ActionIndex HallOfFame::run() {
 
         joystickUpDownMove move = joystick->movedUpDown();
 
-        if (move == Up)
+        if (move == Up) {
+            buzzer->beep();
             currentDisplayedScore = (currentDisplayedScore + noOfScores - 1) % noOfScores;
-        else if (move == Down)
+        }
+        else if (move == Down) {
+            buzzer->beep();
             currentDisplayedScore = (currentDisplayedScore + 1) % noOfScores;
+        }
     }
 
     return hallOfFameActionIndex;

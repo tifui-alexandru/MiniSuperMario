@@ -6,13 +6,13 @@
 class Utils {
 public:
     char *playerNickname;
-    bool musicState;
+    bool soundsState;
     byte utilsStartingLevel;
 
     Utils() {
         playerNickname = "aaaaaa";
-        // musicState = true;
-        musicState = false; // for debugging !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        soundsState = true;
+        // soundsState = false; // for debugging !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         utilsStartingLevel = 1;
     };
 };
