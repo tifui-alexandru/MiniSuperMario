@@ -17,7 +17,5 @@ ActionIndex HowToPlay::run() {
     lcd->displayScrollingText("Instructions at:", " https://github.com/tifui-alexandru/MiniSuperMario ", \
                                 startIndexSecondLine, secondLineLength);
 
-    lcd->displayText("Instructions", "how to play");
-
     return howToPlayActionIndex;
 }
