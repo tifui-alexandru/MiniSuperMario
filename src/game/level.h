@@ -9,8 +9,6 @@ class Level  {
     static const byte levelsCoinValue[noOfLevels];
     static const byte levelsNoOfCoins[noOfLevels];
     static const TexturesProbability levelsTexturesProbability[noOfLevels];
-    static const float levelsSpecialWallsProbability[noOfLevels];
-    static const float levelsSpecialFloorProbability[noOfLevels];
 
     byte levelId = 0;
     byte noOfColumns;
@@ -19,10 +17,9 @@ class Level  {
     byte noOfCoins;
 
     TexturesProbability texturesProbability;
-    float specialWallsProbability;
-    float specialFloorProbability;
 
     static const byte maxAdditionalColumns = 30;
+    static const byte maxNoOfCoins = 10;
 
     byte additionalColumns[maxAdditionalColumns];
     byte additionalCoins[maxAdditionalColumns];
@@ -34,11 +31,11 @@ class Level  {
     struct ErasedCoin {
         Point panCameraPos;
         Point realPos;
-        ErasedCoin* next;
 
-        ErasedCoin(Point p1 = Point(0, 0), Point p2 = Point(0, 0)) : panCameraPos(p1), realPos(p2), next(nullptr) {}
+        ErasedCoin(Point p1 = Point(0, 0), Point p2 = Point(0, 0)) : panCameraPos(p1), realPos(p2) {}
     };
-    ErasedCoin* headErasedCoin = nullptr;
+    byte headErasedCoin = 0;
+    ErasedCoin erasedCoinsList[maxNoOfCoins];
 
     void restoreErasedCoins();
 
@@ -62,8 +59,6 @@ public:
     byte getTime() { return time; };
     byte getCoinValue() { return coinValue; };
     TexturesProbability getTextureProbability() { return texturesProbability; };
-    float getSpecialWallsProbability() { return specialWallsProbability; };
-    float getSpecialFloorProbability() { return specialFloorProbability; };
 
     byte getFirstColumnIndex() { return firstColumnIndex; };
     byte getLastColumnIndex() { return lastColumnIndex; };

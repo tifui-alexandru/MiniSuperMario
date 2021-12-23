@@ -65,7 +65,7 @@ ActionIndex Play::moveMario() {
         if (currentView.isCoin(mario)) {
             buzzer->playCoinSound();
             score += level.getCoinValue();
-            // level.eraseCoin(mario);
+            level.eraseCoin(mario);
             currentView.eraseCoin(mario);
             currentView.setPosition(mario, true);
         }

@@ -3,7 +3,7 @@
 const byte Level::levelsNoOfColumns[noOfLevels] = {5, 10, 15, 20, 30};
 const byte Level::levelsTimeAvailable[noOfLevels] = {999, 999, 999, 999, 999};
 const byte Level::levelsCoinValue[noOfLevels] = {100, 200, 300, 400, 500};
-const byte Level::levelsNoOfCoins[noOfLevels] = {3, 5, 10, 15, 20};
+const byte Level::levelsNoOfCoins[noOfLevels] = {3, 5, 6, 7, 10};
 const TexturesProbability Level::levelsTexturesProbability[noOfLevels] = {
     TexturesProbability(0.33, 0.33, 0.33),
     TexturesProbability(0.33, 0.33, 0.33),
@@ -11,8 +11,6 @@ const TexturesProbability Level::levelsTexturesProbability[noOfLevels] = {
     TexturesProbability(0.33, 0.33, 0.33),
     TexturesProbability(0.33, 0.33, 0.33)
 };
-const float Level::levelsSpecialWallsProbability[noOfLevels] = {0, 0, 0.2, 0, 0.5};
-const float Level::levelsSpecialFloorProbability[noOfLevels] = {0, 0, 0, 0.2, 0.5};
 
 void Level::initLevel() {
     noOfColumns = levelsNoOfColumns[levelId];
@@ -114,8 +112,9 @@ void Level::restartLevel() {
 }
 
 void Level::restoreErasedCoins() {
-    ErasedCoin* currentCoin = headErasedCoin;
-    while (currentCoin != nullptr) {
+    for (int pos = 0; pos < headErasedCoin; ++pos) {
+        ErasedCoin* currentCoin = erasedCoinsList + pos;
+
         if (currentCoin->realPos.y < matrixSize) {
             // complementar position due to matrix logic
             initialView.setCoin({currentCoin->panCameraPos.x, matrixSize - currentCoin->panCameraPos.y - 1});
@@ -126,13 +125,9 @@ void Level::restoreErasedCoins() {
             byte setMask = 1 << line; // zero everywhere exept on the desired line
             additionalCoins[index] |= setMask;
         }
-
-        ErasedCoin* temp = currentCoin;
-        currentCoin = currentCoin->next;
-        delete temp;
     }
 
-    headErasedCoin = nullptr;
+    headErasedCoin = 0;
 }
 
 void Level::eraseCoin(Point p) {
@@ -153,9 +148,7 @@ void Level::eraseCoin(Point p) {
     }
 
     // save the coin position
-    ErasedCoin* erasedCoin = new ErasedCoin(p, realPoint);
-    erasedCoin->next = headErasedCoin;
-    headErasedCoin = erasedCoin;
+    erasedCoinsList[headErasedCoin++] = ErasedCoin(p, realPoint);
 }
 
 Level Level::operator = (const Level& other) {
@@ -166,8 +159,6 @@ Level Level::operator = (const Level& other) {
     this->coinValue = other.getCoinValue();
 
     this->texturesProbability = other.getTextureProbability();
-    this->specialWallsProbability = other.getSpecialWallsProbability();
-    this->specialFloorProbability = other.getSpecialFloorProbability();
 
     this->firstColumnIndex = other.getFirstColumnIndex();
     this->lastColumnIndex = other.getLastColumnIndex();
@@ -191,8 +182,6 @@ void Level::advanceToNextLevel() {
     noOfCoins = levelsNoOfCoins[levelId];
 
     texturesProbability = levelsTexturesProbability[levelId];
-    specialWallsProbability = levelsSpecialWallsProbability[levelId];
-    specialFloorProbability = levelsSpecialFloorProbability[levelId];
 
     byte totalColumns = noOfColumns + matrixSize;
 
@@ -218,8 +207,6 @@ void Level::advanceToNextLevel() {
     for (byte col = 4; col < totalColumns - 1; ++col) {
         byte texture = texturesProbability.generateTexture();
 
-        // if (texture != gameFloor and texture != hole and random(100) < specialWallsProbability * 100)
-        // if (textture == gameFloor and random(100) < specialFloorProbability * 100)
 
         if (col < matrixSize)
             nextMapColumns[col] = texture;
