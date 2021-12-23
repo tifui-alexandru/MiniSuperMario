@@ -21,35 +21,6 @@ ActionIndex Play::run() {
     if (!initGameState)
         initGame();
 
-    // if game is finished
-    if (levelId > noOfLevels) {
-        unsigned long now = millis();
-
-        if (beginGameOverCountdown == 0)
-            beginGameOverCountdown = now;
-
-        if (scoreboardUpdated == false) {
-            enteredTop3 = eepromObj->write(gameUtils->playerNickname, score);  
-            scoreboardUpdated = true;
-        }
-
-        if (now - beginGameOverCountdown < gameOverInterval) {
-            if (enteredTop3)
-                lcd->displayText("You are in top 3", gameUtils->playerNickname);
-            else
-                lcd->displayText("CONGRATULATIONS!", gameUtils->playerNickname);
-        }
-        else {
-            lcd->displayTextAndNumber("Score:     PRESS", score);
-
-            if (joystick->pressedButton()) {
-                initGameState = false;
-                return menuActionIndex;
-            }
-        }
-        return playActionIndex;
-    }
-
     // if time is up, the game is over
     if (time <= 0 or lives == 0) 
         currentGameState = dead;
@@ -96,6 +67,7 @@ ActionIndex Play::moveMario() {
             score += level.getCoinValue();
             // level.eraseCoin(mario);
             currentView.eraseCoin(mario);
+            currentView.setPosition(mario, true);
         }
     }
     else if (deadPosition(nextMario)) {
@@ -248,6 +220,7 @@ ActionIndex Play::dieMario() {
 
         if (joystick->pressedButton()) {
             beginGameOverCountdown = 0;
+            buzzer->beep();
 
             return menuActionIndex;
         }
@@ -264,14 +237,44 @@ ActionIndex Play::winMario() {
         beginWinCountdown = now;
     }
 
-    if (now - beginWinCountdown < winInterval) {
-        lcd->displayText("Congrats,", gameUtils->playerNickname);
+    if (levelId < noOfLevels) {
+        if (now - beginWinCountdown < winInterval) {
+            lcd->displayText("Congrats,", gameUtils->playerNickname);
+        }
+        else {
+            lcd->displayText("Press the button", "to advance level");
+            if (joystick->pressedButton()) {
+                beginWinCountdown = 0;
+                buzzer->beep();
+                return advanceLevel();
+            }
+        }
     }
     else {
-        lcd->displayText("Press the button", "to advance level");
-        if (joystick->pressedButton()) {
-            beginWinCountdown = 0;
-            return advanceLevel();
+        unsigned long now = millis();
+
+        if (beginGameOverCountdown == 0)
+            beginGameOverCountdown = now;
+
+        if (scoreboardUpdated == false) {
+            enteredTop3 = eepromObj->write(gameUtils->playerNickname, score);  
+            scoreboardUpdated = true;
+        }
+
+        if (now - beginGameOverCountdown < gameOverInterval) {
+            if (enteredTop3)
+                lcd->displayText("You are in top 3", gameUtils->playerNickname);
+            else
+                lcd->displayText("CONGRATULATIONS!", gameUtils->playerNickname);
+        }
+        else {
+            lcd->displayTextAndNumber("Score:     PRESS", score);
+
+            if (joystick->pressedButton()) {
+                initGameState = false;
+                buzzer->beep();
+                return menuActionIndex;
+            }
         }
     }
 
