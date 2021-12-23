@@ -68,7 +68,7 @@ bool EepromClass::write(char* nickname, int highscore) {
         EEPROM.update(noOfActivePlayersOffset, noOfActivePlayers);
     }
     else {
-        int lowestHighscore = readHighscore(noOfPlayers);
+        int lowestHighscore = readHighscore(noOfPlayers - 1);
         if (lowestHighscore >= highscore) 
             return false; // the new highscore is not in top 3
         

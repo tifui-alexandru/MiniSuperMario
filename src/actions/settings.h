@@ -23,7 +23,7 @@ class Settings : public Action {
         "LCD brightness",
         "Matrix intensity",
         "Change nickname",
-        "Turn sounds OFF",
+        "Turn music OFF",
         "Reset scoreboard",
         "Back to menu"
     };

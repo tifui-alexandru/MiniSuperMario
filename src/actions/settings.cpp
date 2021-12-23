@@ -53,9 +53,9 @@ ActionIndex Settings::runsoundsOnOff() {
     gameUtils->soundsState = !gameUtils->soundsState;
 
     if (gameUtils->soundsState)
-        options[(int)soundsOnOff] = "Turn sounds OFF";
+        options[(int)soundsOnOff] = "Turn music OFF";
     else
-        options[(int)soundsOnOff] = "Turn sounds ON";
+        options[(int)soundsOnOff] = "Turn music ON";
 
     return exitRoutine(settingsActionIndex);
 }

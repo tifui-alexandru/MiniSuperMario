@@ -248,7 +248,8 @@ ActionIndex Play::dieMario() {
 
 
         if (joystick->pressedButton()) {
-            currentGameState = playing;
+            Serial.println(beginGameOverCountdown);
+
             beginGameOverCountdown = 0;
 
             return menuActionIndex;
