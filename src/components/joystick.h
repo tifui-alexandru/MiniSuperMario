@@ -1,6 +1,10 @@
 #ifndef JOYSTICK_H
 #define JOYSTICK_H
 
+/*
+    Manipulates the joystick.
+*/
+
 #include <Arduino.h>
 #include "utils.h"
 

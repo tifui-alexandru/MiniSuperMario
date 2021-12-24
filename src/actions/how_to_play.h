@@ -1,6 +1,10 @@
 #ifndef HOW_TO_PLAY_H
 #define HOW_TO_PLAY_H
 
+/*
+    Displays a link to the game instructions page.
+*/
+
 #include <Arduino.h>
 #include "action.h"
 

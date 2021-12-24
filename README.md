@@ -14,15 +14,15 @@ The game is meant to be a tribute to "Super Mario Bros". Even if the complexity 
 ## Game description & How to play
 
 
-The game consists of 5 levels of difficulty. In each level, Mario is represented as a pixel on the matrix, and the player is supposed to drive him to the end of the map in the shortest possible time. 
+The game consists of 5 levels of difficulty. In each level, Mario is represented as a pixel on the matrix, and the player is supposed to drive him to the end of the map in the shortest possible time.
 
-Along the way, the player will face obstacles, gaps and coins.
+Along the way, the player will face obstacles, gaps and coins. The difficulty of a level is determined by the frequency of the obstacles and gaps and the available time to finish the level.
 
 Mario can be moved along the horizontal axis using the joystick, and can jump by pressing the button.
 
 A timer will be shown on the LCD, that will indicate the time remaining for the player to finish the level. If the remaining time finishes, the game is finished.
 
-In the begining, the player has three lives. Each time he fells in a gap, a life is deduced and the player will restart the level, without being granted extra time. If the player remains without any lives, the game ends. The number of lives remainig is also indicated on the LCD.
+In the beginning, the player has three lives. Each time he falls in a gap, a life is deduced and the player will restart the level, without being granted extra time. If the player remains without any lives, the game ends. The number of lives remaining is also indicated on the LCD.
 
 Each coin the player collects will increase his score. Depending on the level, the coins may have different values. At the end of each level, the score is increased by the remaining time displayed on the LCD.
 
@@ -41,13 +41,16 @@ Each coin the player collects will increase his score. Depending on the level, t
 * 1 capacitor
 * resistors and wires
 
-
 <br>
 
 ## Setup
 
+![setup image 1](./assets/setup0.jpeg)
 
+![setup image 2](./assets/setup1.jpeg)
 
 <br>
 
 ## Demo
+
+https://www.youtube.com/watch?v=c0cXvdSh9OE

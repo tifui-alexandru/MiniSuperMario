@@ -1,6 +1,10 @@
 #ifndef CAMERA_VIEW_H
 #define CAMERA_VIEW_H
 
+/*
+    Describes an 8x8 portion of the map
+*/
+
 #include "../components/utils.h"
 #include "gameplay_utils.h"
 	

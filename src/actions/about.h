@@ -1,6 +1,10 @@
 #ifndef ABOUT_H
 #define ABOUT_H
 
+/*
+    Displays information about the author and a link to the source code
+*/
+
 #include <Arduino.h>
 #include "action.h"
 

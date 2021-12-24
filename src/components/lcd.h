@@ -1,6 +1,10 @@
 #ifndef LCD_H
 #define LCD_H
 
+/*
+    Manipulates the LCD.
+*/
+
 #include <Arduino.h>
 #include <LiquidCrystal.h>
 

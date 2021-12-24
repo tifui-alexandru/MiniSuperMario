@@ -4,6 +4,10 @@
 #include <Arduino.h>
 #include "action.h"
 
+/*
+    Navigate through the settings menu and perform changes.
+*/
+
 class Settings : public Action {
     const byte settingsAnimation[matrixSize] = {
         B00011000,

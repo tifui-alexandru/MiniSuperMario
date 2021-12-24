@@ -1,6 +1,10 @@
 #ifndef PLAY_H
 #define PLAY_H
 
+/*
+    Play the actual game.
+*/
+
 #include <Arduino.h>
 #include "action.h"
 #include "../game/level.h"

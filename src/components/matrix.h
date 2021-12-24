@@ -1,6 +1,10 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
+/*
+    Manipulates the matrix.
+*/
+
 #include <Arduino.h>
 #include "LedControl.h"
 

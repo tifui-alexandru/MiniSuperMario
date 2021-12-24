@@ -1,5 +1,9 @@
 #ifndef LEVEL_H
 #define LEVEL_H
+
+/*
+    Describes the level of the game
+*/
 	
 #include "camera_view.h"
 

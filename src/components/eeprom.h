@@ -1,6 +1,10 @@
 #ifndef EEPROM_H
 #define EEPROM_H
 
+/*
+    Manipulates EEPROM I/O operations.
+*/
+
 #include <Arduino.h>
 #include <EEPROM.h>
 	

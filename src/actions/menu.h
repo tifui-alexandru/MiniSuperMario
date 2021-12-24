@@ -1,6 +1,10 @@
 #ifndef MENU_H
 #define MENU_H
 
+/*
+    Used to navigate through the menu.
+*/
+
 #include <Arduino.h>
 #include "action.h"
 

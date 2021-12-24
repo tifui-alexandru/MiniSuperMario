@@ -1,6 +1,10 @@
 #ifndef WELLCOME_H
 #define WELLCOME_H
 
+/*
+    Displays the wellcome message.
+*/
+
 #include <Arduino.h>
 #include "action.h"
 

@@ -3,6 +3,10 @@
 
 #include "action.h"
 
+/*
+    Enter nickname.
+*/
+
 class Register : public Action {
     const byte registerAnimation[matrixSize] = {
         B00011000,

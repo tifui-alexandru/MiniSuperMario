@@ -1,6 +1,10 @@
 #ifndef HALL_OF_FAME_H
 #define HALL_OF_FAME_H
 
+/*
+    Displays the biggest 3 highscores.
+*/
+
 #include <Arduino.h>
 #include "action.h"
 

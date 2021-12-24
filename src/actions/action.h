@@ -1,6 +1,10 @@
 #ifndef ACTION_H
 #define ACTION_H
 
+/*
+    Main abstract class of the program.
+*/
+
 #include <Arduino.h>
 #include "../components/lcd.h";
 #include "../components/joystick.h";

@@ -1,6 +1,10 @@
 #ifndef BUZZER_H
 #define BUZZER_H
 
+/*
+    Manipulates the buzzer.
+*/
+
 #include "utils.h"
 #include "../game/pitches.h"
 	

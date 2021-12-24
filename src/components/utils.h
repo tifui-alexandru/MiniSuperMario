@@ -1,6 +1,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+/*
+    Contains global variables, parameters and data types used in the code.
+*/
+
 #include <Arduino.h>
 
 class Utils {

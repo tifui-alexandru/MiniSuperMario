@@ -1,3 +1,37 @@
+/*
+    Master comment:
+
+    This source code contains two main kind of classes:
+        - classes used to manipulate hardware components:
+            - lcd
+            - joystick
+            - matrix
+            - buzzer
+            - eeprom
+        - classes used to describe certain actions a player can perform:
+            - wellcome (display wellcome message)
+            - menu (navigate through menu options)
+            - settings (navigate through settings options and change settings)
+            - play
+            - how_to_play
+            - hall_of_fame
+            - about
+            - register (enter nickname)
+
+    There are also classes that help in the game logic:
+        - level (describes a level in the game)
+        - camera_view (describes an 8x8 portion of the map)
+
+    There is also the utils class, that keeps some global variables such as:
+        - the player nickname
+        - the music state (ON or OFF)
+        - the level on which the game starts
+
+    There is the main abstract class Action. Each of the other "action" classes (Menu, Play etc.) inherits this one.
+    At any time, we call the run() method of the current action, that will return which is the next action we should perform.
+    To reduce memory usage, we use only keep the current action object in memory.
+*/
+
 #include "src/actions/menu.h"
 #include "src/actions/wellcome.h"
 #include "src/actions/play.h"
@@ -36,9 +70,6 @@ void setup() {
 
     currentActionIndex = wellcomeActionIndex;
     action = new Wellcome(lcd, joystick, gameMap, buzzer, eepromObj);
-
-
-    Serial.begin(9600);
 }
 
 void loop() {

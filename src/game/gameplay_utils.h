@@ -1,6 +1,10 @@
 #ifndef GAMEPLAY_UTILS_H
 #define GAMEPLAY_UTILS_H
 
+/*
+    Contains textures used in the game
+*/
+
 // column textures for the game
 const static byte gameFloor = B00000001;
 const static byte hole = B00000000;
